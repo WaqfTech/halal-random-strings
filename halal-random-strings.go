@@ -1,5 +1,5 @@
-// Package hotdiva2000 provides a human-readable random string generator.
-package hotdiva2000
+// Package halalrandomstrings provides a human-readable random string generator.
+package halalrandomstrings
 
 import (
 	_ "embed"
@@ -13,10 +13,12 @@ import (
 //go:generate sort -u nouns.txt -o nouns.txt
 //go:generate sort -u prefix.txt -o prefix.txt
 //go:generate sort -u suffix.txt -o suffix.txt
+//go:generate sort -u blocked.txt -o blocked.txt
 
 const (
 	defaultPrefixThreshold = 0.2
 	defaultSuffixThreshold = 0.2
+	maxRetries             = 100
 )
 
 //go:embed prefix.txt
@@ -31,91 +33,79 @@ var nounData string
 //go:embed suffix.txt
 var suffixData string
 
+//go:embed blocked.txt
+var blockedData string
+
 var (
 	prefixes  []string
 	modifiers []string
 	nouns     []string
 	suffixes  []string
-
-	// These start with vowels but should not be preceded with "an". Exceptions
-	// will be checked as prefixes, so cases like "uptopia" will also over
-	// "uptopian".
-	anExceptions = []string{"unix", "utopia"}
+	blocked   []string
 )
 
 func init() {
-	prefixes = strings.Split(prefixData, "\n")
-	modifiers = strings.Split(modifierData, "\n")
-	nouns = strings.Split(nounData, "\n")
-	suffixes = strings.Split(suffixData, "\n")
+	prefixes = strings.Split(strings.TrimSpace(prefixData), "\n")
+	modifiers = strings.Split(strings.TrimSpace(modifierData), "\n")
+	nouns = strings.Split(strings.TrimSpace(nounData), "\n")
+	suffixes = strings.Split(strings.TrimSpace(suffixData), "\n")
+	blocked = strings.Split(strings.TrimSpace(blockedData), "\n")
 }
 
-func startsWithVowel(s string) bool {
-	s = strings.ToLower(s)
-	for _, e := range anExceptions {
-		if strings.HasPrefix(s, e) {
+func isSafe(s string) bool {
+	for _, blockedWord := range blocked {
+		if strings.Contains(s, blockedWord) {
 			return false
 		}
 	}
-	vowels := []string{"a", "e", "i", "o", "u"}
-	for _, v := range vowels {
-		if strings.HasPrefix(s, v) {
-			return true
-		}
-	}
-	return false
-}
-
-// Look for places where "a" should be "an" and correct accordingly.
-func fixArticles(sentence string) string {
-	words := strings.Split(sentence, " ")
-	for i, word := range words {
-		if strings.ToLower(word) == "a" && i < len(words)-1 {
-			nextWord := words[i+1]
-			if startsWithVowel(nextWord) {
-				words[i] = "an"
-			}
-		}
-	}
-
-	return strings.Join(words, " ")
+	return true
 }
 
 // generate returns random strings.
 func generate(opts Options) []string {
-	if opts.Results < 1 {
-		opts.Results = 1
+	if opts.Repeat < 1 {
+		opts.Repeat = 1
 	}
 	opts.PrefixThreshold = ordered.Clamp(opts.PrefixThreshold, 0, 1)
 	opts.SuffixThreshold = ordered.Clamp(opts.SuffixThreshold, 0, 1)
 
-	r := make([]string, opts.Results)
+	if opts.Sep == "" {
+		opts.Sep = "-"
+	}
+
+	r := make([]string, opts.Repeat)
+	src := rand.New(rand.NewSource(opts.Seed))
 
 	for i := range r {
-		var (
-			prefix = ""
-			suffix = ""
-		)
+		for j := 0; j < maxRetries; j++ {
+			var (
+				prefix = ""
+				suffix = ""
+			)
 
-		if opts.PrefixThreshold > 0 && rand.Float64() < opts.PrefixThreshold {
-			prefix = prefixes[rand.Intn(len(prefixes))] + " "
+			if opts.PrefixThreshold > 0 && src.Float64() < opts.PrefixThreshold {
+				prefix = prefixes[src.Intn(len(prefixes))] + " "
+			}
+			if opts.SuffixThreshold > 0 && src.Float64() < opts.SuffixThreshold {
+				suffix = " " + suffixes[src.Intn(len(suffixes))]
+			}
+
+			mod := modifiers[src.Intn(len(modifiers))]
+			noun := nouns[src.Intn(len(nouns))]
+
+			var builder strings.Builder
+			builder.WriteString(prefix)
+			builder.WriteString(mod)
+			builder.WriteString(" ")
+			builder.WriteString(noun)
+			builder.WriteString(suffix)
+
+			output := strings.ToLower(strings.ReplaceAll(builder.String(), " ", opts.Sep))
+			if isSafe(output) {
+				r[i] = output
+				break
+			}
 		}
-		if opts.SuffixThreshold > 0 && rand.Float64() < opts.SuffixThreshold {
-			suffix = " " + suffixes[rand.Intn(len(suffixes))]
-		}
-
-		mod := modifiers[rand.Intn(len(modifiers))]
-		noun := nouns[rand.Intn(len(nouns))]
-
-		var builder strings.Builder
-		builder.WriteString(prefix)
-		builder.WriteString(mod)
-		builder.WriteString(" ")
-		builder.WriteString(noun)
-		builder.WriteString(suffix)
-		
-		output := fixArticles(builder.String())
-		r[i] = strings.ToLower(strings.ReplaceAll(output, " ", "-"))
 	}
 
 	return r
@@ -128,8 +118,14 @@ type Options struct {
 	PrefixThreshold float64
 	SuffixThreshold float64
 
-	// Number of results to generate.
-	Results int
+	// Number of strings to generate.
+	Repeat int
+
+	// Separator to use between words.
+	Sep string
+
+	// Seed for the random number generator.
+	Seed int64
 }
 
 // Generate returns a random string.
@@ -137,6 +133,8 @@ func Generate() string {
 	return generate(Options{
 		PrefixThreshold: defaultPrefixThreshold,
 		SuffixThreshold: defaultSuffixThreshold,
+		Repeat:          1,
+		Seed:            rand.Int63(),
 	})[0]
 }
 
@@ -145,7 +143,8 @@ func GenerateN(n int) []string {
 	return generate(Options{
 		PrefixThreshold: defaultPrefixThreshold,
 		SuffixThreshold: defaultSuffixThreshold,
-		Results:         n,
+		Repeat:          n,
+		Seed:            rand.Int63(),
 	})
 }
 
