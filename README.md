@@ -1,60 +1,48 @@
-# hotdiva2000
+# Halal Random Strings
 
-A human-readable random string generator.
+A wholesome, family-friendly random name generator (inspired by hotdiva2000).
 
 Example output:
 
 ```
-ivy-league-daddy
-eurovision-business-school
-mildly-tarnished-business-idea
-180-bpm-lawyer
-royal-car-phone
-most-likely-a-stunning-investment
-sultry-board-meeting
-performance-driven-dad-bod
-phd-level-can-of-beer
-very-normal-pull-request-per-se
-apres-ski-pizza-party
-mostly-new-ux-design-software
-stunning-ai-startup-of-the-moment
-buttery-vape-juice-on-chain
-emo-pool-boy
-tragic-image-editor-because-why-not
-eighties-sparking-white-wine
-blatantly-offensive-yaml-error
-romantic-bed-linen
-beach-party-security-company
+$ halal-random-strings -r 3
+nur-sabr-masjid
+sadiq-hikma-kitab
+karim-ukhuwa-safina
 ```
+
+## Usage
 
 Use it as a library:
 
 ```go
-import "github.com/charmbracelet/hotdiva2000"
+import "github.com/WaqfTech/halal-random-strings"
 
-fmt.Println(hotdiva2000.Generate()) // star-studded-booze-cruise
+fmt.Println(halalrandomstrings.Generate()) // nur-sabr-masjid
 ```
 
 Use it on the CLI:
 
 ```bash
 # Generate a random string
-hotdiva2000
+halal-random-strings
 
-# Generate 25 random strings
-hotdiva2000 -r 25
+# Generate 5 random strings
+halal-random-strings -r 5
+
+# Use a different separator
+halal-random-strings --sep _
+
+# Use a seed for reproducibility
+halal-random-strings --seed 42
 
 # See also
-hotdiva2000 -h
+halal-random-strings -h
 ```
 
-## Whatcha Think?
+## Credit
 
-We’d love to hear your thoughts on this project. Feel free to drop us a note.
-
-- [Twitter](https://twitter.com/charmcli)
-- [The Fediverse](https://mastodon.social/@charmcli)
-- [Discord](https://charm.sh/chat)
+This project is a fork of [charmbracelet/hotdiva2000](https://github.com/charmbracelet/hotdiva2000), and we are grateful to the original authors for their work.
 
 ## License
 

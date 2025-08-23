@@ -1,4 +1,4 @@
-module github.com/charmbracelet/hotdiva2000
+module github.com/WaqfTech/halal-random-strings
 
 go 1.21
 
