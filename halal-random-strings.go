@@ -2,9 +2,11 @@
 package halalrandomstrings
 
 import (
+	crand "crypto/rand"
 	_ "embed"
 	"encoding/json"
 	"fmt"
+	"math/big"
 	"math/rand"
 	"strings"
 	"time"
@@ -18,12 +20,12 @@ var wordsData []byte
 const (
 	defaultPrefixThreshold = 0.2
 	defaultSuffixThreshold = 0.2
-	maxRetries             = 100
+	maxRetries             = 1000 // Increased max retries
 )
 
 type Words struct {
 	Categories map[string][]string `json:"categories"`
-	Rules      []Rule              `json:"rules"`
+	Rules      []Rule              `json:"rules"`	
 	Blocked    []string            `json:"blocked"`
 }
 
@@ -62,27 +64,30 @@ func generate(opts Options) []string {
 	}
 
 	if opts.MinWords < 1 {
-		opts.MinWords = 4
+		opts.MinWords = 5 // Default to 5 words
 	}
 
 	if opts.MaxWords < opts.MinWords {
-		opts.MaxWords = opts.MinWords
-	}
-
-	seed := opts.Seed
-	if seed == 0 {
-		seed = time.Now().UnixNano()
+		opts.MaxWords = 8 // Default to 8 words
 	}
 
 	r := make([]string, opts.Repeat)
-	src := rand.New(rand.NewSource(seed))
+	
+	// Use math/rand for word selection (faster)
+	var src *rand.Rand
+	if opts.Seed == 0 {
+		src = rand.New(rand.NewSource(time.Now().UnixNano()))
+	} else {
+		src = rand.New(rand.NewSource(opts.Seed))
+	}
 
 	for i := range r {
 		for j := 0; j < maxRetries; j++ {
-			var output string
-			var wordCount int
+			var currentOutput string
+			var currentWordCount int
 
-			for wordCount < opts.MinWords {
+			// Build the string iteratively
+			for {
 				// Pick a random rule
 				rule := words.Rules[src.Intn(len(words.Rules))]
 
@@ -95,25 +100,46 @@ func generate(opts Options) []string {
 
 				replacer := strings.NewReplacer(replacerArgs...)
 				generated := replacer.Replace(rule.Template)
+				
+				// Calculate word count of the generated part
+				generatedWordCount := len(strings.Split(generated, opts.Sep))
 
-				if output == "" {
-					output = generated
-				} else {
-					output = output + opts.Sep + generated
+				// Check if adding this rule would exceed MaxWords
+				if currentWordCount + generatedWordCount > opts.MaxWords && currentWordCount > 0 {
+					// If we have words already and adding this rule exceeds MaxWords, try to finalize
+					break
 				}
 
-				wordCount = len(strings.Split(output, opts.Sep))
+				// Append the generated part
+				if currentOutput == "" {
+					currentOutput = generated
+				} else {
+					currentOutput = currentOutput + opts.Sep + generated
+				}
+				currentWordCount = len(strings.Split(currentOutput, opts.Sep))
 
-				if wordCount > opts.MaxWords {
-					output = ""
-					wordCount = 0
+				// If we have enough words, break the inner loop
+				if currentWordCount >= opts.MinWords {
+					break
 				}
 			}
 
-			if isSafe(output) {
-				output = strings.ReplaceAll(output, "'", "-")
-				r[i] = strings.ToLower(strings.ReplaceAll(output, " ", opts.Sep))
-				break
+			// Finalize the output
+			if currentWordCount >= opts.MinWords && currentWordCount <= opts.MaxWords {
+				if isSafe(currentOutput) {
+					output := strings.ReplaceAll(currentOutput, "'", "-")
+					
+					// Add a random number for extra uniqueness using crypto/rand
+					randomNum, err := crand.Int(crand.Reader, big.NewInt(1000000000000000000))
+					if err != nil {
+						// Fallback to time-based if crypto/rand fails
+						randomNum = big.NewInt(time.Now().UnixNano() % 1000000000000000000)
+					}
+					output = fmt.Sprintf("%s%s%d", output, opts.Sep, randomNum.Int64())
+
+					r[i] = strings.ToLower(strings.ReplaceAll(output, " ", opts.Sep))
+					break
+				}
 			}
 		}
 	}

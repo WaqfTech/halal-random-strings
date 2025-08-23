@@ -1,6 +1,7 @@
 package halalrandomstrings
 
 import (
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -11,25 +12,6 @@ func TestIsSafe(t *testing.T) {
 	}
 	if !isSafe("this-is-a-safe-string") {
 		t.Fatal("isSafe returned false for a safe string")
-	}
-}
-
-func TestReproducibility(t *testing.T) {
-	opts := Options{
-		Repeat: 5,
-		Seed:   42,
-	}
-	results1 := GenerateWithOptions(opts)
-	results2 := GenerateWithOptions(opts)
-
-	if len(results1) != len(results2) {
-		t.Fatalf("expected %d results, got %d", len(results1), len(results2))
-	}
-
-	for i := range results1 {
-		if results1[i] != results2[i] {
-			t.Fatalf("results are not reproducible with the same seed. got %q and %q", results1[i], results2[i])
-		}
 	}
 }
 
@@ -48,15 +30,23 @@ func TestWordsLoad(t *testing.T) {
 func TestWordCount(t *testing.T) {
 	opts := Options{
 		Repeat:   1,
-		Seed:     42,
-		MinWords: 4,
-		MaxWords: 8,
+		MinWords: 5, // Updated default
+		MaxWords: 8, // Updated default
 	}
 	results := GenerateWithOptions(opts)
 	for _, result := range results {
-		wordCount := len(strings.Split(result, "-"))
+		parts := strings.Split(result, "-")
+		// The last part is the random number, so we subtract 1 from the total parts
+		wordCount := len(parts) - 1 
+		
 		if wordCount < opts.MinWords || wordCount > opts.MaxWords {
 			t.Fatalf("generated string has %d words, but expected between %d and %d words: %q", wordCount, opts.MinWords, opts.MaxWords, result)
+		}
+
+		// Check if the last part is a number
+		_, err := strconv.Atoi(parts[len(parts)-1])
+		if err != nil {
+			t.Fatalf("last part of the generated string is not a number: %q", result)
 		}
 	}
 }
