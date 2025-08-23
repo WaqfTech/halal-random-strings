@@ -1,4 +1,5 @@
 import collections
+import sys
 
 def analyze_uniqueness(filename):
   with open(filename, 'r') as f:
@@ -22,4 +23,7 @@ def analyze_uniqueness(filename):
     print("\nNo duplicate lines found.")
 
 if __name__ == "__main__":
-  analyze_uniqueness("output.txt")
+  if len(sys.argv) < 2:
+    print("Usage: python3 analyze.py <output_file>")
+    sys.exit(1)
+  analyze_uniqueness(sys.argv[1])

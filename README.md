@@ -1,57 +1,24 @@
-# Halal Random Strings
 
-A wholesome, family-friendly random name generator (inspired by hotdiva2000).
+## Author
+- **Name:** Jad Madi
+- **GitHub:** [@jadmadi](https://github.com/jadmadi)
+- **Email:** jad@madi.se
+- **Website:** [https://madi.se](https://madi.se)
+- **LinkedIn:** [https://linkedin.com/in/hakammadi](https://linkedin.com/in/hakammadi)
 
-Example output:
+For professional inquiries or collaborations, please contact via LinkedIn or website.
 
-```
-$ halal-random-strings -r 3
-nur-sabr-masjid
-sadiq-hikma-kitab
-karim-ukhuwa-safina
-```
+## Contributing
 
-## Usage
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Use it as a library:
+## Acknowledgements
 
-```go
-import "github.com/WaqfTech/halal-random-strings"
+We would like to express our gratitude to the creators and maintainers of the following project:
 
-fmt.Println(halalrandomstrings.Generate()) // nur-sabr-masjid
-```
-
-Use it on the CLI:
-
-```bash
-# Generate a random string
-halal-random-strings
-
-# Generate 5 random strings
-halal-random-strings -r 5
-
-# Use a different separator
-halal-random-strings --sep _
-
-# Use a seed for reproducibility
-halal-random-strings --seed 42
-
-# See also
-halal-random-strings -h
-```
-
-## Credit
-
-This project is a fork of [charmbracelet/hotdiva2000](https://github.com/charmbracelet/hotdiva2000), and we are grateful to the original authors for their work.
-
+{ list the Acknowledgements}
 ## License
 
-[MIT](https://github.com/charmbracelet/hotdiva2000/raw/main/LICENSE)
+This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for details.
 
----
-
-Part of [Charm](https://charm.sh).
-
-<a href="https://charm.sh/"><img alt="The Charm logo" width="400" src="https://stuff.charm.sh/charm-badge.jpg" /></a>
-
-Charm 热爱开源 • Charm loves open source
+Additionally, this work adheres to the principles of the [Waqf General Public License](https://github.com/ojuba-org/waqf), aiming to make the work a perpetual charitable endowment (Waqf) for the benefit of all Muslims.
