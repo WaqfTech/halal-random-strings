@@ -60,23 +60,49 @@ func generate(opts Options) []string {
 		opts.Sep = "-"
 	}
 
+	if opts.MinWords < 1 {
+		opts.MinWords = 4
+	}
+
+	if opts.MaxWords < opts.MinWords {
+		opts.MaxWords = opts.MinWords
+	}
+
 	r := make([]string, opts.Repeat)
 	src := rand.New(rand.NewSource(opts.Seed))
 
 	for i := range r {
 		for j := 0; j < maxRetries; j++ {
-			// Pick a random rule
-			rule := words.Rules[src.Intn(len(words.Rules))]
+			var output string
+			var wordCount int
 
-			// Generate the string based on the rule
-			var replacerArgs []string
-			for _, category := range rule.Pattern {
-				word := words.Categories[category][src.Intn(len(words.Categories[category]))]
-				replacerArgs = append(replacerArgs, fmt.Sprintf("{%s}", category), word)
+			for wordCount < opts.MinWords {
+				// Pick a random rule
+				rule := words.Rules[src.Intn(len(words.Rules))]
+
+				// Generate the string based on the rule
+				var replacerArgs []string
+				for _, category := range rule.Pattern {
+					word := words.Categories[category][src.Intn(len(words.Categories[category]))]
+					replacerArgs = append(replacerArgs, fmt.Sprintf("{%s}", category), word)
+				}
+
+				replacer := strings.NewReplacer(replacerArgs...)
+				generated := replacer.Replace(rule.Template)
+
+				if output == "" {
+					output = generated
+				} else {
+					output = output + opts.Sep + generated
+				}
+
+				wordCount = len(strings.Split(output, opts.Sep))
+
+				if wordCount > opts.MaxWords {
+					output = ""
+					wordCount = 0
+				}
 			}
-
-			replacer := strings.NewReplacer(replacerArgs...)
-			output := replacer.Replace(rule.Template)
 
 			if isSafe(output) {
 				output = strings.ReplaceAll(output, "'", "-")
@@ -104,6 +130,12 @@ type Options struct {
 
 	// Seed for the random number generator.
 	Seed int64
+
+	// Minimum number of words in the generated string.
+	MinWords int
+
+	// Maximum number of words in the generated string.
+	MaxWords int
 }
 
 // Generate returns a random string.

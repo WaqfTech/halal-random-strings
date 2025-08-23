@@ -1,6 +1,7 @@
 package halalrandomstrings
 
 import (
+	"strings"
 	"testing"
 )
 
@@ -41,5 +42,21 @@ func TestWordsLoad(t *testing.T) {
 	}
 	if len(words.Blocked) == 0 {
 		t.Fatal("blocked in words.json is empty")
+	}
+}
+
+func TestWordCount(t *testing.T) {
+	opts := Options{
+		Repeat:   1,
+		Seed:     42,
+		MinWords: 4,
+		MaxWords: 8,
+	}
+	results := GenerateWithOptions(opts)
+	for _, result := range results {
+		wordCount := len(strings.Split(result, "-"))
+		if wordCount < opts.MinWords || wordCount > opts.MaxWords {
+			t.Fatalf("generated string has %d words, but expected between %d and %d words: %q", wordCount, opts.MinWords, opts.MaxWords, result)
+		}
 	}
 }
