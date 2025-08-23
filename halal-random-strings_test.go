@@ -32,20 +32,14 @@ func TestReproducibility(t *testing.T) {
 	}
 }
 
-func TestWordlistsLoad(t *testing.T) {
-	if len(prefixes) == 0 {
-		t.Fatal("prefixes wordlist is empty")
+func TestWordsLoad(t *testing.T) {
+	if len(words.Categories) == 0 {
+		t.Fatal("categories in words.json is empty")
 	}
-	if len(modifiers) == 0 {
-		t.Fatal("modifiers wordlist is empty")
+	if len(words.Rules) == 0 {
+		t.Fatal("rules in words.json is empty")
 	}
-	if len(nouns) == 0 {
-		t.Fatal("nouns wordlist is empty")
-	}
-	if len(suffixes) == 0 {
-		t.Fatal("suffixes wordlist is empty")
-	}
-	if len(blocked) == 0 {
-		t.Fatal("blocked wordlist is empty")
+	if len(words.Blocked) == 0 {
+		t.Fatal("blocked in words.json is empty")
 	}
 }
