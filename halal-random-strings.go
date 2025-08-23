@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math/rand"
 	"strings"
+	"time"
 
 	"github.com/charmbracelet/x/exp/ordered"
 )
@@ -68,8 +69,13 @@ func generate(opts Options) []string {
 		opts.MaxWords = opts.MinWords
 	}
 
+	seed := opts.Seed
+	if seed == 0 {
+		seed = time.Now().UnixNano()
+	}
+
 	r := make([]string, opts.Repeat)
-	src := rand.New(rand.NewSource(opts.Seed))
+	src := rand.New(rand.NewSource(seed))
 
 	for i := range r {
 		for j := 0; j < maxRetries; j++ {
@@ -142,7 +148,6 @@ type Options struct {
 func Generate() string {
 	return generate(Options{
 		Repeat: 1,
-		Seed:   rand.Int63(),
 	})[0]
 }
 
@@ -150,7 +155,6 @@ func Generate() string {
 func GenerateN(n int) []string {
 	return generate(Options{
 		Repeat: n,
-		Seed:   rand.Int63(),
 	})
 }
 
