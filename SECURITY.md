@@ -6,7 +6,7 @@ We take the security of Halal Random Strings seriously. If you discover a securi
 
 **Please DO NOT open a public issue on GitHub.**
 
-Instead, please send an email to [your-security-email@example.com](mailto:your-security-email@example.com) (Replace with actual email address).
+Instead, please send an email to [jad@madi.se](mailto:jad@madi.se) (Replace with actual email address).
 
 In your report, please include:
 

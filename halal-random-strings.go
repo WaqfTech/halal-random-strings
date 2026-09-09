@@ -3,19 +3,18 @@ package halalrandomstrings
 
 import (
 	crand "crypto/rand"
-	_ "embed"
 	"encoding/json"
 	"fmt"
+	"io/ioutil" // Added
 	"math/big"
 	"math/rand"
+	"os"        // Added
 	"strings"
 	"time"
+	sort "sort"
 
 	"github.com/charmbracelet/x/exp/ordered"
 )
-
-//go:embed words.json
-var wordsData []byte
 
 const (
 	defaultPrefixThreshold = 0.2
@@ -34,12 +33,21 @@ type Rule struct {
 	Template string   `json:"template"`
 }
 
-var words Words
+var words Words // Keep as package-level, but will be populated by LoadWords
 
-func init() {
-	if err := json.Unmarshal(wordsData, &words); err != nil {
-		panic(fmt.Sprintf("failed to parse words.json: %v", err))
+// LoadWords reads words.json from the specified path and populates the words variable.
+func LoadWords(filePath string) error {
+	jsonFile, err := os.Open(filePath)
+	if err != nil {
+		return fmt.Errorf("failed to open words.json: %w", err)
 	}
+	defer jsonFile.Close()
+
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+	if err := json.Unmarshal(byteValue, &words); err != nil {
+		return fmt.Errorf("failed to parse words.json: %w", err)
+	}
+	return nil
 }
 
 func isSafe(s string) bool {
@@ -85,11 +93,43 @@ func generate(opts Options) []string {
 		for j := 0; j < maxRetries; j++ {
 			var currentOutput string
 			var currentWordCount int
+			
+			// Filter rules based on selected categories
+			filteredRules := []Rule{}
+			if len(opts.Categories) > 0 {
+				for _, rule := range words.Rules {
+					// Check if all categories in the rule's pattern are in the selected categories
+					allCategoriesMatch := true
+					for _, patternCategory := range rule.Pattern {
+						found := false
+						for _, selectedCategory := range opts.Categories {
+							if patternCategory == selectedCategory {
+								found = true
+								break
+							}
+						}
+						if !found {
+							allCategoriesMatch = false
+							break
+						}
+					}
+					if allCategoriesMatch {
+						filteredRules = append(filteredRules, rule)
+					}
+				}
+			} else {
+				filteredRules = words.Rules // Use all rules if no categories are specified
+			}
+
+			// If no rules match the selected categories, skip this iteration
+			if len(filteredRules) == 0 {
+				continue
+			}
 
 			// Build the string iteratively
-			for {
-				// Pick a random rule
-				rule := words.Rules[src.Intn(len(words.Rules))]
+			for attempt := 0; attempt < maxRetries; attempt++ {
+				// Pick a random rule from filtered rules
+				rule := filteredRules[src.Intn(len(filteredRules))]
 
 				// Generate the string based on the rule
 				var replacerArgs []string
@@ -105,9 +145,16 @@ func generate(opts Options) []string {
 				generatedWordCount := len(strings.Split(generated, opts.Sep))
 
 				// Check if adding this rule would exceed MaxWords
-				if currentWordCount + generatedWordCount > opts.MaxWords && currentWordCount > 0 {
-					// If we have words already and adding this rule exceeds MaxWords, try to finalize
-					break
+				if currentWordCount + generatedWordCount > opts.MaxWords {
+					// If we have enough words already, finalize this string
+					if currentWordCount >= opts.MinWords {
+						break // Break from inner building loop
+					} else {
+						// Not enough words yet, and this rule exceeds MaxWords. Reset and try again.
+						currentOutput = ""
+						currentWordCount = 0
+						continue // Continue to next attempt in inner building loop
+					}
 				}
 
 				// Append the generated part
@@ -118,27 +165,36 @@ func generate(opts Options) []string {
 				}
 				currentWordCount = len(strings.Split(currentOutput, opts.Sep))
 
-				// If we have enough words, break the inner loop
-				if currentWordCount >= opts.MinWords {
-					break
+				// If we have enough words, and haven't exceeded MaxWords, we can break
+				// This condition is crucial to ensure we don't keep adding words unnecessarily
+				// This is the problematic line, it should be `currentWordCount >= opts.MinWords`
+				// and then check `currentWordCount <= opts.MaxWords` after the loop
+				if currentWordCount >= opts.MinWords && currentWordCount <= opts.MaxWords {
+					break // Break from inner building loop
 				}
 			}
 
-			// Finalize the output
+			// Finalize the output if it meets criteria
 			if currentWordCount >= opts.MinWords && currentWordCount <= opts.MaxWords {
-				if isSafe(currentOutput) {
-					output := strings.ReplaceAll(currentOutput, "'", "-")
-					
-					// Add a random number for extra uniqueness using crypto/rand
-					randomNum, err := crand.Int(crand.Reader, big.NewInt(1000000000000000000))
-					if err != nil {
-						// Fallback to time-based if crypto/rand fails
-						randomNum = big.NewInt(time.Now().UnixNano() % 1000000000000000000)
-					}
-					output = fmt.Sprintf("%s%s%d", output, opts.Sep, randomNum.Int64())
+				// Before returning, ensure the string is safe
+				// Normalize the output before checking safety and returning
+				finalOutput := strings.ReplaceAll(currentOutput, "'", "-")
+				finalOutput = strings.ToLower(strings.ReplaceAll(finalOutput, " ", opts.Sep))
 
-					r[i] = strings.ToLower(strings.ReplaceAll(output, " ", opts.Sep))
-					break
+				if isSafe(finalOutput) {
+					// Add a random number for extra uniqueness using crypto/rand
+					output := finalOutput
+					if opts.IncludeRandomNumber {
+						randomNum, err := crand.Int(crand.Reader, big.NewInt(1000000000000000000))
+						if err != nil {
+							// Fallback to time-based if crypto/rand fails
+							randomNum = big.NewInt(time.Now().UnixNano() % 1000000000000000000)
+						}
+						output = fmt.Sprintf("%s%s%d", finalOutput, opts.Sep, randomNum.Int64())
+					}
+
+					r[i] = output
+					break // Break from maxRetries loop
 				}
 			}
 		}
@@ -168,12 +224,19 @@ type Options struct {
 
 	// Maximum number of words in the generated string.
 	MaxWords int
+
+	// Whether to include a random number at the end of the string.
+	IncludeRandomNumber bool
+
+	// List of categories to use for string generation.
+	Categories []string
 }
 
 // Generate returns a random string.
 func Generate() string {
 	return generate(Options{
 		Repeat: 1,
+		IncludeRandomNumber: true, // Default to true
 	})[0]
 }
 
@@ -181,10 +244,22 @@ func Generate() string {
 func GenerateN(n int) []string {
 	return generate(Options{
 		Repeat: n,
+		IncludeRandomNumber: true, // Default to true
 	})
 }
 
 // GenerateWithOptions generates results against the given options.
 func GenerateWithOptions(o Options) []string {
 	return generate(o)
+}
+
+// GetCategories returns a sorted list of available categories.
+func GetCategories() []string {
+	keys := make([]string, 0, len(words.Categories))
+	for k := range words.Categories {
+		keys = append(keys, k)
+	}
+	// Sort keys for consistent output
+	sort.Strings(keys)
+	return keys
 }
