@@ -306,3 +306,25 @@ func TestCategoryFilteringAndFallback(t *testing.T) {
 		t.Errorf("expected 'unknown category' error message, got %v", errInvalid)
 	}
 }
+
+func BenchmarkGenerate(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = Generate()
+	}
+}
+
+func BenchmarkGenerateWithOptions(b *testing.B) {
+	opts := Options{
+		Repeat:              1,
+		MinWords:            5,
+		MaxWords:            8,
+		IncludeRandomNumber: true,
+	}
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_ = GenerateWithOptions(opts)
+	}
+}

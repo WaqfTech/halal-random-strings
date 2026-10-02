@@ -172,6 +172,18 @@ func isSafe(s string) bool {
 	return defaultEngine.IsSafe(s)
 }
 
+func normalizeWord(s, sep string) string {
+	s = strings.ReplaceAll(s, "'", sep)
+	if sep != "-" {
+		s = strings.ReplaceAll(s, "-", sep)
+	}
+	s = strings.ToLower(strings.ReplaceAll(s, " ", sep))
+	for strings.Contains(s, sep+sep) {
+		s = strings.ReplaceAll(s, sep+sep, sep)
+	}
+	return strings.Trim(s, sep)
+}
+
 func (e *Engine) getCategoriesLocked() []string {
 	keys := make([]string, 0, len(e.words.Categories))
 	for k := range e.words.Categories {
@@ -274,28 +286,24 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 				// Pick a random rule from filtered rules
 				rule := filteredRules[src.Intn(len(filteredRules))]
 
-				// Generate the string based on the rule
-				var replacerArgs []string
+				// Generate the string based on the rule using strings.Builder instead of strings.NewReplacer
+				var ruleBuilder strings.Builder
 				for _, category := range rule.Pattern {
 					categoryWords := engineWords.Categories[category]
 					if len(categoryWords) == 0 {
 						continue
 					}
 					word := categoryWords[src.Intn(len(categoryWords))]
-					replacerArgs = append(replacerArgs, fmt.Sprintf("{%s}", category), word)
+					normWord := normalizeWord(word, opts.Sep)
+					if normWord == "" {
+						continue
+					}
+					if ruleBuilder.Len() > 0 {
+						ruleBuilder.WriteString(opts.Sep)
+					}
+					ruleBuilder.WriteString(normWord)
 				}
-
-				replacer := strings.NewReplacer(replacerArgs...)
-				generated := replacer.Replace(rule.Template)
-				generated = strings.ReplaceAll(generated, "'", opts.Sep)
-				if opts.Sep != "-" {
-					generated = strings.ReplaceAll(generated, "-", opts.Sep)
-				}
-				generated = strings.ToLower(strings.ReplaceAll(generated, " ", opts.Sep))
-				for strings.Contains(generated, opts.Sep+opts.Sep) {
-					generated = strings.ReplaceAll(generated, opts.Sep+opts.Sep, opts.Sep)
-				}
-				generated = strings.Trim(generated, opts.Sep)
+				generated := ruleBuilder.String()
 				
 				// Calculate word count of the generated part
 				generatedWordCount := len(strings.Split(generated, opts.Sep))
