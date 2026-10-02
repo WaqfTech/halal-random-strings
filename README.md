@@ -135,6 +135,10 @@ This project is designed to pre-generate a large pool of unique strings and stor
 6.  **Deploy Cloudflare Worker API:**
     Refer to the `api_worker.js` (or `api_worker.ts`) outline in the project for setting up your Cloudflare Worker to serve strings from D1 via API endpoints like `/invite/new` and `/invite/status`.
 
+> [!TIP]
+> **Architectural Recommendation (Edge Workers):**
+> For high-throughput production services, consider generating halal strings **on-the-fly** directly inside the Cloudflare Worker (by embedding the JSON dictionary or compiling the Go generator to WebAssembly) rather than reading from a pre-populated D1 table. On-the-fly generation eliminates D1 read-after-write concurrency races, removes database query latency, and avoids D1 row read/write billing overhead. Pre-populating D1 is best reserved for pre-allocated claim or single-use invitation tokens that require durable tracking.
+
 ## Contributing
 
 We welcome contributions! Please see `docs/CONTRIBUTING.md` for guidelines on how to set up your development environment, add new words, and propose changes.
