@@ -35,8 +35,8 @@ halal-random-strings/
 ├── halal-random-strings.go     # Core logic for string generation
 ├── halal-random-strings_test.go # Unit tests for the core logic
 ├── words.json                  # Centralized JSON file containing all word categories and generation rules
-├── LICENSE                     # Project license (MIT)
-├── Waqf.en.md                  # Full text of the "Waqf" General Public License
+├── LICENSE                     # GNU Affero General Public License v3.0 (AGPL-3.0)
+├── WaqfDPL-1.0.md              # Waqf Digital Public License (Waqf-DPL 1.0) draft
 ├── SECURITY.md                 # Guidelines for reporting security vulnerabilities
 ├── go.mod
 └── go.sum
@@ -156,7 +156,9 @@ This project is a fork of [charmbracelet/hotdiva2000](https://github.com/charmbr
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE) with copyright (c) 2024-2026 WaqfTech. The moral intentions and ethical framework guiding this project are further expressed in the ["Waqf" General Public License](Waqf.en.md). Code contributions and package consumption remain freely usable under standard MIT terms.
+This project is licensed under the [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE) with copyright (c) 2024-2026 WaqfTech.
+
+The moral foundation, spiritual principles, and ethical terms of endowment guiding this work are governed by the [Waqf Digital Public License (Waqf-DPL 1.0)](WaqfDPL-1.0.md), drafted by WaqfTech at [github.com/WaqfTech/waqf-license-draft](https://github.com/WaqfTech/waqf-license-draft).
 
 ---
 

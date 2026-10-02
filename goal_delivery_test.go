@@ -388,6 +388,17 @@ func TestGoal_13_HarmonizeLicensingAndSecurityPolicy(t *testing.T) {
 	if !strings.Contains(string(licenseData), "WaqfTech") {
 		t.Error("LICENSE must attribute WaqfTech")
 	}
+	if !strings.Contains(string(licenseData), "GNU AFFERO GENERAL PUBLIC LICENSE") {
+		t.Error("LICENSE must be GNU Affero General Public License (AGPL-3.0)")
+	}
+
+	waqfLicense, err := os.ReadFile("WaqfDPL-1.0.md")
+	if err != nil {
+		t.Fatalf("WaqfDPL-1.0.md is missing: %v", err)
+	}
+	if !strings.Contains(string(waqfLicense), "Waqf-DPL 1.0") {
+		t.Error("WaqfDPL-1.0.md must contain Waqf-DPL 1.0 draft text")
+	}
 
 	secData, err := os.ReadFile("SECURITY.md")
 	if err != nil {
