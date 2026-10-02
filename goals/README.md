@@ -28,10 +28,10 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 
 ## Summary
 - **Total Goals**: 14
-- 🟢 **Implemented & Verified**: 11
-- 🟡 **Ready to Execute (Pending)**: 3 (3 independent ⚡, 0 unblocked 🔗)
+- 🟢 **Implemented & Verified**: 12
+- 🟡 **Ready to Execute (Pending)**: 2 (2 independent ⚡, 0 unblocked 🔗)
 - 🎯 **By Tier**: 0 immediate (Tier 1), 14 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
-- 📋 **Execution Tasks Progress**: 51/65 completed (78%)
+- 📋 **Execution Tasks Progress**: 56/65 completed (86%)
 
 ---
 
@@ -39,7 +39,6 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 
 | Goal Package | Tier | Mode & Sequence | Dependencies | Focus & Description | Launch Command |
 | :--- | :---: | :---: | :--- | :--- | :--- |
-| [`harden-d1-scripts-and-architecture`](harden-d1-scripts-and-architecture/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Harden D1 Population Script and Eliminate CI Blocking Prompts — Remove interactive input() prompts from populate_d1.py to fix CI/CD execution, a... | `/goal goals/harden-d1-scripts-and-architecture/goal.md` |
 | [`harmonize-licensing-and-security-policy`](harmonize-licensing-and-security-policy/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Harmonize License Inconsistency, Update Security Policy and Docs — Clarify MIT vs Waqf GPL copyleft conflict, attribute WaqfTech in the license, re... | `/goal goals/harmonize-licensing-and-security-policy/goal.md` |
 | [`sanitize-asma-allah-and-virtues`](sanitize-asma-allah-and-virtues/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Segregate Asma' Allah al-Husna from Generic Adjectives — Segregate the 99 Names and Attributes of Allah from generic adjectives in words.... | `/goal goals/sanitize-asma-allah-and-virtues/goal.md` |
 
@@ -54,6 +53,7 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 | [`fix-scunthorpe-and-blocked-list`](fix-scunthorpe-and-blocked-list/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `7fc7218` |
 | [`fix-historical-scholar-attributions`](fix-historical-scholar-attributions/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `ba5c235` |
 | [`fix-sanctuaries-and-animal-rules`](fix-sanctuaries-and-animal-rules/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `7431c7e` |
+| [`harden-d1-scripts-and-architecture`](harden-d1-scripts-and-architecture/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `dfd58b1` |
 | [`sila-onboarding`](sila-onboarding/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `0fd3c0d` |
 | [`fix-separator-and-word-count-logic`](fix-separator-and-word-count-logic/goal.md) | `🔗 Dep` | 🚢 SHIP | Git Commit | `e732521` |
 | [`fix-category-filtering-and-fallback`](fix-category-filtering-and-fallback/goal.md) | `🔗 Dep` | 🚢 SHIP | Git Commit | `e664af4` |
