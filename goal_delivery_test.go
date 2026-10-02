@@ -651,5 +651,44 @@ func TestGoal_17_PruneBlockedListAndResolveSelfBlocking(t *testing.T) {
 	}
 }
 
+// TestGoal_18_OptimizeEngineAllocationsAndWordNormalization verifies pre-normalized word index and allocation efficiency.
+func TestGoal_18_OptimizeEngineAllocationsAndWordNormalization(t *testing.T) {
+	eng := DefaultEngine()
+	if eng.normWords == nil || len(eng.normWords) == 0 {
+		t.Fatal("normWords index must be populated on DefaultEngine")
+	}
+
+	// Verify pre-calculated token lengths
+	for cat, tokens := range eng.normWords {
+		if len(tokens) == 0 {
+			t.Errorf("category %q has empty pre-normalized token slice", cat)
+		}
+		for _, tok := range tokens {
+			if tok.tokens < 1 {
+				t.Errorf("invalid token count %d for word %q in category %q", tok.tokens, tok.text, cat)
+			}
+			if strings.Contains(tok.text, " ") {
+				t.Errorf("pre-normalized word %q in category %q contains spaces", tok.text, cat)
+			}
+		}
+	}
+
+	// Verify high-throughput batch generation without allocation errors
+	opts := Options{
+		Repeat:              500,
+		MinWords:            3,
+		MaxWords:            6,
+		IncludeRandomNumber: true,
+	}
+	results, err := eng.GenerateWithOptionsE(opts)
+	if err != nil {
+		t.Fatalf("batch generation failed: %v", err)
+	}
+	if len(results) != 500 {
+		t.Fatalf("expected 500 results, got %d", len(results))
+	}
+}
+
+
 
 

@@ -6,10 +6,10 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
-	"math/big"
 	"math/rand"
 	"os"
 	"sort"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -37,11 +37,23 @@ type Rule struct {
 	Template string   `json:"template"`
 }
 
+type wordToken struct {
+	text   string
+	tokens int
+}
+
 // Engine provides a thread-safe random string generator engine.
 type Engine struct {
 	mu         sync.RWMutex
 	words      Words
 	blockedSet map[string]struct{}
+	normWords  map[string][]wordToken
+}
+
+var randPool = sync.Pool{
+	New: func() any {
+		return rand.New(rand.NewSource(time.Now().UnixNano()))
+	},
 }
 
 func normalizeTokenString(s string) string {
@@ -60,7 +72,7 @@ func normalizeTokenString(s string) string {
 	return strings.Trim(norm, "-")
 }
 
-func (e *Engine) rebuildBlockedSetLocked() {
+func (e *Engine) rebuildIndexesLocked() {
 	e.blockedSet = make(map[string]struct{}, len(e.words.Blocked))
 	for _, b := range e.words.Blocked {
 		norm := normalizeTokenString(b)
@@ -68,13 +80,28 @@ func (e *Engine) rebuildBlockedSetLocked() {
 			e.blockedSet[norm] = struct{}{}
 		}
 	}
-}
 
+	e.normWords = make(map[string][]wordToken, len(e.words.Categories))
+	for cat, list := range e.words.Categories {
+		tokens := make([]wordToken, 0, len(list))
+		for _, w := range list {
+			norm := normalizeWord(w, "-")
+			if norm != "" {
+				count := strings.Count(norm, "-") + 1
+				tokens = append(tokens, wordToken{
+					text:   norm,
+					tokens: count,
+				})
+			}
+		}
+		e.normWords[cat] = tokens
+	}
+}
 
 // NewEngine creates an Engine using the given Words dataset.
 func NewEngine(w Words) *Engine {
 	e := &Engine{words: w}
-	e.rebuildBlockedSetLocked()
+	e.rebuildIndexesLocked()
 	return e
 }
 
@@ -87,9 +114,10 @@ func NewDefaultEngine() (*Engine, error) {
 		}
 	}
 	e := &Engine{words: w}
-	e.rebuildBlockedSetLocked()
+	e.rebuildIndexesLocked()
 	return e, nil
 }
+
 
 var (
 	defaultEngine *Engine
@@ -124,7 +152,7 @@ func (e *Engine) LoadWords(filePath string) error {
 
 	e.mu.Lock()
 	e.words = newWords
-	e.rebuildBlockedSetLocked()
+	e.rebuildIndexesLocked()
 	e.mu.Unlock()
 	return nil
 }
@@ -146,15 +174,20 @@ func (e *Engine) isSafeLocked(s string) bool {
 		return true
 	}
 
-
 	tokens := strings.Split(norm, "-")
 	n := len(tokens)
+	// Fast-path: single token O(1) checks without any string building
+	for i := 0; i < n; i++ {
+		if _, blocked := e.blockedSet[tokens[i]]; blocked {
+			return false
+		}
+	}
+	// Multi-token phrase checks
 	for i := 0; i < n; i++ {
 		var sb strings.Builder
-		for j := i; j < n && j < i+4; j++ {
-			if j > i {
-				sb.WriteString("-")
-			}
+		sb.WriteString(tokens[i])
+		for j := i + 1; j < n && j < i+4; j++ {
+			sb.WriteString("-")
 			sb.WriteString(tokens[j])
 			phrase := sb.String()
 			if _, blocked := e.blockedSet[phrase]; blocked {
@@ -311,14 +344,15 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 	// Use math/rand for word selection (faster)
 	var src *rand.Rand
 	if opts.Seed == 0 {
-		src = rand.New(rand.NewSource(time.Now().UnixNano()))
+		src = randPool.Get().(*rand.Rand)
+		defer randPool.Put(src)
 	} else {
 		src = rand.New(rand.NewSource(opts.Seed))
 	}
 
 	for i := range r {
 		for j := 0; j < maxRetries; j++ {
-			var currentOutput string
+			var currentBuilder strings.Builder
 			var currentWordCount int
 
 			// Build the string iteratively
@@ -326,15 +360,20 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 				// Pick a random rule from filtered rules
 				rule := filteredRules[src.Intn(len(filteredRules))]
 
-				// Generate the string based on the rule using strings.Builder instead of strings.NewReplacer
 				var ruleBuilder strings.Builder
+				var ruleWordCount int
 				for _, category := range rule.Pattern {
-					categoryWords := engineWords.Categories[category]
+					categoryWords := e.normWords[category]
 					if len(categoryWords) == 0 {
 						continue
 					}
-					word := categoryWords[src.Intn(len(categoryWords))]
-					normWord := normalizeWord(word, opts.Sep)
+					wt := categoryWords[src.Intn(len(categoryWords))]
+					var normWord string
+					if opts.Sep == "-" {
+						normWord = wt.text
+					} else {
+						normWord = strings.ReplaceAll(wt.text, "-", opts.Sep)
+					}
 					if normWord == "" {
 						continue
 					}
@@ -342,32 +381,31 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 						ruleBuilder.WriteString(opts.Sep)
 					}
 					ruleBuilder.WriteString(normWord)
+					ruleWordCount += wt.tokens
 				}
-				generated := ruleBuilder.String()
-				
-				// Calculate word count of the generated part
-				generatedWordCount := len(strings.Split(generated, opts.Sep))
+				if ruleBuilder.Len() == 0 {
+					continue
+				}
 
 				// Check if adding this rule would exceed MaxWords
-				if currentWordCount + generatedWordCount > opts.MaxWords {
+				if currentWordCount+ruleWordCount > opts.MaxWords {
 					// If we have enough words already, finalize this string
 					if currentWordCount >= opts.MinWords {
 						break // Break from inner building loop
 					} else {
 						// Not enough words yet, and this rule exceeds MaxWords. Reset and try again.
-						currentOutput = ""
+						currentBuilder.Reset()
 						currentWordCount = 0
 						continue // Continue to next attempt in inner building loop
 					}
 				}
 
 				// Append the generated part
-				if currentOutput == "" {
-					currentOutput = generated
-				} else {
-					currentOutput = currentOutput + opts.Sep + generated
+				if currentBuilder.Len() > 0 {
+					currentBuilder.WriteString(opts.Sep)
 				}
-				currentWordCount = len(strings.Split(currentOutput, opts.Sep))
+				currentBuilder.WriteString(ruleBuilder.String())
+				currentWordCount += ruleWordCount
 
 				// If we have enough words, and haven't exceeded MaxWords, we can break
 				if currentWordCount >= opts.MinWords && currentWordCount <= opts.MaxWords {
@@ -377,25 +415,27 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 
 			// Finalize the output if it meets criteria
 			if currentWordCount >= opts.MinWords && currentWordCount <= opts.MaxWords {
-				if e.isSafeLocked(currentOutput) {
-					output := currentOutput
+				candidate := currentBuilder.String()
+				if e.isSafeLocked(candidate) {
 					if opts.IncludeRandomNumber {
-						// Generate a consistent 4-digit random number [1000, 9999] that fits safely in 32-bit systems
 						var val int64
 						if opts.Seed != 0 {
 							val = int64(src.Intn(9000)) + 1000
 						} else {
-							num, err := crand.Int(crand.Reader, big.NewInt(9000))
+							var b [2]byte
+							_, err := crand.Read(b[:])
 							if err != nil {
-								val = (time.Now().UnixNano() % 9000) + 1000
+								val = int64(src.Intn(9000)) + 1000
 							} else {
-								val = num.Int64() + 1000
+								val = int64((uint16(b[0])<<8|uint16(b[1]))%9000) + 1000
 							}
 						}
-						output = fmt.Sprintf("%s%s%d", currentOutput, opts.Sep, val)
+						currentBuilder.WriteString(opts.Sep)
+						currentBuilder.WriteString(strconv.FormatInt(val, 10))
+						candidate = currentBuilder.String()
 					}
 
-					r[i] = output
+					r[i] = candidate
 					break // Break from maxRetries loop
 				}
 			}
