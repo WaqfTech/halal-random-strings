@@ -110,10 +110,10 @@ func TestCategories(t *testing.T) {
 	for _, result := range resultsSahaba {
 		found := false
 		// Normalize the generated result for comparison
-		normalizedResult := strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(result, optsSahaba.Sep, " "), "-", " "))
+		normalizedResult := strings.Join(strings.Fields(strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(result, optsSahaba.Sep, " "), "-", " "))), " ")
 		for _, sahabi := range words.Categories["sahaba"] {
 			// Normalize the sahabi name for comparison
-			normalizedSahabi := strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(sahabi, "'", " "), "-", " "))
+			normalizedSahabi := strings.Join(strings.Fields(strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(sahabi, "'", " "), "-", " "))), " ")
 			if normalizedSahabi == normalizedResult {
 				found = true
 				break

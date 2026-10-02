@@ -1910,59 +1910,6 @@
       "Acai-Purple",
       "Cranberry-Sour"
     ],
-    "muslim_scientists": [
-      "Jabir ibn Hayyan",
-      "Al-Zahrawi",
-      "Ibn al-Haytham",
-      "Al-Khwarizmi",
-      "Abbas ibn Firnas",
-      "Al-Jazari",
-      "Al-Kindi",
-      "Fatima al-Fihri",
-      "Ibn Sina",
-      "Al-Razi",
-      "Ibn Rushd",
-      "Al-Farabi",
-      "Al-Biruni",
-      "Al-Battani",
-      "Umar Khayyam",
-      "Nasir al-Din al-Tusi",
-      "Ibn Khaldun",
-      "Al-Idrisi",
-      "Piri Reis",
-      "Ibn Battuta",
-      "Thabit ibn Qurra",
-      "Banu Musa brothers",
-      "Al-Sufi",
-      "Ibn Yunus",
-      "Ibn Zuhr",
-      "Ibn Nafis",
-      "Jamshid al-Kashi",
-      "Ghiyath al-Din al-Kashi",
-      "Ahmad ibn Fadlan",
-      "Al-Mas'udi",
-      "Ibn al-Awwam",
-      "Ibn al-Baytar",
-      "Ibn Juljul",
-      "Al-Ghazali",
-      "Jabir ibn Aflah",
-      "Abu Kamil Shuja ibn Aslam",
-      "Muhammad al-Fazari",
-      "Yahya ibn Abi Mansur",
-      "Hunayn ibn Ishaq",
-      "Suleiman al-Mahri",
-      "Ahmad ibn Majid",
-      "Abu Ishaq al-Zarqali",
-      "Abd al-Rahman al-Sufi",
-      "Maimonides",
-      "Ibn al-Khatib",
-      "Ibn Bajjah",
-      "Ibn Tufail",
-      "Ibn Arabi",
-      "Al-Khazini",
-      "Al-Samawal al-Maghribi",
-      "Mariam al-Asturlabi"
-    ],
     "islamic_inventions": [
       "Alembic Still",
       "Surgical Catgut",
@@ -3935,6 +3882,59 @@
       "Plasterwork",
       "Stucco Decoration",
       "Painted Ceilings"
+    ],
+    "islamic_golden_age_scholars": [
+      "Jabir ibn Hayyan",
+      "Al-Zahrawi",
+      "Ibn al-Haytham",
+      "Al-Khwarizmi",
+      "Abbas ibn Firnas",
+      "Al-Jazari",
+      "Al-Kindi",
+      "Fatima al-Fihri",
+      "Ibn Sina",
+      "Al-Razi",
+      "Ibn Rushd",
+      "Al-Farabi",
+      "Al-Biruni",
+      "Al-Battani",
+      "Umar Khayyam",
+      "Nasir al-Din al-Tusi",
+      "Ibn Khaldun",
+      "Al-Idrisi",
+      "Piri Reis",
+      "Ibn Battuta",
+      "Thabit ibn Qurra",
+      "Banu Musa brothers",
+      "Al-Sufi",
+      "Ibn Yunus",
+      "Ibn Zuhr",
+      "Ibn Nafis",
+      "Jamshid al-Kashi",
+      "Ghiyath al-Din al-Kashi",
+      "Ahmad ibn Fadlan",
+      "Al-Mas'udi",
+      "Ibn al-Awwam",
+      "Ibn al-Baytar",
+      "Ibn Juljul",
+      "Al-Ghazali",
+      "Jabir ibn Aflah",
+      "Abu Kamil Shuja ibn Aslam",
+      "Muhammad al-Fazari",
+      "Yahya ibn Abi Mansur",
+      "Hunayn ibn Ishaq",
+      "Suleiman al-Mahri",
+      "Ahmad ibn Majid",
+      "Abu Ishaq al-Zarqali",
+      "Abd al-Rahman al-Sufi",
+      "Maimonides",
+      "Ibn al-Khatib",
+      "Ibn Bajjah",
+      "Ibn Tufail",
+      "Ibn Arabi",
+      "Al-Khazini",
+      "Al-Samawal al-Maghribi",
+      "Mariam al-Asturlabi"
     ]
   },
   "rules": [
@@ -3981,10 +3981,10 @@
     },
     {
       "pattern": [
-        "muslim_scientists",
+        "islamic_golden_age_scholars",
         "islamic_inventions"
       ],
-      "template": "{muslim_scientists}-{islamic_inventions}"
+      "template": "{islamic_golden_age_scholars}-{islamic_inventions}"
     },
     {
       "pattern": [
@@ -4009,10 +4009,10 @@
     },
     {
       "pattern": [
-        "muslim_scientists",
+        "islamic_golden_age_scholars",
         "vegetables"
       ],
-      "template": "{muslim_scientists}-{vegetables}"
+      "template": "{islamic_golden_age_scholars}-{vegetables}"
     },
     {
       "pattern": [
@@ -4203,10 +4203,10 @@
     },
     {
       "pattern": [
-        "muslim_scientists",
+        "islamic_golden_age_scholars",
         "suffixes"
       ],
-      "template": "{muslim_scientists}-{suffixes}"
+      "template": "{islamic_golden_age_scholars}-{suffixes}"
     },
     {
       "pattern": [

@@ -42,7 +42,7 @@ The core of this project is the `words.json` file. To contribute new words or ca
 
 *   **Locate `words.json`:** It's in the project root directory.
 *   **Understand the Structure:**
-    *   `categories`: A dictionary where keys are category names (e.g., `adjectives`, `fruits`, `muslim_scientists`) and values are arrays of strings (the words themselves).
+    *   `categories`: A dictionary where keys are category names (e.g., `adjectives`, `fruits`, `islamic_golden_age_scholars`) and values are arrays of strings (the words themselves).
     *   `rules`: An array of objects, each defining a pattern (which categories to combine) and a template for how to combine them (e.g., `"{adjectives}-{nouns_concepts}"`).
     *   `blocked`: An array of strings that should never appear in generated names.
 *   **Adding New Words:** Simply add your new words to the appropriate category array in `words.json`. Maintain alphabetical order within categories for readability.

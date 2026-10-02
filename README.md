@@ -97,7 +97,7 @@ khalid-ibn-al-walid-haleem-wasif-987654321
 
 The `words.json` file is the heart of the generator. It contains:
 
-*   `categories`: A map where keys are category names (e.g., `adjectives`, `fruits`, `muslim_scientists`) and values are arrays of strings (the words themselves).
+*   `categories`: A map where keys are category names (e.g., `adjectives`, `fruits`, `islamic_golden_age_scholars`) and values are arrays of strings (the words themselves).
 *   `rules`: An array of objects, each defining a `pattern` (which categories to combine) and a `template` for how to combine them (e.g., `"{adjectives}-{nouns_concepts}"`).
 *   `blocked`: An array of strings that should never appear in generated names.
 
