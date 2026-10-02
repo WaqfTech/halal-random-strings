@@ -26,19 +26,25 @@ func TestWordsLoad(t *testing.T) {
 	if len(words.Blocked) == 0 {
 		t.Fatal("blocked in words.json is empty")
 	}
+	categories := GetCategories()
+	if len(categories) == 0 {
+		t.Fatal("GetCategories() returned no categories")
+	}
 }
 
 func TestWordCount(t *testing.T) {
 	opts := Options{
 		Repeat:              10, // Test multiple strings
-		Sep:                 "-",
 		MinWords:            5, 
 		MaxWords:            8, 
 		IncludeRandomNumber: true,
 	}
 	results := GenerateWithOptions(opts)
 	for _, result := range results {
-		parts := strings.Split(result, opts.Sep)
+		parts := strings.Split(result, "-")
+		if len(parts) <= 1 {
+			t.Fatalf("generated string has too few parts: %q", result)
+		}
 		// The last part is the random number, so we subtract 1 from the total parts
 		wordCount := len(parts) - 1 
 		
@@ -55,28 +61,38 @@ func TestWordCount(t *testing.T) {
 }
 
 func TestIncludeRandomNumber(t *testing.T) {
-	// Test with IncludeRandomNumber = true (default)
+	// Test with IncludeRandomNumber = true and uninitialized Sep (verifies default "-" and avoids out-of-range panic)
 	optsTrue := Options{
 		Repeat:              1,
-		Sep:                 "-",
 		IncludeRandomNumber: true,
 	}
-	resultTrue := GenerateWithOptions(optsTrue)[0]
-	partsTrue := strings.Split(resultTrue, optsTrue.Sep)
+	resultsTrue := GenerateWithOptions(optsTrue)
+	if len(resultsTrue) == 0 || resultsTrue[0] == "" {
+		t.Fatal("expected non-empty string for IncludeRandomNumber=true")
+	}
+	partsTrue := strings.Split(resultsTrue[0], "-")
+	if len(partsTrue) == 0 {
+		t.Fatalf("parts slice is empty for %q", resultsTrue[0])
+	}
 	if _, err := strconv.Atoi(partsTrue[len(partsTrue)-1]); err != nil {
-		t.Fatalf("expected random number, but got error: %v in %q", err, resultTrue)
+		t.Fatalf("expected random number suffix, but got error: %v in %q", err, resultsTrue[0])
 	}
 
-	// Test with IncludeRandomNumber = false
+	// Test with IncludeRandomNumber = false and uninitialized Sep
 	optsFalse := Options{
 		Repeat:              1,
-		Sep:                 "-",
 		IncludeRandomNumber: false,
 	}
-	resultFalse := GenerateWithOptions(optsFalse)[0]
-	partsFalse := strings.Split(resultFalse, optsFalse.Sep)
+	resultsFalse := GenerateWithOptions(optsFalse)
+	if len(resultsFalse) == 0 || resultsFalse[0] == "" {
+		t.Fatal("expected non-empty string for IncludeRandomNumber=false")
+	}
+	partsFalse := strings.Split(resultsFalse[0], "-")
+	if len(partsFalse) == 0 {
+		t.Fatalf("parts slice is empty for %q", resultsFalse[0])
+	}
 	if _, err := strconv.Atoi(partsFalse[len(partsFalse)-1]); err == nil {
-		t.Fatalf("did not expect random number, but found one in %q", resultFalse)
+		t.Fatalf("did not expect random number suffix, but found one in %q", resultsFalse[0])
 	}
 }
 
