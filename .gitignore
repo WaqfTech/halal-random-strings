@@ -3,8 +3,8 @@ goals/*/claim.json
 .sila/
 
 # Binaries & build artifacts
-halal
-halal-random-strings
+/halal
+/halal-random-strings
 *.exe
 *.test
 

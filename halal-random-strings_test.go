@@ -254,3 +254,39 @@ func TestCustomSeparatorAndBoundaries(t *testing.T) {
 		}
 	}
 }
+
+func TestCategoryFilteringAndFallback(t *testing.T) {
+	// 1. Single category without compound rules (e.g. fruits) should not fail or hang
+	optsSingle := Options{
+		Repeat:              5,
+		Categories:          []string{"fruits"},
+		MinWords:            2,
+		MaxWords:            3,
+		IncludeRandomNumber: false,
+	}
+	results, err := GenerateWithOptionsE(optsSingle)
+	if err != nil {
+		t.Fatalf("unexpected error for single category 'fruits': %v", err)
+	}
+	if len(results) != 5 {
+		t.Fatalf("expected 5 results, got %d", len(results))
+	}
+	for _, res := range results {
+		if res == "" {
+			t.Fatal("expected non-empty string for 'fruits' fallback")
+		}
+	}
+
+	// 2. Unknown category should return an explicit error
+	optsInvalid := Options{
+		Repeat:     1,
+		Categories: []string{"invalid_nonexistent_category_xyz"},
+	}
+	_, errInvalid := GenerateWithOptionsE(optsInvalid)
+	if errInvalid == nil {
+		t.Fatal("expected error for nonexistent category, got nil")
+	}
+	if !strings.Contains(errInvalid.Error(), "unknown category") {
+		t.Errorf("expected 'unknown category' error message, got %v", errInvalid)
+	}
+}

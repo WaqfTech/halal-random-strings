@@ -183,7 +183,11 @@ func main() {
 
 	opts.Repeat = ordered.Clamp(opts.Repeat, minResults, maxResults)
 
-	r := halalrandomstrings.GenerateWithOptions(opts)
+	r, err := halalrandomstrings.GenerateWithOptionsE(opts)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		os.Exit(1)
+	}
 	for i := 0; i < len(r); i++ {
 		fmt.Println(r[i])
 	}
