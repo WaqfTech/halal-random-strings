@@ -307,6 +307,56 @@ func TestCategoryFilteringAndFallback(t *testing.T) {
 	}
 }
 
+func TestHolySanctuariesAndAnimals(t *testing.T) {
+	// 1. Sanctuaries category exists and contains sacred sites
+	sanctuaries, exists := words.Categories["holy_sanctuaries"]
+	if !exists || len(sanctuaries) == 0 {
+		t.Fatal("expected holy_sanctuaries category to exist and have entries")
+	}
+
+	sanctuarySet := make(map[string]bool)
+	for _, s := range sanctuaries {
+		sanctuarySet[strings.ToLower(s)] = true
+	}
+	for _, expected := range []string{"kaaba", "masjid", "al-aqsa", "mecca", "medina"} {
+		if !sanctuarySet[expected] {
+			t.Errorf("expected %q in holy_sanctuaries", expected)
+		}
+	}
+
+	// 2. Ensure holy sanctuaries are not in nouns_places
+	for _, place := range words.Categories["nouns_places"] {
+		norm := strings.ToLower(place)
+		if norm == "kaaba" || norm == "masjid" || norm == "al-aqsa" {
+			t.Errorf("sacred site %q should not be in nouns_places", place)
+		}
+	}
+
+	// 3. Ensure impure animals are purged from animals category
+	for _, animal := range words.Categories["animals"] {
+		norm := strings.ToLower(animal)
+		if norm == "warthog" || norm == "boar" || norm == "wild-dog" {
+			t.Errorf("impure animal %q should not be in animals", animal)
+		}
+	}
+
+	// 4. Test animal + geographic features generation
+	opts := Options{
+		Repeat:              5,
+		Categories:          []string{"animals", "geographic_features"},
+		MinWords:            2,
+		MaxWords:            2,
+		IncludeRandomNumber: false,
+	}
+	results, err := GenerateWithOptionsE(opts)
+	if err != nil {
+		t.Fatalf("failed to generate with animals and geographic_features: %v", err)
+	}
+	if len(results) != 5 {
+		t.Fatalf("expected 5 results, got %d", len(results))
+	}
+}
+
 func BenchmarkGenerate(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()

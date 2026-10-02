@@ -328,7 +328,7 @@
       "Nur",
       "Hidaya",
       "Falah",
-      "Naj\u00e2h",
+      "Najâh",
       "Jihad of the soul",
       "Blessing-seeking",
       "Guidance-following",
@@ -345,9 +345,6 @@
       "tasbih",
       "sajada",
       "qibla",
-      "minbar",
-      "mihrab",
-      "kaaba",
       "hijab",
       "niqab",
       "thobe",
@@ -652,10 +649,7 @@
       "headphones"
     ],
     "nouns_places": [
-      "masjid",
-      "madina",
       "souk",
-      "kaaba",
       "minaret",
       "dome",
       "courtyard",
@@ -710,10 +704,6 @@
       "playground",
       "stadium",
       "gym",
-      "mecca",
-      "medina",
-      "jerusalem",
-      "al-aqsa",
       "damascus",
       "baghdad",
       "cairo",
@@ -915,13 +905,9 @@
       "sabil-water",
       "hammam-bath",
       "public-bathhouse",
-      "jameh-mosque-great",
-      "mussalla-prayer",
-      "prayer-room-retreat",
       "ablution-area-wash",
       "sahn-courtyard",
       "riwaq-arcade",
-      "haram-area-sanctuary",
       "citadel-fort",
       "gatehouse-structure",
       "watchtower-lookout",
@@ -2830,9 +2816,6 @@
       "Buffalo",
       "Rhinoceros",
       "Hippopotamus",
-      "Warthog",
-      "Boar",
-      "Wild-Dog",
       "Fennec-Fox",
       "Caiman",
       "Alligator",
@@ -3155,7 +3138,7 @@
       "Chashma",
       "Sabil",
       "Kuttab",
-      "Hamm\u0101m",
+      "Hammām",
       "Caravanserai",
       "Qanat",
       "Wind Tower",
@@ -3935,6 +3918,43 @@
       "Al-Khazini",
       "Al-Samawal al-Maghribi",
       "Mariam al-Asturlabi"
+    ],
+    "holy_sanctuaries": [
+      "al-aqsa",
+      "haram-area-sanctuary",
+      "jameh-mosque-great",
+      "jerusalem",
+      "kaaba",
+      "madina",
+      "masjid",
+      "mecca",
+      "medina",
+      "mihrab",
+      "minbar",
+      "mussalla-prayer",
+      "prayer-room-retreat"
+    ],
+    "geographic_features": [
+      "desert",
+      "oasis",
+      "mountain",
+      "hill",
+      "valley",
+      "river",
+      "lake",
+      "sea",
+      "ocean",
+      "forest",
+      "jungle",
+      "island",
+      "peninsula",
+      "plateau",
+      "wadi",
+      "canyon",
+      "meadow",
+      "desert-dunes",
+      "wadi-valley",
+      "plateau-land"
     ]
   },
   "rules": [
@@ -4050,9 +4070,9 @@
     {
       "pattern": [
         "animals",
-        "nouns_places"
+        "geographic_features"
       ],
-      "template": "{animals}-{nouns_places}"
+      "template": "{animals}-{geographic_features}"
     },
     {
       "pattern": [
@@ -4375,6 +4395,20 @@
         "muslim_names_female"
       ],
       "template": "{islamic_virtues}-{muslim_names_female}"
+    },
+    {
+      "pattern": [
+        "adjectives",
+        "holy_sanctuaries"
+      ],
+      "template": "{adjectives}-{holy_sanctuaries}"
+    },
+    {
+      "pattern": [
+        "islamic_virtues",
+        "holy_sanctuaries"
+      ],
+      "template": "{islamic_virtues}-{holy_sanctuaries}"
     }
   ],
   "blocked": [
