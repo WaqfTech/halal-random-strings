@@ -28,18 +28,15 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 
 ## Summary
 - **Total Goals**: 1
-- 🟢 **Implemented & Verified**: 0
-- 🔵 **In Progress (Claimed)**: 1
+- 🟢 **Implemented & Verified**: 1
 - 🟡 **Ready to Execute (Pending)**: 0 (0 independent ⚡, 0 unblocked 🔗)
 - 🎯 **By Tier**: 0 immediate (Tier 1), 1 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
-- 📋 **Execution Tasks Progress**: 0/4 completed (0%)
+- 📋 **Execution Tasks Progress**: 4/4 completed (100%)
 
 ---
 
-## 🔵 In Progress (Claimed Goals)
+## 🟢 Implemented & Verified
 
-| Goal Package | Tier | Mode | Agent | Status & Note | Started |
-| :--- | :---: | :---: | :--- | :--- | :--- |
-| [`sila-onboarding`](sila-onboarding/goal.md) | `🗺️ Roadmap` | `⚡ Indep` | `@antigravity` | in progress | 0s ago |
-
----
+| Goal Package | Mode | Shape | Task / Ref | Commit |
+| :--- | :---: | :--- | :--- | :--- |
+| [`sila-onboarding`](sila-onboarding/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `0fd3c0d` |
