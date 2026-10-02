@@ -44,22 +44,32 @@ type Engine struct {
 	blockedSet map[string]struct{}
 }
 
+func normalizeTokenString(s string) string {
+	var sb strings.Builder
+	for _, r := range strings.ToLower(strings.TrimSpace(s)) {
+		if (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9') {
+			sb.WriteRune(r)
+		} else {
+			sb.WriteRune('-')
+		}
+	}
+	norm := sb.String()
+	for strings.Contains(norm, "--") {
+		norm = strings.ReplaceAll(norm, "--", "-")
+	}
+	return strings.Trim(norm, "-")
+}
+
 func (e *Engine) rebuildBlockedSetLocked() {
 	e.blockedSet = make(map[string]struct{}, len(e.words.Blocked))
 	for _, b := range e.words.Blocked {
-		norm := strings.ToLower(strings.TrimSpace(b))
-		norm = strings.ReplaceAll(norm, "_", "-")
-		norm = strings.ReplaceAll(norm, " ", "-")
-		norm = strings.ReplaceAll(norm, "'", "-")
-		for strings.Contains(norm, "--") {
-			norm = strings.ReplaceAll(norm, "--", "-")
-		}
-		norm = strings.Trim(norm, "-")
+		norm := normalizeTokenString(b)
 		if norm != "" {
 			e.blockedSet[norm] = struct{}{}
 		}
 	}
 }
+
 
 // NewEngine creates an Engine using the given Words dataset.
 func NewEngine(w Words) *Engine {
@@ -131,17 +141,11 @@ func LoadWords(filePath string) error {
 }
 
 func (e *Engine) isSafeLocked(s string) bool {
-	norm := strings.ToLower(strings.TrimSpace(s))
-	norm = strings.ReplaceAll(norm, "_", "-")
-	norm = strings.ReplaceAll(norm, " ", "-")
-	norm = strings.ReplaceAll(norm, "'", "-")
-	for strings.Contains(norm, "--") {
-		norm = strings.ReplaceAll(norm, "--", "-")
-	}
-	norm = strings.Trim(norm, "-")
+	norm := normalizeTokenString(s)
 	if norm == "" {
 		return true
 	}
+
 
 	tokens := strings.Split(norm, "-")
 	n := len(tokens)
@@ -231,7 +235,8 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 			}
 		}
 
-		// Exact compound rule matching
+		// Compound rule matching
+		var matchingRules []Rule
 		for _, rule := range engineWords.Rules {
 			allCategoriesMatch := true
 			for _, patternCategory := range rule.Pattern {
@@ -248,9 +253,40 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 				}
 			}
 			if allCategoriesMatch {
-				filteredRules = append(filteredRules, rule)
+				matchingRules = append(matchingRules, rule)
 			}
 		}
+
+		if len(opts.Categories) > 1 {
+			var fullMatchRules []Rule
+			for _, rule := range matchingRules {
+				hasAll := true
+				for _, selCat := range opts.Categories {
+					catFound := false
+					for _, patternCat := range rule.Pattern {
+						if patternCat == strings.TrimSpace(selCat) {
+							catFound = true
+							break
+						}
+					}
+					if !catFound {
+						hasAll = false
+						break
+					}
+				}
+				if hasAll {
+					fullMatchRules = append(fullMatchRules, rule)
+				}
+			}
+			if len(fullMatchRules) > 0 {
+				filteredRules = fullMatchRules
+			} else {
+				filteredRules = matchingRules
+			}
+		} else {
+			filteredRules = matchingRules
+		}
+
 
 		// Dynamic single-category rule fallback if no compound rules match
 		if len(filteredRules) == 0 {
@@ -345,12 +381,16 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 					output := currentOutput
 					if opts.IncludeRandomNumber {
 						// Generate a consistent 4-digit random number [1000, 9999] that fits safely in 32-bit systems
-						num, err := crand.Int(crand.Reader, big.NewInt(9000))
 						var val int64
-						if err != nil {
-							val = (time.Now().UnixNano() % 9000) + 1000
+						if opts.Seed != 0 {
+							val = int64(src.Intn(9000)) + 1000
 						} else {
-							val = num.Int64() + 1000
+							num, err := crand.Int(crand.Reader, big.NewInt(9000))
+							if err != nil {
+								val = (time.Now().UnixNano() % 9000) + 1000
+							} else {
+								val = num.Int64() + 1000
+							}
 						}
 						output = fmt.Sprintf("%s%s%d", currentOutput, opts.Sep, val)
 					}
@@ -408,10 +448,14 @@ type Options struct {
 
 // Generate returns a random string.
 func (e *Engine) Generate() string {
-	return e.GenerateWithOptions(Options{
+	res := e.GenerateWithOptions(Options{
 		Repeat:              1,
 		IncludeRandomNumber: true,
-	})[0]
+	})
+	if len(res) == 0 {
+		return ""
+	}
+	return res[0]
 }
 
 // GenerateN returns n random strings.

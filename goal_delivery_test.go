@@ -545,3 +545,60 @@ func TestGoal_15_TheologicalSanitationAndCombinatorialRules(t *testing.T) {
 	}
 }
 
+// TestGoal_16_DelimiterSafetyAndSeedDeterminism verifies delimiter normalization in isSafe and PRNG seed reproducibility.
+func TestGoal_16_DelimiterSafetyAndSeedDeterminism(t *testing.T) {
+	// 1. Verify custom separators (. / # :) are intercepted by isSafe
+	evasiveBlockedStrings := []string{
+		"prefix.wine.suffix",
+		"dish/pork/dish",
+		"bet#casino#bet",
+		"vodka:drink",
+		"gambling_site",
+		"user--wine--end",
+	}
+	for _, s := range evasiveBlockedStrings {
+		if isSafe(s) {
+			t.Errorf("safety filter failure: %q contains a blocked term but was marked safe", s)
+		}
+	}
+
+	// 2. Verify deterministic seed output across separate engine calls
+	opts1 := Options{
+		Repeat:              5,
+		Seed:                424242,
+		MinWords:            3,
+		MaxWords:            5,
+		IncludeRandomNumber: true,
+	}
+	results1, err := GenerateWithOptionsE(opts1)
+	if err != nil {
+		t.Fatalf("run 1 failed: %v", err)
+	}
+
+	opts2 := Options{
+		Repeat:              5,
+		Seed:                424242,
+		MinWords:            3,
+		MaxWords:            5,
+		IncludeRandomNumber: true,
+	}
+	results2, err := GenerateWithOptionsE(opts2)
+	if err != nil {
+		t.Fatalf("run 2 failed: %v", err)
+	}
+
+	for i := range results1 {
+		if results1[i] != results2[i] {
+			t.Fatalf("seed determinism failure at index %d: run1=%q != run2=%q", i, results1[i], results2[i])
+		}
+	}
+
+	// 3. Verify Engine.Generate() does not panic even on impossible options
+	engine := NewEngine(Words{Categories: map[string][]string{}})
+	val := engine.Generate()
+	if val != "" {
+		t.Errorf("expected empty string from empty engine, got %q", val)
+	}
+}
+
+
