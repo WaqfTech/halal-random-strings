@@ -3,6 +3,7 @@ package halalrandomstrings
 import (
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 )
 
@@ -146,4 +147,27 @@ func TestCategories(t *testing.T) {
 			t.Fatalf("second word %q not found in nouns_places category for %q", parts[1], result)
 		}
 	}
+}
+
+func TestEngineConcurrent(t *testing.T) {
+	engine, err := NewDefaultEngine()
+	if err != nil {
+		t.Fatalf("failed to create default engine: %v", err)
+	}
+
+	const goroutines = 20
+	var wg sync.WaitGroup
+	wg.Add(goroutines)
+
+	for i := 0; i < goroutines; i++ {
+		go func() {
+			defer wg.Done()
+			for j := 0; j < 10; j++ {
+				_ = engine.Generate()
+				_ = engine.GetCategories()
+				_ = engine.IsSafe("safe-string")
+			}
+		}()
+	}
+	wg.Wait()
 }
