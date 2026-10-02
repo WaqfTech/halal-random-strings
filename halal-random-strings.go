@@ -459,9 +459,9 @@ func (e *Engine) GenerateWithOptions(opts Options) []string {
 
 // Options are options to customize output.
 type Options struct {
-	// Whether to show occasional additional prefix and suffix content. This
-	// increases possibilities but can make strings longer.
+	// PrefixThreshold is reserved for upstream compatibility and currently unused.
 	PrefixThreshold float64
+	// SuffixThreshold is reserved for upstream compatibility and currently unused.
 	SuffixThreshold float64
 
 	// Number of strings to generate.

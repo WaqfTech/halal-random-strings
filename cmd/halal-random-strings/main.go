@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -12,85 +13,99 @@ import (
 	flag "github.com/spf13/pflag"
 )
 
-	func usage() {
+func printUsage(out io.Writer) {
 	appName := filepath.Base(os.Args[0])
+	useColor := os.Getenv("NO_COLOR") == "" && os.Getenv("TERM") != "dumb"
 
-	// Define styles
-	titleStyle := lipgloss.NewStyle().
-		Foreground(lipgloss.Color("#00FF00")). // Green
-		Bold(true).
-		PaddingBottom(1)
+	// Define accessible styles readable across dark and light palettes
+	var (
+		titleStyle          lipgloss.Style
+		descriptionStyle    lipgloss.Style
+		sectionStyle        lipgloss.Style
+		exampleCommandStyle lipgloss.Style
+		commentStyle        lipgloss.Style
+		sampleOutputStyle   lipgloss.Style
+		noteStyle           lipgloss.Style
+	)
 
-	descriptionStyle := lipgloss.NewStyle().
-		Foreground(lipgloss.Color("#AAAAAA")). // Light Gray
-		PaddingBottom(1)
+	if useColor {
+		titleStyle = lipgloss.NewStyle().
+			Foreground(lipgloss.Color("#2E7D32")). // Deep Forest Green
+			Bold(true).
+			PaddingBottom(1)
 
-	sectionStyle := lipgloss.NewStyle().
-		Foreground(lipgloss.Color("#00FFFF")). // Cyan
-		Bold(true).
-		PaddingTop(1).
-		PaddingBottom(1)
+		descriptionStyle = lipgloss.NewStyle().
+			Foreground(lipgloss.Color("#666666")).
+			PaddingBottom(1)
 
-	exampleCommandStyle := lipgloss.NewStyle().
-		Foreground(lipgloss.Color("#FFFF00")). // Yellow
-		Bold(true)
+		sectionStyle = lipgloss.NewStyle().
+			Foreground(lipgloss.Color("#00838F")). // Deep Cyan
+			Bold(true).
+			PaddingTop(1).
+			PaddingBottom(1)
 
-	commentStyle := lipgloss.NewStyle().
-		Foreground(lipgloss.Color("#888888")). // Dark Gray
-		Italic(true)
+		exampleCommandStyle = lipgloss.NewStyle().
+			Foreground(lipgloss.Color("#C58500")). // Dark Amber / Gold
+			Bold(true)
 
-	sampleOutputStyle := lipgloss.NewStyle().
-		Foreground(lipgloss.Color("#00FF00")). // Green
-		Faint(true)
+		commentStyle = lipgloss.NewStyle().
+			Foreground(lipgloss.Color("#777777")).
+			Italic(true)
 
-	noteStyle := lipgloss.NewStyle().
-		Foreground(lipgloss.Color("#FFA500")). // Orange
-		Italic(true).
-		PaddingTop(1)
+		sampleOutputStyle = lipgloss.NewStyle().
+			Foreground(lipgloss.Color("#2E7D32")).
+			Faint(true)
+
+		noteStyle = lipgloss.NewStyle().
+			Foreground(lipgloss.Color("#D84315")). // Dark Orange
+			Italic(true).
+			PaddingTop(1)
+	}
 
 	// Print Usage and Description
-	fmt.Fprintln(os.Stderr, titleStyle.Render(fmt.Sprintf("Usage: %s [FLAGS]", appName)))
-	fmt.Fprintln(os.Stderr, descriptionStyle.Render("A wholesome, family-friendly random string generator."))
-	fmt.Fprintln(os.Stderr, descriptionStyle.Render("Generates unique and meaningful identifiers using Islamic terms and concepts."))
+	fmt.Fprintln(out, titleStyle.Render(fmt.Sprintf("Usage: %s [FLAGS]", appName)))
+	fmt.Fprintln(out, descriptionStyle.Render("A wholesome, family-friendly random string generator."))
+	fmt.Fprintln(out, descriptionStyle.Render("Generates unique and meaningful identifiers using Islamic terms and concepts."))
 
 	// Print Options
-	fmt.Fprintln(os.Stderr, sectionStyle.Render("Options:"))
+	fmt.Fprintln(out, sectionStyle.Render("Options:"))
+	flag.CommandLine.SetOutput(out)
 	flag.PrintDefaults()
 
 	// Print Examples
-	fmt.Fprintln(os.Stderr, sectionStyle.Render("Examples:"))
+	fmt.Fprintln(out, sectionStyle.Render("Examples:"))
 
 	// Helper function to print examples
 	printExample := func(cmd, desc string, outputs ...string) {
-		fmt.Fprintln(os.Stderr, exampleCommandStyle.Render(fmt.Sprintf("  %s", cmd)))
-		fmt.Fprintln(os.Stderr, commentStyle.Render(fmt.Sprintf("    # %s", desc)))
+		fmt.Fprintln(out, exampleCommandStyle.Render(fmt.Sprintf("  %s", cmd)))
+		fmt.Fprintln(out, commentStyle.Render(fmt.Sprintf("    # %s", desc)))
 		if len(outputs) > 0 {
-			fmt.Fprintln(os.Stderr, sampleOutputStyle.Render("    # Sample Output:"))
-			for _, out := range outputs {
-				fmt.Fprintln(os.Stderr, sampleOutputStyle.Render(fmt.Sprintf("    #   %s", out)))
+			fmt.Fprintln(out, sampleOutputStyle.Render("    # Sample Output:"))
+			for _, sample := range outputs {
+				fmt.Fprintln(out, sampleOutputStyle.Render(fmt.Sprintf("    #   %s", sample)))
 			}
 		}
-		fmt.Fprintln(os.Stderr, "") // Add a blank line for spacing
+		fmt.Fprintln(out, "")
 	}
 
 	printExample(
 		appName,
 		"Generates a single random string with a default length of 5-8 words and a numerical ending.",
-		"wisdom-qalam-light-station-123456789",
+		"wisdom-qalam-light-station-1234",
 	)
 
 	printExample(
 		fmt.Sprintf("%s -r 3", appName),
 		"Generates 3 random strings.",
-		"salam-peace-mosque-987654321",
-		"iman-truth-garden-123456789",
-		"barakah-blessing-river-567890123",
+		"salam-peace-mosque-9876",
+		"iman-truth-garden-1234",
+		"barakah-blessing-river-5678",
 	)
 
 	printExample(
 		fmt.Sprintf("%s --sep _", appName),
 		"Uses an underscore as the separator between words instead of a hyphen.",
-		"subhanallah_glory_mountain_456789012",
+		"subhanallah_glory_mountain_4567",
 	)
 
 	printExample(
@@ -102,7 +117,7 @@ import (
 	printExample(
 		fmt.Sprintf("%s --min-words 3 --max-words 5", appName),
 		"Generates a string with 3 to 5 words.",
-		"jannah-paradise-tree-789012345",
+		"jannah-tree-garden-7890",
 	)
 
 	printExample(
@@ -114,36 +129,40 @@ import (
 	printExample(
 		fmt.Sprintf("%s --categories sahaba", appName),
 		"Generates a string using only Sahaba names.",
-		"umar-ibn-al-khattab-987654321",
+		"umar-ibn-al-khattab-9876",
 	)
 
 	printExample(
 		fmt.Sprintf("%s --categories adjectives,nouns_places", appName),
 		"Combines words from 'adjectives' and 'nouns_places' categories.",
-		"beautiful-kaaba-city-345678901",
+		"beautiful-kaaba-city-3456",
 	)
 
-	fmt.Fprintln(os.Stderr, noteStyle.Render("Note: Sample outputs are illustrative and actual outputs may vary due to randomness."))
+	fmt.Fprintln(out, noteStyle.Render("Note: Sample outputs are illustrative and actual outputs may vary due to randomness."))
 
 	// Print Available Categories
-	fmt.Fprintln(os.Stderr, sectionStyle.Render("Available Categories:"))
+	fmt.Fprintln(out, sectionStyle.Render("Available Categories:"))
 	categories := halalrandomstrings.GetCategories()
 	for _, category := range categories {
-		fmt.Fprintln(os.Stderr, commentStyle.Render(fmt.Sprintf("  - %s", category)))
+		fmt.Fprintln(out, commentStyle.Render(fmt.Sprintf("  - %s", category)))
 	}
+}
+
+func usage() {
+	printUsage(os.Stderr)
 }
 
 func main() {
 	const (
 		minResults     = 1
-		maxResults     = 1000
+		maxResults     = 100000
 		defaultResults = 1
 	)
 
 	var (
-		showHelp bool
-		opts     halalrandomstrings.Options
-		categoriesStr string
+		showHelp       bool
+		opts           halalrandomstrings.Options
+		categoriesStr  string
 		noRandomNumber bool
 	)
 
@@ -157,12 +176,12 @@ func main() {
 	flag.BoolVar(&noRandomNumber, "no-random-number", false, "Do not append a random number to the end of the string")
 
 	flag.CommandLine.SortFlags = false
-	flag.Usage = usage // Set custom usage function
+	flag.Usage = usage
 	flag.Parse()
 
 	if showHelp {
-		flag.Usage()
-		os.Exit(0) // Exit with 0 for help
+		printUsage(os.Stdout)
+		os.Exit(0)
 	}
 
 	// Apply defaults if not set by flags

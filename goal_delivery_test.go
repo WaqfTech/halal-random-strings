@@ -689,6 +689,43 @@ func TestGoal_18_OptimizeEngineAllocationsAndWordNormalization(t *testing.T) {
 	}
 }
 
+// TestGoal_19_EnhanceCliUxAndResolveDocumentationDrift verifies CLI output, help stream, and sample formatting.
+func TestGoal_19_EnhanceCliUxAndResolveDocumentationDrift(t *testing.T) {
+	// 1. Run CLI binary with --help and verify it outputs to stdout with exit code 0
+	cmd := exec.Command("go", "run", "./cmd/halal-random-strings", "--help")
+	cmd.Env = append(os.Environ(), "NO_COLOR=1")
+	outBytes, err := cmd.Output()
+	if err != nil {
+		t.Fatalf("CLI --help failed: %v", err)
+	}
+	output := string(outBytes)
 
+	// 2. Verify usage title and categories are present in stdout
+	if !strings.Contains(output, "Usage:") {
+		t.Errorf("expected usage output to contain 'Usage:', got:\n%s", output)
+	}
+	if !strings.Contains(output, "Available Categories:") {
+		t.Errorf("expected usage output to contain 'Available Categories:', got:\n%s", output)
+	}
 
+	// 3. Verify sample outputs use 4-digit endings instead of 9-digit endings
+	if strings.Contains(output, "123456789") || strings.Contains(output, "987654321") {
+		t.Errorf("found old 9-digit sample outputs in CLI help text")
+	}
+	if !strings.Contains(output, "1234") || !strings.Contains(output, "9876") {
+		t.Errorf("expected 4-digit sample outputs in CLI help text")
+	}
 
+	// 4. Verify README contains updated 4-digit samples
+	readmeBytes, err := os.ReadFile("README.md")
+	if err != nil {
+		t.Fatalf("failed to read README.md: %v", err)
+	}
+	readme := string(readmeBytes)
+	if strings.Contains(readme, "123456789") || strings.Contains(readme, "987654321") {
+		t.Errorf("found old 9-digit sample outputs in README.md")
+	}
+	if !strings.Contains(readme, "1234") {
+		t.Errorf("expected 4-digit sample outputs in README.md")
+	}
+}

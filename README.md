@@ -87,8 +87,8 @@ To generate multiple strings (e.g., 10 strings):
 Example output:
 
 ```
-al-khansa-salih-siraj-123456789
-khalid-ibn-al-walid-haleem-wasif-987654321
+al-khansa-salih-siraj-1234
+khalid-ibn-al-walid-haleem-wasif-9876
 # ... and so on
 ```
 
@@ -121,7 +121,7 @@ This project is designed to pre-generate a large pool of unique strings and stor
 
 4.  **Generate a large batch of strings:**
     ```bash
-    # Generates 100,000 strings into output.txt and runs uniqueness analysis
+    # Generates 1,000 strings into output.txt and runs uniqueness analysis
     make generate
     ```
 
