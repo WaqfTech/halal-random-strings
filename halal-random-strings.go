@@ -306,12 +306,15 @@ func (e *Engine) GenerateWithOptions(opts Options) []string {
 				if e.isSafeLocked(currentOutput) {
 					output := currentOutput
 					if opts.IncludeRandomNumber {
-						randomNum, err := crand.Int(crand.Reader, big.NewInt(1000000000000000000))
+						// Generate a consistent 4-digit random number [1000, 9999] that fits safely in 32-bit systems
+						num, err := crand.Int(crand.Reader, big.NewInt(9000))
+						var val int64
 						if err != nil {
-							// Fallback to time-based if crypto/rand fails
-							randomNum = big.NewInt(time.Now().UnixNano() % 1000000000000000000)
+							val = (time.Now().UnixNano() % 9000) + 1000
+						} else {
+							val = num.Int64() + 1000
 						}
-						output = fmt.Sprintf("%s%s%d", currentOutput, opts.Sep, randomNum.Int64())
+						output = fmt.Sprintf("%s%s%d", currentOutput, opts.Sep, val)
 					}
 
 					r[i] = output

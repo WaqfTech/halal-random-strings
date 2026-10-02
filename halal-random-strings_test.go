@@ -205,3 +205,52 @@ func TestScunthorpeAndZeroFalsePositives(t *testing.T) {
 		}
 	}
 }
+
+func TestCustomSeparatorAndBoundaries(t *testing.T) {
+	// Test custom separator "_"
+	optsSep := Options{
+		Repeat:              10,
+		Sep:                 "_",
+		MinWords:            3,
+		MaxWords:            5,
+		IncludeRandomNumber: true,
+	}
+	resultsSep := GenerateWithOptions(optsSep)
+	for _, res := range resultsSep {
+		if strings.Contains(res, "-") {
+			t.Errorf("expected pure underscore delimiters for sep='_', got %q", res)
+		}
+		if strings.Contains(res, " ") {
+			t.Errorf("expected no spaces in generated string, got %q", res)
+		}
+		parts := strings.Split(res, "_")
+		wordCount := len(parts) - 1
+		if wordCount < 3 || wordCount > 5 {
+			t.Errorf("expected between 3 and 5 words, got %d in %q", wordCount, res)
+		}
+
+		num, err := strconv.Atoi(parts[len(parts)-1])
+		if err != nil {
+			t.Fatalf("failed to parse numeric suffix in %q: %v", res, err)
+		}
+		if num < 1000 || num > 9999 {
+			t.Errorf("expected 4-digit numeric suffix in [1000, 9999], got %d in %q", num, res)
+		}
+	}
+
+	// Test boundary constraints MinWords == MaxWords == 4
+	optsExact := Options{
+		Repeat:              10,
+		Sep:                 "-",
+		MinWords:            4,
+		MaxWords:            4,
+		IncludeRandomNumber: false,
+	}
+	resultsExact := GenerateWithOptions(optsExact)
+	for _, res := range resultsExact {
+		parts := strings.Split(res, "-")
+		if len(parts) != 4 {
+			t.Errorf("expected exactly 4 words, got %d in %q", len(parts), res)
+		}
+	}
+}
