@@ -1,0 +1,20 @@
+# Goal: Fix Scunthorpe Problem and Sanitize Blocked Word Filter
+
+## Goal Description
+Replace naive substring search in isSafe() with token-boundary checks to prevent blocking Muhammad, Ahmad, Aisha, Khadijah, Uthman, and Islamic virtues. Purge innocent everyday words and hallucinated -toy suffixes from blocked in words.json.
+
+## Dependencies & Execution Order
+- **Mode**: Independent (disjoint, parallelizable)
+- **Depends On**: none
+- **Sequence**: -
+- **Shape**: ship
+- **Tier**: roadmap
+
+## References
+- **Shared Understanding & Fact Sheet**: [`goals/fix-scunthorpe-and-blocked-list/facts.md`](facts.md)
+- **Execution Plan**: [`goals/fix-scunthorpe-and-blocked-list/plan.md`](plan.md)
+
+## Done Condition
+1. All requirements described in the goal and execution plan are implemented.
+2. All automated unit and integration tests pass cleanly with `-race` (`go test -race ./...` or stack equivalent).
+3. Zero architectural regressions; definitions of done satisfied.
