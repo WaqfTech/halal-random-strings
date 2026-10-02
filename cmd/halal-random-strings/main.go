@@ -155,7 +155,7 @@ func usage() {
 func main() {
 	const (
 		minResults     = 1
-		maxResults     = 100000
+		maxResults     = 1000000
 		defaultResults = 1
 	)
 

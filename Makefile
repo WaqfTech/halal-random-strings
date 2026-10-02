@@ -1,4 +1,4 @@
-.PHONY: all setup generate analyze populate-d1
+.PHONY: all setup generate analyze populate-d1 verify-corpus
 
 # Default target
 all: build test generate analyze
@@ -49,6 +49,12 @@ generate:
 # Analyze target: Runs the Python script to analyze uniqueness
 analyze:
 	@echo "Analyzing uniqueness from $(OUTPUT_FILE)..."
+	python3 scripts/analyze.py $(OUTPUT_FILE)
+
+# Verify corpus target: Runs large-scale generation and semantic sensitivity audit
+verify-corpus: build
+	@echo "Generating and auditing 10000 strings for semantic and theological compliance..."
+	@./$(GO_APP_NAME) -r 10000 --no-random-number > $(OUTPUT_FILE)
 	python3 scripts/analyze.py $(OUTPUT_FILE)
 
 # Populate D1 target: Runs the Python script to feed output.txt to D1

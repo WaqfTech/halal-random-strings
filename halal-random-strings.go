@@ -44,10 +44,12 @@ type wordToken struct {
 
 // Engine provides a thread-safe random string generator engine.
 type Engine struct {
-	mu         sync.RWMutex
-	words      Words
-	blockedSet map[string]struct{}
-	normWords  map[string][]wordToken
+	mu                       sync.RWMutex
+	words                    Words
+	blockedSet               map[string]struct{}
+	normWords                map[string][]wordToken
+	defaultSacredCandidates  []Rule
+	defaultMundaneCandidates []Rule
 }
 
 var randPool = sync.Pool{
@@ -80,6 +82,7 @@ var (
 		"islamic_months":              {},
 		"nouns_concepts":              {},
 		"adjectives":                  {},
+		"muslim_empires":              {},
 	}
 
 	mundaneCategories = map[string]struct{}{
@@ -159,6 +162,30 @@ func (e *Engine) rebuildIndexesLocked() {
 			}
 		}
 		e.normWords[cat] = tokens
+	}
+
+	var sacredRules []Rule
+	var mundaneRules []Rule
+	var neutralRules []Rule
+	for _, rule := range e.words.Rules {
+		switch getRuleDomain(rule) {
+		case domainSacred:
+			sacredRules = append(sacredRules, rule)
+		case domainMundane:
+			mundaneRules = append(mundaneRules, rule)
+		default:
+			neutralRules = append(neutralRules, rule)
+		}
+	}
+
+	e.defaultSacredCandidates = append(sacredRules, neutralRules...)
+	if len(e.defaultSacredCandidates) == 0 {
+		e.defaultSacredCandidates = e.words.Rules
+	}
+
+	e.defaultMundaneCandidates = append(mundaneRules, neutralRules...)
+	if len(e.defaultMundaneCandidates) == 0 {
+		e.defaultMundaneCandidates = e.words.Rules
 	}
 }
 
@@ -274,7 +301,7 @@ func isSafe(s string) bool {
 }
 
 func normalizeWord(s, sep string) string {
-	s = strings.ReplaceAll(s, "'", sep)
+	s = strings.ReplaceAll(s, "'", "")
 	if sep != "-" {
 		s = strings.ReplaceAll(s, "-", sep)
 	}
@@ -412,8 +439,40 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 		return nil, fmt.Errorf("no rules available for specified options")
 	}
 
+	// Pre-partition rules by domain to eliminate per-string heap allocations
+	var sacredCandidates []Rule
+	var mundaneCandidates []Rule
+	if len(opts.Categories) == 0 {
+		sacredCandidates = e.defaultSacredCandidates
+		mundaneCandidates = e.defaultMundaneCandidates
+	} else {
+		var sacredRules []Rule
+		var mundaneRules []Rule
+		var neutralRules []Rule
+		for _, rule := range filteredRules {
+			switch getRuleDomain(rule) {
+			case domainSacred:
+				sacredRules = append(sacredRules, rule)
+			case domainMundane:
+				mundaneRules = append(mundaneRules, rule)
+			default:
+				neutralRules = append(neutralRules, rule)
+			}
+		}
+
+		sacredCandidates = append(sacredRules, neutralRules...)
+		if len(sacredCandidates) == 0 {
+			sacredCandidates = filteredRules
+		}
+
+		mundaneCandidates = append(mundaneRules, neutralRules...)
+		if len(mundaneCandidates) == 0 {
+			mundaneCandidates = filteredRules
+		}
+	}
+
 	r := make([]string, opts.Repeat)
-	
+
 	// Use math/rand for word selection (faster)
 	var src *rand.Rand
 	if opts.Seed == 0 {
@@ -428,54 +487,14 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 			var currentBuilder strings.Builder
 			var currentWordCount int
 
-			// Establish allowed rules for this specific string to enforce strict domain mutual exclusivity
-			initialRule := filteredRules[src.Intn(len(filteredRules))]
-			targetDomain := getRuleDomain(initialRule)
-			if targetDomain == domainNeutral {
-				if src.Intn(100) < 75 {
-					targetDomain = domainSacred
-				} else {
-					targetDomain = domainMundane
-				}
+			targetCandidates := sacredCandidates
+			if len(mundaneCandidates) > 0 && (len(sacredCandidates) == 0 || src.Intn(100) >= 75) {
+				targetCandidates = mundaneCandidates
 			}
 
-			var candidateRules []Rule
-			for _, rule := range filteredRules {
-				rd := getRuleDomain(rule)
-				if targetDomain == domainSacred && rd == domainMundane {
-					continue
-				}
-				if targetDomain == domainMundane && rd == domainSacred {
-					continue
-				}
-				candidateRules = append(candidateRules, rule)
-			}
-			if len(candidateRules) == 0 {
-				candidateRules = []Rule{initialRule}
-			}
-
-			// Build the string iteratively using candidateRules
+			// Build the string iteratively using targetCandidates
 			for attempt := 0; attempt < maxRetries; attempt++ {
-				// Pick a random rule from candidate rules
-				rule := candidateRules[src.Intn(len(candidateRules))]
-				rd := getRuleDomain(rule)
-				if targetDomain == domainNeutral && rd != domainNeutral {
-					targetDomain = rd
-					var updated []Rule
-					for _, cr := range candidateRules {
-						crd := getRuleDomain(cr)
-						if targetDomain == domainSacred && crd == domainMundane {
-							continue
-						}
-						if targetDomain == domainMundane && crd == domainSacred {
-							continue
-						}
-						updated = append(updated, cr)
-					}
-					if len(updated) > 0 {
-						candidateRules = updated
-					}
-				}
+				rule := targetCandidates[src.Intn(len(targetCandidates))]
 
 				var ruleBuilder strings.Builder
 				var ruleWordCount int
@@ -506,15 +525,11 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 
 				// Check if adding this rule would exceed MaxWords
 				if currentWordCount+ruleWordCount > opts.MaxWords {
-					// If we have enough words already, finalize this string
 					if currentWordCount >= opts.MinWords {
-						break // Break from inner building loop
-					} else {
-						// Not enough words yet, and this rule exceeds MaxWords. Reset and try again.
-						currentBuilder.Reset()
-						currentWordCount = 0
-						continue // Continue to next attempt in inner building loop
+						break // Already reached minimum words, finalize
 					}
+					// Not enough words yet; try another candidate rule without resetting accumulated words
+					continue
 				}
 
 				// Append the generated part
@@ -524,9 +539,8 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 				currentBuilder.WriteString(ruleBuilder.String())
 				currentWordCount += ruleWordCount
 
-				// If we have enough words, and haven't exceeded MaxWords, we can break
 				if currentWordCount >= opts.MinWords && currentWordCount <= opts.MaxWords {
-					break // Break from inner building loop
+					break // Successfully reached word count range
 				}
 			}
 

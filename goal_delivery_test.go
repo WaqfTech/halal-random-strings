@@ -805,3 +805,70 @@ func TestGoal_20_ReconcileUpstreamLicensingAndD1Pipeline(t *testing.T) {
 		t.Errorf("generated SQL must contain INSERT OR IGNORE statement")
 	}
 }
+
+// TestGoal_21_SanitizeTheologyAndCorpusAudit verifies theological sanitation, apostrophe normalization, and corpus audit.
+func TestGoal_21_SanitizeTheologyAndCorpusAudit(t *testing.T) {
+	// 1. Verify Holy Qur'an and sacred items are purged from nouns_objects
+	for _, obj := range words.Categories["nouns_objects"] {
+		norm := strings.ToLower(obj)
+		if norm == "mushaf" || norm == "quran-stand" || norm == "sajjadah" || norm == "masbaha" || norm == "prayer-beads" || norm == "adhan-clock" || norm == "hijab" || norm == "niqab" || norm == "thobe" {
+			t.Errorf("sacred or adab item %q must NOT be in nouns_objects", obj)
+		}
+	}
+
+	// 2. Verify sacred items are in holy_sanctuaries
+	sanctuarySet := make(map[string]bool)
+	for _, s := range words.Categories["holy_sanctuaries"] {
+		sanctuarySet[strings.ToLower(s)] = true
+	}
+	for _, expected := range []string{"mushaf", "quran-stand", "sajjadah", "masbaha", "kaaba", "al-aqsa"} {
+		if !sanctuarySet[expected] {
+			t.Errorf("expected %q in holy_sanctuaries", expected)
+		}
+	}
+
+	// 3. Verify muslim_empires is in sacredCategories
+	if !isSacredCategory("muslim_empires") {
+		t.Error("muslim_empires must be classified as a sacredCategory to isolate caliphates from food/animals")
+	}
+
+	// 4. Verify rahim is in asma_allah
+	hasRahim := false
+	for _, a := range words.Categories["asma_allah"] {
+		if strings.EqualFold(a, "rahim") {
+			hasRahim = true
+			break
+		}
+	}
+	if !hasRahim {
+		t.Error("rahim must be in asma_allah category")
+	}
+
+	// 5. Verify Yazid and Ghadir Khumm are purged
+	for _, name := range words.Categories["muslim_names_male"] {
+		if strings.EqualFold(name, "yazid") {
+			t.Error("Yazid must be purged from muslim_names_male for theological harmony")
+		}
+	}
+	for _, event := range words.Categories["islamic_events"] {
+		if strings.Contains(strings.ToLower(event), "ghadir") {
+			t.Error("Ghadir Khumm must be purged from islamic_events for theological harmony")
+		}
+	}
+
+	// 6. Verify apostrophe normalization strips quotes instead of creating hyphens
+	if norm := normalizeWord("sa'd", "-"); norm != "sad" {
+		t.Errorf("expected normalizeWord(\"sa'd\", \"-\") to be \"sad\", got %q", norm)
+	}
+	if norm := normalizeWord("mu'min", "-"); norm != "mumin" {
+		t.Errorf("expected normalizeWord(\"mu'min\", \"-\") to be \"mumin\", got %q", norm)
+	}
+
+	// 7. Verify dictionary glossary artifacts are purged from nouns_concepts
+	for _, concept := range words.Categories["nouns_concepts"] {
+		lower := strings.ToLower(concept)
+		if strings.Contains(lower, "concept") || strings.Contains(lower, "attribute") || strings.Contains(lower, "event") {
+			t.Errorf("glossary metadata %q must not be in nouns_concepts", concept)
+		}
+	}
+}

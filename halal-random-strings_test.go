@@ -113,7 +113,7 @@ func TestCategories(t *testing.T) {
 		normalizedResult := strings.Join(strings.Fields(strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(result, optsSahaba.Sep, " "), "-", " "))), " ")
 		for _, sahabi := range words.Categories["sahaba"] {
 			// Normalize the sahabi name for comparison
-			normalizedSahabi := strings.Join(strings.Fields(strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(sahabi, "'", " "), "-", " "))), " ")
+			normalizedSahabi := strings.Join(strings.Fields(strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(sahabi, "'", ""), "-", " "))), " ")
 			if normalizedSahabi == normalizedResult {
 				found = true
 				break
@@ -143,7 +143,7 @@ func TestCategories(t *testing.T) {
 		// Check if first word is an adjective and second is a place
 		adjFound := false
 		for _, adj := range words.Categories["adjectives"] {
-			if strings.ToLower(adj) == parts[0] {
+			if normalizeWord(adj, "-") == parts[0] {
 				adjFound = true
 				break
 			}
@@ -154,7 +154,7 @@ func TestCategories(t *testing.T) {
 
 		placeFound := false
 		for _, place := range words.Categories["nouns_places"] {
-			if strings.ToLower(place) == parts[1] {
+			if normalizeWord(place, "-") == parts[1] {
 				placeFound = true
 				break
 			}
@@ -465,7 +465,7 @@ func TestTheologicalQuarantineAndSensitivityGuarantees(t *testing.T) {
 
 	// 3. Verify zero cross-domain violations across 1000 generated strings
 	opts := Options{
-		Repeat:              1000,
+		Repeat:              5000,
 		MinWords:            5,
 		MaxWords:            8,
 		IncludeRandomNumber: true,
@@ -481,6 +481,8 @@ func TestTheologicalQuarantineAndSensitivityGuarantees(t *testing.T) {
 		"muslim_names_female": {},
 		"asma_allah":          {},
 		"holy_sanctuaries":    {},
+		"muslim_empires":      {},
+		"adab_terms":          {},
 	}
 	sacredWords := make(map[string]bool)
 	for cat := range sacredSets {
