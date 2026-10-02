@@ -357,6 +357,53 @@ func TestHolySanctuariesAndAnimals(t *testing.T) {
 	}
 }
 
+func TestAsmaAllahSegregation(t *testing.T) {
+	// 1. asma_allah category exists
+	asma, exists := words.Categories["asma_allah"]
+	if !exists || len(asma) == 0 {
+		t.Fatal("expected asma_allah category to exist and have entries")
+	}
+
+	asmaSet := make(map[string]bool)
+	for _, a := range asma {
+		asmaSet[strings.ToLower(a)] = true
+	}
+	for _, expected := range []string{"rahman", "khaliq", "quddus", "razzaq", "samad"} {
+		if !asmaSet[expected] {
+			t.Errorf("expected %q in asma_allah", expected)
+		}
+	}
+
+	// 2. Ensure exclusive Asma' Allah are not in generic adjectives
+	for _, adj := range words.Categories["adjectives"] {
+		norm := strings.ToLower(adj)
+		if norm == "rahman" || norm == "khaliq" || norm == "qahhar" || norm == "razzaq" || norm == "quddus" {
+			t.Errorf("divine attribute %q should not be in generic adjectives", adj)
+		}
+	}
+
+	// 3. Test respectful generation with servant_prefixes and asma_allah
+	opts := Options{
+		Repeat:              5,
+		Categories:          []string{"servant_prefixes", "asma_allah"},
+		MinWords:            2,
+		MaxWords:            2,
+		IncludeRandomNumber: false,
+	}
+	results, err := GenerateWithOptionsE(opts)
+	if err != nil {
+		t.Fatalf("failed to generate with servant_prefixes and asma_allah: %v", err)
+	}
+	if len(results) != 5 {
+		t.Fatalf("expected 5 results, got %d", len(results))
+	}
+	for _, r := range results {
+		if !strings.HasPrefix(r, "abd-") && !strings.HasPrefix(r, "amat-") {
+			t.Errorf("expected result to start with abd- or amat-, got %q", r)
+		}
+	}
+}
+
 func BenchmarkGenerate(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
