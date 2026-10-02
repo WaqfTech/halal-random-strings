@@ -28,11 +28,11 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 
 ## Summary
 - **Total Goals**: 14
-- 🟢 **Implemented & Verified**: 3
-- 🟡 **Ready to Execute (Pending)**: 9 (6 independent ⚡, 3 unblocked 🔗)
-- ⛔ **Blocked on Prerequisites**: 2
+- 🟢 **Implemented & Verified**: 4
+- 🟡 **Ready to Execute (Pending)**: 9 (5 independent ⚡, 4 unblocked 🔗)
+- ⛔ **Blocked on Prerequisites**: 1
 - 🎯 **By Tier**: 0 immediate (Tier 1), 14 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
-- 📋 **Execution Tasks Progress**: 13/65 completed (20%)
+- 📋 **Execution Tasks Progress**: 18/65 completed (27%)
 
 ---
 
@@ -40,7 +40,6 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 
 | Goal Package | Tier | Mode & Sequence | Dependencies | Focus & Description | Launch Command |
 | :--- | :---: | :---: | :--- | :--- | :--- |
-| [`fix-scunthorpe-and-blocked-list`](fix-scunthorpe-and-blocked-list/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Fix Scunthorpe Problem and Sanitize Blocked Word Filter — Replace naive substring search in isSafe() with token-boundary checks to prevent... | `/goal goals/fix-scunthorpe-and-blocked-list/goal.md` |
 | [`fix-historical-scholar-attributions`](fix-historical-scholar-attributions/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Correct Historical and Religious Attribution of Non-Muslim Scholars — In words.json, rename muslim_scientists to islamic_golden_age_scholars or catego... | `/goal goals/fix-historical-scholar-attributions/goal.md` |
 | [`fix-sanctuaries-and-animal-rules`](fix-sanctuaries-and-animal-rules/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Segregate Holy Sanctuaries and Fix Disrespectful Animal Pairings — Segregate holy Islamic sanctuaries (Kaaba, Masjid, Madina) from general places i... | `/goal goals/fix-sanctuaries-and-animal-rules/goal.md` |
 | [`harden-d1-scripts-and-architecture`](harden-d1-scripts-and-architecture/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Harden D1 Population Script and Eliminate CI Blocking Prompts — Remove interactive input() prompts from populate_d1.py to fix CI/CD execution, a... | `/goal goals/harden-d1-scripts-and-architecture/goal.md` |
@@ -49,7 +48,7 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 | [`fix-separator-and-word-count-logic`](fix-separator-and-word-count-logic/goal.md) | `🗺️ Roadmap` | `🚢 SHIP 🔗 Ready` | Deps met: fix-words-embedding-and-init | Fix Custom Separator Formatting and Word Count Boundaries — Ensure custom --sep applies to template joints and within compound words without... | `/goal goals/fix-separator-and-word-count-logic/goal.md` |
 | [`fix-category-filtering-and-fallback`](fix-category-filtering-and-fallback/goal.md) | `🗺️ Roadmap` | `🚢 SHIP 🔗 Ready` | Deps met: fix-words-embedding-and-init | Fix Category Filtering and Add Single-Category Fallback Logic — Fix the rule matching logic in halal-random-strings.go so specifying any of the ... | `/goal goals/fix-category-filtering-and-fallback/goal.md` |
 | [`fix-makefile-and-scripts-stability`](fix-makefile-and-scripts-stability/goal.md) | `🗺️ Roadmap` | `🚢 SHIP 🔗 Ready` | Deps met: clean-repo-artifacts-and-clutter | Fix Makefile Typo, Process Fork Bomb, and Script Zero-Division — Fix %(GO_APP_NAME) typo in Makefile, replace the 1,000-process bash loop with a ... | `/goal goals/fix-makefile-and-scripts-stability/goal.md` |
-| [`fix-test-suite-and-panics`](fix-test-suite-and-panics/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⛔ Blocked` | Prereqs: fix-scunthorpe-and-blocked-list | Fix Test Suite Panics and Assertions — Fix the index out of range panic in TestIncludeRandomNumber, remove pass-by-valu... | `/goal goals/fix-test-suite-and-panics/goal.md` |
+| [`fix-test-suite-and-panics`](fix-test-suite-and-panics/goal.md) | `🗺️ Roadmap` | `🚢 SHIP 🔗 Ready` | Deps met: fix-words-embedding-and-init, fix-scunthorpe-and-blocked-list | Fix Test Suite Panics and Assertions — Fix the index out of range panic in TestIncludeRandomNumber, remove pass-by-valu... | `/goal goals/fix-test-suite-and-panics/goal.md` |
 | [`optimize-generator-performance-and-allocations`](optimize-generator-performance-and-allocations/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⛔ Blocked` | Prereqs: fix-separator-and-word-count-logic | Eliminate Redundant Rule Filtering and Hot-Path Heap Allocations — Move rule filtering outside generation loops to eliminate 1M redundant slice all... | `/goal goals/optimize-generator-performance-and-allocations/goal.md` |
 
 ---
@@ -60,4 +59,5 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 | :--- | :---: | :--- | :--- | :--- |
 | [`fix-words-embedding-and-init`](fix-words-embedding-and-init/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `e38e9e0` |
 | [`clean-repo-artifacts-and-clutter`](clean-repo-artifacts-and-clutter/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `0bb7f9a` |
+| [`fix-scunthorpe-and-blocked-list`](fix-scunthorpe-and-blocked-list/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `7fc7218` |
 | [`sila-onboarding`](sila-onboarding/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `0fd3c0d` |
