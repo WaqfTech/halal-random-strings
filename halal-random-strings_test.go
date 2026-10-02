@@ -171,3 +171,37 @@ func TestEngineConcurrent(t *testing.T) {
 	}
 	wg.Wait()
 }
+
+func TestScunthorpeAndZeroFalsePositives(t *testing.T) {
+	venerableNames := []string{
+		"Muhammad",
+		"Ahmad",
+		"Aisha",
+		"Khadijah",
+		"Uthman ibn Affan",
+		"Abu Hurairah",
+		"Compassion",
+		"Steadfastness",
+		"sunnah",
+		"obedient",
+	}
+
+	for _, name := range venerableNames {
+		if !isSafe(name) {
+			t.Errorf("expected %q to be considered safe, but was blocked (false positive)", name)
+		}
+	}
+
+	blockedInputs := []string{
+		"wine",
+		"this-is-a-test-with-wine",
+		"show-off",
+		"user-with-pork-dish",
+	}
+
+	for _, input := range blockedInputs {
+		if isSafe(input) {
+			t.Errorf("expected %q to be blocked, but was considered safe", input)
+		}
+	}
+}

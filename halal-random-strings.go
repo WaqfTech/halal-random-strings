@@ -39,13 +39,33 @@ type Rule struct {
 
 // Engine provides a thread-safe random string generator engine.
 type Engine struct {
-	mu    sync.RWMutex
-	words Words
+	mu         sync.RWMutex
+	words      Words
+	blockedSet map[string]struct{}
+}
+
+func (e *Engine) rebuildBlockedSetLocked() {
+	e.blockedSet = make(map[string]struct{}, len(e.words.Blocked))
+	for _, b := range e.words.Blocked {
+		norm := strings.ToLower(strings.TrimSpace(b))
+		norm = strings.ReplaceAll(norm, "_", "-")
+		norm = strings.ReplaceAll(norm, " ", "-")
+		norm = strings.ReplaceAll(norm, "'", "-")
+		for strings.Contains(norm, "--") {
+			norm = strings.ReplaceAll(norm, "--", "-")
+		}
+		norm = strings.Trim(norm, "-")
+		if norm != "" {
+			e.blockedSet[norm] = struct{}{}
+		}
+	}
 }
 
 // NewEngine creates an Engine using the given Words dataset.
 func NewEngine(w Words) *Engine {
-	return &Engine{words: w}
+	e := &Engine{words: w}
+	e.rebuildBlockedSetLocked()
+	return e
 }
 
 // NewDefaultEngine creates an Engine populated from embedded words.json.
@@ -56,7 +76,9 @@ func NewDefaultEngine() (*Engine, error) {
 			return nil, fmt.Errorf("failed to parse embedded words.json: %w", err)
 		}
 	}
-	return &Engine{words: w}, nil
+	e := &Engine{words: w}
+	e.rebuildBlockedSetLocked()
+	return e, nil
 }
 
 var (
@@ -92,6 +114,7 @@ func (e *Engine) LoadWords(filePath string) error {
 
 	e.mu.Lock()
 	e.words = newWords
+	e.rebuildBlockedSetLocked()
 	e.mu.Unlock()
 	return nil
 }
@@ -108,9 +131,31 @@ func LoadWords(filePath string) error {
 }
 
 func (e *Engine) isSafeLocked(s string) bool {
-	for _, blockedWord := range e.words.Blocked {
-		if strings.Contains(s, blockedWord) {
-			return false
+	norm := strings.ToLower(strings.TrimSpace(s))
+	norm = strings.ReplaceAll(norm, "_", "-")
+	norm = strings.ReplaceAll(norm, " ", "-")
+	norm = strings.ReplaceAll(norm, "'", "-")
+	for strings.Contains(norm, "--") {
+		norm = strings.ReplaceAll(norm, "--", "-")
+	}
+	norm = strings.Trim(norm, "-")
+	if norm == "" {
+		return true
+	}
+
+	tokens := strings.Split(norm, "-")
+	n := len(tokens)
+	for i := 0; i < n; i++ {
+		var sb strings.Builder
+		for j := i; j < n && j < i+4; j++ {
+			if j > i {
+				sb.WriteString("-")
+			}
+			sb.WriteString(tokens[j])
+			phrase := sb.String()
+			if _, blocked := e.blockedSet[phrase]; blocked {
+				return false
+			}
 		}
 	}
 	return true
