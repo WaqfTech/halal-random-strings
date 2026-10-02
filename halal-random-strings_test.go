@@ -29,9 +29,10 @@ func TestWordsLoad(t *testing.T) {
 
 func TestWordCount(t *testing.T) {
 	opts := Options{
-		Repeat:            10, // Test multiple strings
-		MinWords:          5, 
-		MaxWords:          8, 
+		Repeat:              10, // Test multiple strings
+		Sep:                 "-",
+		MinWords:            5, 
+		MaxWords:            8, 
 		IncludeRandomNumber: true,
 	}
 	results := GenerateWithOptions(opts)
@@ -55,7 +56,8 @@ func TestWordCount(t *testing.T) {
 func TestIncludeRandomNumber(t *testing.T) {
 	// Test with IncludeRandomNumber = true (default)
 	optsTrue := Options{
-		Repeat:            1,
+		Repeat:              1,
+		Sep:                 "-",
 		IncludeRandomNumber: true,
 	}
 	resultTrue := GenerateWithOptions(optsTrue)[0]
@@ -66,7 +68,8 @@ func TestIncludeRandomNumber(t *testing.T) {
 
 	// Test with IncludeRandomNumber = false
 	optsFalse := Options{
-		Repeat:            1,
+		Repeat:              1,
+		Sep:                 "-",
 		IncludeRandomNumber: false,
 	}
 	resultFalse := GenerateWithOptions(optsFalse)[0]
@@ -79,20 +82,21 @@ func TestIncludeRandomNumber(t *testing.T) {
 func TestCategories(t *testing.T) {
 	// Test with a specific category (sahaba)
 	optsSahaba := Options{
-		Repeat:   10,
-		Categories: []string{"sahaba"},
-		MinWords: 1, 
-		MaxWords: 5, // Sahaba names can be multi-word
+		Repeat:              10,
+		Categories:          []string{"sahaba"},
+		Sep:                 "-",
+		MinWords:            1, 
+		MaxWords:            5, // Sahaba names can be multi-word
 		IncludeRandomNumber: false, 
 	}
 	resultsSahaba := GenerateWithOptions(optsSahaba)
 	for _, result := range resultsSahaba {
 		found := false
 		// Normalize the generated result for comparison
-		normalizedResult := strings.ToLower(strings.ReplaceAll(result, optsSahaba.Sep, " "))
+		normalizedResult := strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(result, optsSahaba.Sep, " "), "-", " "))
 		for _, sahabi := range words.Categories["sahaba"] {
 			// Normalize the sahabi name for comparison
-			normalizedSahabi := strings.ToLower(sahabi)
+			normalizedSahabi := strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(sahabi, "'", " "), "-", " "))
 			if normalizedSahabi == normalizedResult {
 				found = true
 				break
@@ -105,10 +109,11 @@ func TestCategories(t *testing.T) {
 
 	// Test with multiple categories (adjectives, nouns_places)
 	optsMulti := Options{
-		Repeat:   10,
-		Categories: []string{"adjectives", "nouns_places"},
-		MinWords: 2, 
-		MaxWords: 2,
+		Repeat:              10,
+		Categories:          []string{"adjectives", "nouns_places"},
+		Sep:                 "-",
+		MinWords:            2, 
+		MaxWords:            2,
 		IncludeRandomNumber: false,
 	}
 	resultsMulti := GenerateWithOptions(optsMulti)

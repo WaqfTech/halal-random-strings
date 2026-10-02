@@ -3,15 +3,15 @@ package halalrandomstrings
 
 import (
 	crand "crypto/rand"
+	_ "embed"
 	"encoding/json"
 	"fmt"
-	"io/ioutil" // Added
 	"math/big"
 	"math/rand"
-	"os"        // Added
+	"os"
+	"sort"
 	"strings"
 	"time"
-	sort "sort"
 
 	"github.com/charmbracelet/x/exp/ordered"
 )
@@ -21,6 +21,9 @@ const (
 	defaultSuffixThreshold = 0.2
 	maxRetries             = 1000 // Increased max retries
 )
+
+//go:embed words.json
+var defaultWordsData []byte
 
 type Words struct {
 	Categories map[string][]string `json:"categories"`
@@ -33,17 +36,23 @@ type Rule struct {
 	Template string   `json:"template"`
 }
 
-var words Words // Keep as package-level, but will be populated by LoadWords
+var words Words // Populated by default from embedded words.json, overridable by LoadWords
+
+func init() {
+	if len(defaultWordsData) > 0 {
+		if err := json.Unmarshal(defaultWordsData, &words); err != nil {
+			panic(fmt.Sprintf("failed to parse embedded words.json: %v", err))
+		}
+	}
+}
 
 // LoadWords reads words.json from the specified path and populates the words variable.
 func LoadWords(filePath string) error {
-	jsonFile, err := os.Open(filePath)
+	byteValue, err := os.ReadFile(filePath)
 	if err != nil {
 		return fmt.Errorf("failed to open words.json: %w", err)
 	}
-	defer jsonFile.Close()
 
-	byteValue, _ := ioutil.ReadAll(jsonFile)
 	if err := json.Unmarshal(byteValue, &words); err != nil {
 		return fmt.Errorf("failed to parse words.json: %w", err)
 	}
@@ -140,6 +149,15 @@ func generate(opts Options) []string {
 
 				replacer := strings.NewReplacer(replacerArgs...)
 				generated := replacer.Replace(rule.Template)
+				generated = strings.ReplaceAll(generated, "'", opts.Sep)
+				if opts.Sep != "-" {
+					generated = strings.ReplaceAll(generated, "-", opts.Sep)
+				}
+				generated = strings.ToLower(strings.ReplaceAll(generated, " ", opts.Sep))
+				for strings.Contains(generated, opts.Sep+opts.Sep) {
+					generated = strings.ReplaceAll(generated, opts.Sep+opts.Sep, opts.Sep)
+				}
+				generated = strings.Trim(generated, opts.Sep)
 				
 				// Calculate word count of the generated part
 				generatedWordCount := len(strings.Split(generated, opts.Sep))
@@ -166,9 +184,6 @@ func generate(opts Options) []string {
 				currentWordCount = len(strings.Split(currentOutput, opts.Sep))
 
 				// If we have enough words, and haven't exceeded MaxWords, we can break
-				// This condition is crucial to ensure we don't keep adding words unnecessarily
-				// This is the problematic line, it should be `currentWordCount >= opts.MinWords`
-				// and then check `currentWordCount <= opts.MaxWords` after the loop
 				if currentWordCount >= opts.MinWords && currentWordCount <= opts.MaxWords {
 					break // Break from inner building loop
 				}
@@ -176,21 +191,15 @@ func generate(opts Options) []string {
 
 			// Finalize the output if it meets criteria
 			if currentWordCount >= opts.MinWords && currentWordCount <= opts.MaxWords {
-				// Before returning, ensure the string is safe
-				// Normalize the output before checking safety and returning
-				finalOutput := strings.ReplaceAll(currentOutput, "'", "-")
-				finalOutput = strings.ToLower(strings.ReplaceAll(finalOutput, " ", opts.Sep))
-
-				if isSafe(finalOutput) {
-					// Add a random number for extra uniqueness using crypto/rand
-					output := finalOutput
+				if isSafe(currentOutput) {
+					output := currentOutput
 					if opts.IncludeRandomNumber {
 						randomNum, err := crand.Int(crand.Reader, big.NewInt(1000000000000000000))
 						if err != nil {
 							// Fallback to time-based if crypto/rand fails
 							randomNum = big.NewInt(time.Now().UnixNano() % 1000000000000000000)
 						}
-						output = fmt.Sprintf("%s%s%d", finalOutput, opts.Sep, randomNum.Int64())
+						output = fmt.Sprintf("%s%s%d", currentOutput, opts.Sep, randomNum.Int64())
 					}
 
 					r[i] = output
