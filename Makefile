@@ -1,7 +1,7 @@
 .PHONY: all setup generate analyze populate-d1
 
 # Default target
-all: build test generate analyze populate-d1
+all: build test generate analyze
 
 # Variables
 GO_APP_NAME := halal-random-strings
@@ -33,7 +33,7 @@ setup:
 build:
 	@echo "Building Go application..."
 	go build -o $(GO_APP_NAME) $(GO_APP_PATH)
-	@echo "Build complete: ./%(GO_APP_NAME)"
+	@echo "Build complete: ./$(GO_APP_NAME)"
 
 # Test target: Runs Go tests
 test:
@@ -43,10 +43,7 @@ test:
 # Generate target: Runs the Go application to generate strings
 generate:
 	@echo "Generating strings to $(OUTPUT_FILE)..."
-	@# Clear previous output
-	@> $(OUTPUT_FILE)
-	@# Run the Go app 1000 times to generate 1000 strings
-	@for i in $$(seq 1 1000); do ./$(GO_APP_NAME) -r 1 >> $(OUTPUT_FILE); done
+	@./$(GO_APP_NAME) -r 1000 > $(OUTPUT_FILE)
 	@echo "Generated 1000 strings."
 
 # Analyze target: Runs the Python script to analyze uniqueness

@@ -11,6 +11,11 @@ def analyze_uniqueness(filename):
   print(f"Total lines: {total_lines}")
   print(f"Unique lines: {unique_lines}")
 
+  if total_lines == 0:
+    print("Uniqueness percentage: 0.00% (file is empty)")
+    print("\nNo lines to analyze.")
+    return
+
   uniqueness_percentage = (unique_lines / total_lines) * 100
   print(f"Uniqueness percentage: {uniqueness_percentage:.2f}%")
 
