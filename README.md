@@ -36,6 +36,7 @@ halal-random-strings/
 ├── halal-random-strings_test.go # Unit tests for the core logic
 ├── words.json                  # Centralized JSON file containing all word categories and generation rules
 ├── LICENSE                     # GNU Affero General Public License v3.0 (AGPL-3.0)
+├── NOTICE                      # Upstream copyright and MIT license attribution
 ├── WaqfDPL-1.0.md              # Waqf Digital Public License (Waqf-DPL 1.0) draft
 ├── SECURITY.md                 # Guidelines for reporting security vulnerabilities
 ├── go.mod
@@ -150,20 +151,14 @@ For information on how to report security vulnerabilities, please see `SECURITY.
 
 Check `docs/TODOS.md` for a list of planned features, potential improvements, and known limitations.
 
-## Credit
+## Credit & Upstream Attribution
 
-This project is a fork of [charmbracelet/hotdiva2000](https://github.com/charmbracelet/hotdiva2000), and we are grateful to the original authors for their work.
+This project is a fork of and derivative work based on [charmbracelet/hotdiva2000](https://github.com/charmbracelet/hotdiva2000), originally authored by Charmbracelet, Inc. under the MIT License. We express our gratitude to the original authors for their open-source contributions.
+
+For full upstream MIT copyright and permission notices, see [NOTICE](NOTICE).
 
 ## License
 
 This project is licensed under the [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE) with copyright (c) 2024-2026 WaqfTech.
 
 The moral foundation, spiritual principles, and ethical terms of endowment guiding this work are governed by the [Waqf Digital Public License (Waqf-DPL 1.0)](WaqfDPL-1.0.md), drafted by WaqfTech at [github.com/WaqfTech/waqf-license-draft](https://github.com/WaqfTech/waqf-license-draft).
-
----
-
-Part of [Charm](https://charm.sh).
-
-<a href="https://charm.sh/"><img alt="The Charm logo" width="400" src="https://stuff.charm.sh/charm-badge.jpg" /></a>
-
-Charm 热爱开源 • Charm loves open source

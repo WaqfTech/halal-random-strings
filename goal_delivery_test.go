@@ -729,3 +729,79 @@ func TestGoal_19_EnhanceCliUxAndResolveDocumentationDrift(t *testing.T) {
 		t.Errorf("expected 4-digit sample outputs in README.md")
 	}
 }
+
+// TestGoal_20_ReconcileUpstreamLicensingAndD1Pipeline verifies NOTICE attribution, clean branding, and D1 batching scripts.
+func TestGoal_20_ReconcileUpstreamLicensingAndD1Pipeline(t *testing.T) {
+	// 1. Verify NOTICE file exists and contains Charmbracelet MIT attribution
+	noticeBytes, err := os.ReadFile("NOTICE")
+	if err != nil {
+		t.Fatalf("NOTICE file missing or unreadable: %v", err)
+	}
+	notice := string(noticeBytes)
+	if !strings.Contains(notice, "Charmbracelet, Inc.") || !strings.Contains(notice, "MIT License") {
+		t.Errorf("NOTICE must contain Charmbracelet, Inc. and MIT License notices")
+	}
+
+	// 2. Verify README.md references NOTICE and does not claim official Charm membership or display Charm badge
+	readmeBytes, err := os.ReadFile("README.md")
+	if err != nil {
+		t.Fatalf("failed to read README.md: %v", err)
+	}
+	readme := string(readmeBytes)
+	if !strings.Contains(readme, "NOTICE") {
+		t.Errorf("README.md must reference NOTICE file")
+	}
+	if strings.Contains(readme, "charm-badge.jpg") || strings.Contains(readme, "Part of [Charm]") {
+		t.Errorf("README.md must not include Charm logo badge or claim to be part of Charm")
+	}
+
+	// 3. Verify scripts/analyze.py streaming and duplicate frequency output
+	tmpFile, err := os.CreateTemp("", "test_analyze_*.txt")
+	if err != nil {
+		t.Fatalf("failed to create temp file: %v", err)
+	}
+	defer os.Remove(tmpFile.Name())
+
+	content := "alpha-1234\nalpha-1234\nbeta-5678\n"
+	if _, err := tmpFile.WriteString(content); err != nil {
+		t.Fatalf("failed to write to temp file: %v", err)
+	}
+	_ = tmpFile.Close()
+
+	cmd := exec.Command("python3", "scripts/analyze.py", tmpFile.Name())
+	outBytes, err := cmd.CombinedOutput()
+	if err != nil {
+		t.Fatalf("scripts/analyze.py failed: %v, output: %s", err, string(outBytes))
+	}
+	outStr := string(outBytes)
+	if !strings.Contains(outStr, "alpha-1234 (x2)") {
+		t.Errorf("analyze.py should format duplicates with frequency '(x2)', got:\n%s", outStr)
+	}
+
+	// 4. Verify scripts/populate_d1.py --dump-sql generates transactional SQL
+	tmpSql, err := os.CreateTemp("", "test_dump_*.sql")
+	if err != nil {
+		t.Fatalf("failed to create temp SQL file: %v", err)
+	}
+	tmpSqlPath := tmpSql.Name()
+	_ = tmpSql.Close()
+	defer os.Remove(tmpSqlPath)
+
+	cmdD1 := exec.Command("python3", "scripts/populate_d1.py", tmpFile.Name(), "--dump-sql", tmpSqlPath, "--batch-size", "1")
+	outD1Bytes, err := cmdD1.CombinedOutput()
+	if err != nil {
+		t.Fatalf("scripts/populate_d1.py failed: %v, output: %s", err, string(outD1Bytes))
+	}
+
+	sqlBytes, err := os.ReadFile(tmpSqlPath)
+	if err != nil {
+		t.Fatalf("failed to read generated SQL file: %v", err)
+	}
+	sqlStr := string(sqlBytes)
+	if !strings.Contains(sqlStr, "BEGIN TRANSACTION;") || !strings.Contains(sqlStr, "COMMIT;") {
+		t.Errorf("generated SQL must wrap inserts in transaction block")
+	}
+	if !strings.Contains(sqlStr, "INSERT OR IGNORE INTO generated_strings") {
+		t.Errorf("generated SQL must contain INSERT OR IGNORE statement")
+	}
+}

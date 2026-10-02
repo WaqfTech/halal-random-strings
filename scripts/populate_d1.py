@@ -14,6 +14,7 @@ import argparse
 import os
 import subprocess
 import sys
+import tempfile
 import time
 
 def run_command(command, check=True, capture_output=True, text=True):
@@ -41,6 +42,48 @@ def prompt_yes_no(question, default=False, interactive=False):
         return response in ("y", "yes")
     except (EOFError, KeyboardInterrupt):
         return default
+
+def escape_sql_string(val: str) -> str:
+    """Sanitize and escape string literal for SQLite/D1."""
+    sanitized = val.replace("\x00", "").replace("\r", "").replace("\n", "")
+    return sanitized.replace("'", "''")
+
+def format_insert_block(batch, timestamp):
+    values = [f"('{escape_sql_string(item)}', NULL, NULL, {timestamp})" for item in batch]
+    return (
+        f"INSERT OR IGNORE INTO generated_strings (id, used_at, used_by, created_at) VALUES\n"
+        f"  {',\n  '.join(values)};\n"
+    )
+
+def generate_sql_file(output_file, sql_file_path, chunk_size=500):
+    """Stream lines from output_file and write transactional SQL batches."""
+    total_strings = 0
+    timestamp = int(time.time())
+
+    with open(output_file, 'r', encoding='utf-8') as fin, open(sql_file_path, 'w', encoding='utf-8') as fout:
+        fout.write("-- Cloudflare D1 batch insert script\n")
+        fout.write("BEGIN TRANSACTION;\n")
+        
+        batch = []
+        for line in fin:
+            cleaned = line.strip()
+            if not cleaned:
+                continue
+            batch.append(cleaned)
+            total_strings += 1
+
+            if len(batch) >= chunk_size:
+                fout.write(format_insert_block(batch, timestamp))
+                batch = []
+                if total_strings % 5000 == 0:
+                    fout.write("COMMIT;\nBEGIN TRANSACTION;\n")
+
+        if batch:
+            fout.write(format_insert_block(batch, timestamp))
+
+        fout.write("COMMIT;\n")
+
+    return total_strings
 
 def check_wrangler_setup(db_name, auto_create=False, auto_apply_schema=False, interactive=False):
     print("\n--- Checking Wrangler Setup ---")
@@ -120,55 +163,52 @@ def check_wrangler_setup(db_name, auto_create=False, auto_apply_schema=False, in
     print("--- Wrangler Setup Complete ---")
     return True
 
-def populate_d1_from_output(output_file, db_name, batch_size=50):
+def populate_d1_from_output(output_file, db_name, batch_size=500, dump_sql=None):
     print(f"\n--- Populating D1 Database '{db_name}' ---")
-    print(f"Reading strings from {output_file}...")
-    
-    try:
-        with open(output_file, 'r', encoding='utf-8') as f:
-            lines = [line.strip() for line in f if line.strip()]
-    except FileNotFoundError:
+    if not os.path.exists(output_file):
         print(f"Error: Output file '{output_file}' not found. Please run 'make generate' first.")
         return False
 
-    if not lines:
-        print(f"No strings found in {output_file}. Nothing to populate.")
-        return True
+    target_sql_path = dump_sql
+    is_temp = False
+    if not target_sql_path:
+        temp_fd, target_sql_path = tempfile.mkstemp(prefix="d1_batch_", suffix=".sql")
+        os.close(temp_fd)
+        is_temp = True
 
-    print(f"Found {len(lines)} strings to insert.")
+    try:
+        print(f"Preparing SQL statements from '{output_file}'...")
+        total = generate_sql_file(output_file, target_sql_path, chunk_size=batch_size)
+        if total == 0:
+            print(f"No valid strings found in {output_file}. Nothing to populate.")
+            return True
+        print(f"Prepared {total} strings in '{target_sql_path}'.")
 
-    # Safe batch inserts to avoid ARG_MAX and CLI length overflows
-    batch_size = max(1, min(batch_size, 100))
-    total_batches = (len(lines) + batch_size - 1) // batch_size
-    
-    for i in range(0, len(lines), batch_size):
-        batch = lines[i:i + batch_size]
-        values_sql = []
-        current_timestamp = int(time.time())
-        for line in batch:
-            # Escape single quotes within the string for SQL
-            escaped_line = line.replace("'", "''")
-            values_sql.append(f"('{escaped_line}', NULL, NULL, {current_timestamp})")
+        if dump_sql:
+            print(f"SQL dump completed successfully. File saved to '{dump_sql}'.")
+            return True
 
-        # INSERT OR IGNORE avoids aborting on duplicate collisions
-        insert_sql = (
-            f"INSERT OR IGNORE INTO generated_strings (id, used_at, used_by, created_at) "
-            f"VALUES {', '.join(values_sql)};"
+        print(f"Executing batch SQL file against D1 database '{db_name}' via wrangler...")
+        result = run_command(
+            ["wrangler", "d1", "execute", db_name, "--file", target_sql_path],
+            check=False,
         )
-
-        batch_num = i // batch_size + 1
-        print(f"Executing batch {batch_num}/{total_batches} ({len(batch)} items)...")
-        result = run_command(["wrangler", "d1", "execute", db_name, "--command", insert_sql], check=False)
-        if result is None:
-            print(f"Failed to execute batch {batch_num}. Aborting population.")
+        if result is None or result.returncode != 0:
+            print("Failed to execute batch SQL file on D1.")
             return False
 
-    print("D1 population complete.")
-    return True
+        print("D1 population complete.")
+        return True
+    finally:
+        if is_temp and os.path.exists(target_sql_path):
+            try:
+                os.remove(target_sql_path)
+            except OSError:
+                pass
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Populate Cloudflare D1 database with generated halal strings.",
+        description="Populate Cloudflare D1 database with generated halal strings via consolidated SQL file.",
     )
     parser.add_argument(
         "output_file",
@@ -185,8 +225,14 @@ def main():
     parser.add_argument(
         "--batch-size",
         type=int,
-        default=50,
-        help="Batch size for D1 insert statements (default: 50, safe for CLI limits)",
+        default=500,
+        help="Batch size for D1 insert statements per transaction block (default: 500)",
+    )
+    parser.add_argument(
+        "--dump-sql",
+        type=str,
+        default=None,
+        help="Output path to dump batch SQL file without executing wrangler",
     )
     parser.add_argument(
         "--auto-create",
@@ -205,6 +251,16 @@ def main():
     )
 
     args = parser.parse_args()
+
+    # If user just wants to dump SQL to file, bypass Wrangler checks
+    if args.dump_sql:
+        success = populate_d1_from_output(
+            args.output_file,
+            args.db_name,
+            batch_size=args.batch_size,
+            dump_sql=args.dump_sql,
+        )
+        sys.exit(0 if success else 1)
 
     if check_wrangler_setup(
         args.db_name,
