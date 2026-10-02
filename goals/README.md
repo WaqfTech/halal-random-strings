@@ -28,11 +28,10 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 
 ## Summary
 - **Total Goals**: 14
-- 🟢 **Implemented & Verified**: 4
+- 🟢 **Implemented & Verified**: 5
 - 🟡 **Ready to Execute (Pending)**: 9 (5 independent ⚡, 4 unblocked 🔗)
-- ⛔ **Blocked on Prerequisites**: 1
 - 🎯 **By Tier**: 0 immediate (Tier 1), 14 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
-- 📋 **Execution Tasks Progress**: 18/65 completed (27%)
+- 📋 **Execution Tasks Progress**: 23/65 completed (35%)
 
 ---
 
@@ -45,11 +44,10 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 | [`harden-d1-scripts-and-architecture`](harden-d1-scripts-and-architecture/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Harden D1 Population Script and Eliminate CI Blocking Prompts — Remove interactive input() prompts from populate_d1.py to fix CI/CD execution, a... | `/goal goals/harden-d1-scripts-and-architecture/goal.md` |
 | [`harmonize-licensing-and-security-policy`](harmonize-licensing-and-security-policy/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Harmonize License Inconsistency, Update Security Policy and Docs — Clarify MIT vs Waqf GPL copyleft conflict, attribute WaqfTech in the license, re... | `/goal goals/harmonize-licensing-and-security-policy/goal.md` |
 | [`sanitize-asma-allah-and-virtues`](sanitize-asma-allah-and-virtues/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Segregate Asma' Allah al-Husna from Generic Adjectives — Segregate the 99 Names and Attributes of Allah from generic adjectives in words.... | `/goal goals/sanitize-asma-allah-and-virtues/goal.md` |
-| [`fix-separator-and-word-count-logic`](fix-separator-and-word-count-logic/goal.md) | `🗺️ Roadmap` | `🚢 SHIP 🔗 Ready` | Deps met: fix-words-embedding-and-init | Fix Custom Separator Formatting and Word Count Boundaries — Ensure custom --sep applies to template joints and within compound words without... | `/goal goals/fix-separator-and-word-count-logic/goal.md` |
 | [`fix-category-filtering-and-fallback`](fix-category-filtering-and-fallback/goal.md) | `🗺️ Roadmap` | `🚢 SHIP 🔗 Ready` | Deps met: fix-words-embedding-and-init | Fix Category Filtering and Add Single-Category Fallback Logic — Fix the rule matching logic in halal-random-strings.go so specifying any of the ... | `/goal goals/fix-category-filtering-and-fallback/goal.md` |
 | [`fix-makefile-and-scripts-stability`](fix-makefile-and-scripts-stability/goal.md) | `🗺️ Roadmap` | `🚢 SHIP 🔗 Ready` | Deps met: clean-repo-artifacts-and-clutter | Fix Makefile Typo, Process Fork Bomb, and Script Zero-Division — Fix %(GO_APP_NAME) typo in Makefile, replace the 1,000-process bash loop with a ... | `/goal goals/fix-makefile-and-scripts-stability/goal.md` |
 | [`fix-test-suite-and-panics`](fix-test-suite-and-panics/goal.md) | `🗺️ Roadmap` | `🚢 SHIP 🔗 Ready` | Deps met: fix-words-embedding-and-init, fix-scunthorpe-and-blocked-list | Fix Test Suite Panics and Assertions — Fix the index out of range panic in TestIncludeRandomNumber, remove pass-by-valu... | `/goal goals/fix-test-suite-and-panics/goal.md` |
-| [`optimize-generator-performance-and-allocations`](optimize-generator-performance-and-allocations/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⛔ Blocked` | Prereqs: fix-separator-and-word-count-logic | Eliminate Redundant Rule Filtering and Hot-Path Heap Allocations — Move rule filtering outside generation loops to eliminate 1M redundant slice all... | `/goal goals/optimize-generator-performance-and-allocations/goal.md` |
+| [`optimize-generator-performance-and-allocations`](optimize-generator-performance-and-allocations/goal.md) | `🗺️ Roadmap` | `🚢 SHIP 🔗 Ready` | Deps met: fix-words-embedding-and-init, fix-separator-and-word-count-logic | Eliminate Redundant Rule Filtering and Hot-Path Heap Allocations — Move rule filtering outside generation loops to eliminate 1M redundant slice all... | `/goal goals/optimize-generator-performance-and-allocations/goal.md` |
 
 ---
 
@@ -61,3 +59,4 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 | [`clean-repo-artifacts-and-clutter`](clean-repo-artifacts-and-clutter/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `0bb7f9a` |
 | [`fix-scunthorpe-and-blocked-list`](fix-scunthorpe-and-blocked-list/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `7fc7218` |
 | [`sila-onboarding`](sila-onboarding/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `0fd3c0d` |
+| [`fix-separator-and-word-count-logic`](fix-separator-and-word-count-logic/goal.md) | `🔗 Dep` | 🚢 SHIP | Git Commit | `e732521` |
