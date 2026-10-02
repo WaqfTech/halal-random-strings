@@ -1,4 +1,12 @@
-
 # Ephemeral goal claim locks (managed by sila)
 goals/*/claim.json
 .sila/
+
+# Binaries & build artifacts
+halal
+halal-random-strings
+*.exe
+*.test
+
+# Generated output
+output.txt
