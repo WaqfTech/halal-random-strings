@@ -214,7 +214,11 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 	}
 
 	if opts.MaxWords < opts.MinWords {
-		opts.MaxWords = 8 // Default to 8 words
+		if opts.MinWords > 8 {
+			opts.MaxWords = opts.MinWords
+		} else {
+			opts.MaxWords = 8 // Default to 8 words
+		}
 	}
 
 	// Validate categories once before generation loops
