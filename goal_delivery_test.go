@@ -601,4 +601,55 @@ func TestGoal_16_DelimiterSafetyAndSeedDeterminism(t *testing.T) {
 	}
 }
 
+// TestGoal_17_PruneBlockedListAndResolveSelfBlocking verifies 100% dictionary safety and zero self-blocking.
+func TestGoal_17_PruneBlockedListAndResolveSelfBlocking(t *testing.T) {
+	// 1. Verify that EVERY word across ALL categories passes isSafe()
+	for catName, wordList := range words.Categories {
+		for _, w := range wordList {
+			if !isSafe(w) {
+				t.Errorf("self-blocking error in category %q: word %q is blocked by safety filter", catName, w)
+			}
+		}
+	}
+
+	// 2. Verify benign words are purged from blocked list
+	benignWords := []string{
+		"ocean", "mountain", "world", "bed", "love", "angel", "friendship",
+		"health", "plant", "song", "perfume", "paradise", "wedding",
+	}
+	blockedMap := make(map[string]bool)
+	for _, b := range words.Blocked {
+		blockedMap[strings.ToLower(strings.TrimSpace(b))] = true
+	}
+	for _, bw := range benignWords {
+		if blockedMap[bw] {
+			t.Errorf("benign word %q must not be in words.Blocked list", bw)
+		}
+	}
+
+	// 3. Verify truly illicit words remain blocked
+	illicitWords := []string{"wine", "beer", "vodka", "pork", "casino", "gambling"}
+	for _, iw := range illicitWords {
+		if !blockedMap[iw] {
+			t.Errorf("illicit word %q must remain in words.Blocked", iw)
+		}
+		if isSafe(iw) {
+			t.Errorf("illicit word %q must be rejected by isSafe", iw)
+		}
+	}
+
+	// 4. Verify category deduplication
+	for catName, wordList := range words.Categories {
+		seen := make(map[string]bool)
+		for _, w := range wordList {
+			low := strings.ToLower(w)
+			if seen[low] {
+				t.Errorf("duplicate entry %q found in category %q", w, catName)
+			}
+			seen[low] = true
+		}
+	}
+}
+
+
 
