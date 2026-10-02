@@ -27,11 +27,11 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 6. **Auto-Reconciliation**: Run `sila goals` to scan commits, mark 🟢 **Implemented**, and clear the claim lock.
 
 ## Summary
-- **Total Goals**: 20
-- 🟢 **Implemented & Verified**: 20
+- **Total Goals**: 21
+- 🟢 **Implemented & Verified**: 21
 - 🟡 **Ready to Execute (Pending)**: 0 (0 independent ⚡, 0 unblocked 🔗)
-- 🎯 **By Tier**: 0 immediate (Tier 1), 20 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
-- 📋 **Execution Tasks Progress**: 100/100 completed (100%)
+- 🎯 **By Tier**: 0 immediate (Tier 1), 21 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
+- 📋 **Execution Tasks Progress**: 104/104 completed (100%)
 
 ---
 
@@ -52,6 +52,7 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 | [`harden-d1-scripts-and-architecture`](harden-d1-scripts-and-architecture/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `dfd58b1` |
 | [`harmonize-licensing-and-security-policy`](harmonize-licensing-and-security-policy/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `9626920` |
 | [`sanitize-asma-allah-and-virtues`](sanitize-asma-allah-and-virtues/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `fddf653` |
+| [`sanitize-theology-and-corpus-audit`](sanitize-theology-and-corpus-audit/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `fe6f332` |
 | [`sila-onboarding`](sila-onboarding/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `0fd3c0d` |
 | [`optimize-engine-allocations-and-word-normalization`](optimize-engine-allocations-and-word-normalization/goal.md) | `🔗 Dep` | 🚢 SHIP | Git Commit | `874b417` |
 | [`fix-separator-and-word-count-logic`](fix-separator-and-word-count-logic/goal.md) | `🔗 Dep` | 🚢 SHIP | Git Commit | `e732521` |
