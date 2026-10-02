@@ -56,20 +56,84 @@ var randPool = sync.Pool{
 	},
 }
 
+const (
+	domainNeutral = 0
+	domainSacred  = 1
+	domainMundane = 2
+)
+
+var (
+	sacredCategories = map[string]struct{}{
+		"sahaba":                      {},
+		"muslim_names_male":           {},
+		"muslim_names_female":         {},
+		"asma_allah":                  {},
+		"servant_prefixes":            {},
+		"holy_sanctuaries":            {},
+		"scholarly_terms":             {},
+		"islamic_events":              {},
+		"adab_terms":                  {},
+		"islamic_virtues":             {},
+		"islamic_art_forms":           {},
+		"islamic_golden_age_scholars": {},
+		"days_of_week_arabic":         {},
+		"islamic_months":              {},
+		"nouns_concepts":              {},
+		"adjectives":                  {},
+	}
+
+	mundaneCategories = map[string]struct{}{
+		"animals":        {},
+		"birds":          {},
+		"arabic_food":    {},
+		"jordanian_food": {},
+		"saudi_food":     {},
+		"yemeni_food":    {},
+		"vegetables":     {},
+		"fruits":         {},
+		"spices":         {},
+		"trees":          {},
+		"nouns_objects":  {},
+	}
+)
+
+func isSacredCategory(cat string) bool {
+	_, ok := sacredCategories[cat]
+	return ok
+}
+
+func isMundaneCategory(cat string) bool {
+	_, ok := mundaneCategories[cat]
+	return ok
+}
+
+func getRuleDomain(rule Rule) int {
+	for _, cat := range rule.Pattern {
+		if isSacredCategory(cat) {
+			return domainSacred
+		}
+		if isMundaneCategory(cat) {
+			return domainMundane
+		}
+	}
+	return domainNeutral
+}
+
 func normalizeTokenString(s string) string {
 	var sb strings.Builder
+	sb.Grow(len(s))
+	lastDash := true
 	for _, r := range strings.ToLower(strings.TrimSpace(s)) {
 		if (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9') {
 			sb.WriteRune(r)
-		} else {
-			sb.WriteRune('-')
+			lastDash = false
+		} else if !lastDash {
+			sb.WriteByte('-')
+			lastDash = true
 		}
 	}
-	norm := sb.String()
-	for strings.Contains(norm, "--") {
-		norm = strings.ReplaceAll(norm, "--", "-")
-	}
-	return strings.Trim(norm, "-")
+	res := sb.String()
+	return strings.TrimSuffix(res, "-")
 }
 
 func (e *Engine) rebuildIndexesLocked() {
@@ -187,7 +251,7 @@ func (e *Engine) isSafeLocked(s string) bool {
 		var sb strings.Builder
 		sb.WriteString(tokens[i])
 		for j := i + 1; j < n && j < i+4; j++ {
-			sb.WriteString("-")
+			sb.WriteByte('-')
 			sb.WriteString(tokens[j])
 			phrase := sb.String()
 			if _, blocked := e.blockedSet[phrase]; blocked {
@@ -261,11 +325,21 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 	// Validate categories once before generation loops
 	var filteredRules []Rule
 	if len(opts.Categories) > 0 {
+		var hasSacred, hasMundane bool
 		for _, cat := range opts.Categories {
 			cat = strings.TrimSpace(cat)
 			if _, exists := engineWords.Categories[cat]; !exists {
 				return nil, fmt.Errorf("unknown category: %q (available: %s)", cat, strings.Join(e.getCategoriesLocked(), ", "))
 			}
+			if isSacredCategory(cat) {
+				hasSacred = true
+			}
+			if isMundaneCategory(cat) {
+				hasMundane = true
+			}
+		}
+		if hasSacred && hasMundane {
+			return nil, fmt.Errorf("incompatible categories: sacred Islamic terms cannot be combined with animals or food")
 		}
 
 		// Compound rule matching
@@ -320,7 +394,6 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 			filteredRules = matchingRules
 		}
 
-
 		// Dynamic single-category rule fallback if no compound rules match
 		if len(filteredRules) == 0 {
 			for _, cat := range opts.Categories {
@@ -355,10 +428,54 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 			var currentBuilder strings.Builder
 			var currentWordCount int
 
-			// Build the string iteratively
+			// Establish allowed rules for this specific string to enforce strict domain mutual exclusivity
+			initialRule := filteredRules[src.Intn(len(filteredRules))]
+			targetDomain := getRuleDomain(initialRule)
+			if targetDomain == domainNeutral {
+				if src.Intn(100) < 75 {
+					targetDomain = domainSacred
+				} else {
+					targetDomain = domainMundane
+				}
+			}
+
+			var candidateRules []Rule
+			for _, rule := range filteredRules {
+				rd := getRuleDomain(rule)
+				if targetDomain == domainSacred && rd == domainMundane {
+					continue
+				}
+				if targetDomain == domainMundane && rd == domainSacred {
+					continue
+				}
+				candidateRules = append(candidateRules, rule)
+			}
+			if len(candidateRules) == 0 {
+				candidateRules = []Rule{initialRule}
+			}
+
+			// Build the string iteratively using candidateRules
 			for attempt := 0; attempt < maxRetries; attempt++ {
-				// Pick a random rule from filtered rules
-				rule := filteredRules[src.Intn(len(filteredRules))]
+				// Pick a random rule from candidate rules
+				rule := candidateRules[src.Intn(len(candidateRules))]
+				rd := getRuleDomain(rule)
+				if targetDomain == domainNeutral && rd != domainNeutral {
+					targetDomain = rd
+					var updated []Rule
+					for _, cr := range candidateRules {
+						crd := getRuleDomain(cr)
+						if targetDomain == domainSacred && crd == domainMundane {
+							continue
+						}
+						if targetDomain == domainMundane && crd == domainSacred {
+							continue
+						}
+						updated = append(updated, cr)
+					}
+					if len(updated) > 0 {
+						candidateRules = updated
+					}
+				}
 
 				var ruleBuilder strings.Builder
 				var ruleWordCount int
@@ -423,11 +540,16 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 							val = int64(src.Intn(9000)) + 1000
 						} else {
 							var b [2]byte
-							_, err := crand.Read(b[:])
-							if err != nil {
-								val = int64(src.Intn(9000)) + 1000
-							} else {
-								val = int64((uint16(b[0])<<8|uint16(b[1]))%9000) + 1000
+							for {
+								if _, err := crand.Read(b[:]); err != nil {
+									val = int64(src.Intn(9000)) + 1000
+									break
+								}
+								valUint := uint32(b[0])<<8 | uint32(b[1])
+								if valUint < 63000 {
+									val = int64(valUint%9000) + 1000
+									break
+								}
 							}
 						}
 						currentBuilder.WriteString(opts.Sep)

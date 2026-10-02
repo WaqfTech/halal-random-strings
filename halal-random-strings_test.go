@@ -425,3 +425,124 @@ func BenchmarkGenerateWithOptions(b *testing.B) {
 		_ = GenerateWithOptions(opts)
 	}
 }
+
+func TestTheologicalQuarantineAndSensitivityGuarantees(t *testing.T) {
+	// 1. Verify that culturally insulting, demonic, or derogatory words are rejected by isSafe
+	prohibitedWords := []string{
+		"donkey", "mule", "ape", "monkey", "baboon", "chimpanzee", "gorilla",
+		"hyena", "jackal", "vulture", "rat", "mouse", "toad", "snake", "cobra", "viper",
+		"shoe", "sandal", "boot", "slipper", "shoelace", "dustpan", "mop", "broom", "vacuum-cleaner",
+		"iblis", "jahannam", "shirk", "kufr", "nifaq", "bid-ah", "awrah",
+		"death-of-the-prophet", "su-al-zann", "dine",
+		"ahmad-donkey-food", "ismail-dine-desert", "aisha-shoe", "kaaba-baboon",
+	}
+	for _, pw := range prohibitedWords {
+		if isSafe(pw) {
+			t.Errorf("critical sensitivity failure: prohibited term %q must be rejected by isSafe", pw)
+		}
+	}
+
+	// 2. Verify that incompatible category requests return explicit validation error
+	incompatiblePairs := [][]string{
+		{"muslim_names_male", "animals"},
+		{"sahaba", "arabic_food"},
+		{"asma_allah", "vegetables"},
+		{"holy_sanctuaries", "fruits"},
+		{"islamic_virtues", "spices"},
+	}
+	for _, pair := range incompatiblePairs {
+		opts := Options{
+			Repeat:     1,
+			Categories: pair,
+		}
+		_, err := GenerateWithOptionsE(opts)
+		if err == nil {
+			t.Errorf("expected error for incompatible categories %v, got nil", pair)
+		} else if !strings.Contains(err.Error(), "incompatible categories") {
+			t.Errorf("expected 'incompatible categories' error for %v, got: %v", pair, err)
+		}
+	}
+
+	// 3. Verify zero cross-domain violations across 1000 generated strings
+	opts := Options{
+		Repeat:              1000,
+		MinWords:            5,
+		MaxWords:            8,
+		IncludeRandomNumber: true,
+	}
+	results, err := GenerateWithOptionsE(opts)
+	if err != nil {
+		t.Fatalf("batch generation failed: %v", err)
+	}
+
+	sacredSets := map[string]struct{}{
+		"sahaba":              {},
+		"muslim_names_male":   {},
+		"muslim_names_female": {},
+		"asma_allah":          {},
+		"holy_sanctuaries":    {},
+	}
+	sacredWords := make(map[string]bool)
+	for cat := range sacredSets {
+		for _, w := range words.Categories[cat] {
+			norm := normalizeTokenString(w)
+			if norm != "" {
+				sacredWords[norm] = true
+			}
+		}
+	}
+
+	animalFoodSets := map[string]struct{}{
+		"animals":        {},
+		"arabic_food":    {},
+		"jordanian_food": {},
+		"saudi_food":     {},
+		"yemeni_food":    {},
+		"vegetables":     {},
+		"fruits":         {},
+		"spices":         {},
+	}
+	animalFoodWords := make(map[string]bool)
+	for cat := range animalFoodSets {
+		for _, w := range words.Categories[cat] {
+			norm := normalizeTokenString(w)
+			if norm != "" {
+				animalFoodWords[norm] = true
+			}
+		}
+	}
+
+	for _, res := range results {
+		parts := strings.Split(res, "-")
+		if len(parts) > 1 {
+			// strip random number suffix if present
+			if _, err := strconv.Atoi(parts[len(parts)-1]); err == nil {
+				parts = parts[:len(parts)-1]
+			}
+		}
+		hasSacred := false
+		hasAnimalFood := false
+
+		for i := 0; i < len(parts); i++ {
+			if sacredWords[parts[i]] {
+				hasSacred = true
+			}
+			if animalFoodWords[parts[i]] {
+				hasAnimalFood = true
+			}
+			for j := i + 1; j < len(parts) && j < i+4; j++ {
+				phrase := strings.Join(parts[i:j+1], "-")
+				if sacredWords[phrase] {
+					hasSacred = true
+				}
+				if animalFoodWords[phrase] {
+					hasAnimalFood = true
+				}
+			}
+		}
+
+		if hasSacred && hasAnimalFood {
+			t.Fatalf("theological quarantine violated in generated string: %q", res)
+		}
+	}
+}
