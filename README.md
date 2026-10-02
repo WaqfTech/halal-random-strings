@@ -31,8 +31,7 @@ halal-random-strings/
 │   └── TODOS.md                # Future enhancements and known limitations
 ├── scripts/
 │   ├── analyze.py              # Python script to analyze string uniqueness
-│   ├── populate_d1.py          # Python script to populate D1 database
-│   └── test_uniqueness.sh      # Bash script to test uniqueness at scale
+│   └── populate_d1.py          # Python script to populate D1 database
 ├── halal-random-strings.go     # Core logic for string generation
 ├── halal-random-strings_test.go # Unit tests for the core logic
 ├── words.json                  # Centralized JSON file containing all word categories and generation rules
@@ -157,7 +156,7 @@ This project is a fork of [charmbracelet/hotdiva2000](https://github.com/charmbr
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). The core principles and moral intentions behind this project are further elaborated in the ["Waqf" General Public License](Waqf.en.md).
+This project is licensed under the [MIT License](LICENSE) with copyright (c) 2024-2026 WaqfTech. The moral intentions and ethical framework guiding this project are further expressed in the ["Waqf" General Public License](Waqf.en.md). Code contributions and package consumption remain freely usable under standard MIT terms.
 
 ---
 
