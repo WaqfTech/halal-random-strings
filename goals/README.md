@@ -28,10 +28,10 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 
 ## Summary
 - **Total Goals**: 14
-- 🟢 **Implemented & Verified**: 9
-- 🟡 **Ready to Execute (Pending)**: 5 (5 independent ⚡, 0 unblocked 🔗)
+- 🟢 **Implemented & Verified**: 10
+- 🟡 **Ready to Execute (Pending)**: 4 (4 independent ⚡, 0 unblocked 🔗)
 - 🎯 **By Tier**: 0 immediate (Tier 1), 14 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
-- 📋 **Execution Tasks Progress**: 43/65 completed (66%)
+- 📋 **Execution Tasks Progress**: 47/65 completed (72%)
 
 ---
 
@@ -39,7 +39,6 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 
 | Goal Package | Tier | Mode & Sequence | Dependencies | Focus & Description | Launch Command |
 | :--- | :---: | :---: | :--- | :--- | :--- |
-| [`fix-historical-scholar-attributions`](fix-historical-scholar-attributions/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Correct Historical and Religious Attribution of Non-Muslim Scholars — In words.json, rename muslim_scientists to islamic_golden_age_scholars or catego... | `/goal goals/fix-historical-scholar-attributions/goal.md` |
 | [`fix-sanctuaries-and-animal-rules`](fix-sanctuaries-and-animal-rules/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Segregate Holy Sanctuaries and Fix Disrespectful Animal Pairings — Segregate holy Islamic sanctuaries (Kaaba, Masjid, Madina) from general places i... | `/goal goals/fix-sanctuaries-and-animal-rules/goal.md` |
 | [`harden-d1-scripts-and-architecture`](harden-d1-scripts-and-architecture/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Harden D1 Population Script and Eliminate CI Blocking Prompts — Remove interactive input() prompts from populate_d1.py to fix CI/CD execution, a... | `/goal goals/harden-d1-scripts-and-architecture/goal.md` |
 | [`harmonize-licensing-and-security-policy`](harmonize-licensing-and-security-policy/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Harmonize License Inconsistency, Update Security Policy and Docs — Clarify MIT vs Waqf GPL copyleft conflict, attribute WaqfTech in the license, re... | `/goal goals/harmonize-licensing-and-security-policy/goal.md` |
@@ -54,6 +53,7 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 | [`fix-words-embedding-and-init`](fix-words-embedding-and-init/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `e38e9e0` |
 | [`clean-repo-artifacts-and-clutter`](clean-repo-artifacts-and-clutter/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `0bb7f9a` |
 | [`fix-scunthorpe-and-blocked-list`](fix-scunthorpe-and-blocked-list/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `7fc7218` |
+| [`fix-historical-scholar-attributions`](fix-historical-scholar-attributions/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `ba5c235` |
 | [`sila-onboarding`](sila-onboarding/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `0fd3c0d` |
 | [`fix-separator-and-word-count-logic`](fix-separator-and-word-count-logic/goal.md) | `🔗 Dep` | 🚢 SHIP | Git Commit | `e732521` |
 | [`fix-category-filtering-and-fallback`](fix-category-filtering-and-fallback/goal.md) | `🔗 Dep` | 🚢 SHIP | Git Commit | `e664af4` |
