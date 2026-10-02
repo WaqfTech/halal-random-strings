@@ -27,11 +27,33 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 6. **Auto-Reconciliation**: Run `sila goals` to scan commits, mark 🟢 **Implemented**, and clear the claim lock.
 
 ## Summary
-- **Total Goals**: 14
+- **Total Goals**: 20
 - 🟢 **Implemented & Verified**: 14
-- 🟡 **Ready to Execute (Pending)**: 0 (0 independent ⚡, 0 unblocked 🔗)
-- 🎯 **By Tier**: 0 immediate (Tier 1), 14 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
-- 📋 **Execution Tasks Progress**: 65/65 completed (100%)
+- 🔵 **In Progress (Claimed)**: 1
+- 🟡 **Ready to Execute (Pending)**: 4 (4 independent ⚡, 0 unblocked 🔗)
+- ⛔ **Blocked on Prerequisites**: 1
+- 🎯 **By Tier**: 0 immediate (Tier 1), 20 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
+- 📋 **Execution Tasks Progress**: 65/100 completed (65%)
+
+---
+
+## 🔵 In Progress (Claimed Goals)
+
+| Goal Package | Tier | Mode | Agent | Status & Note | Started |
+| :--- | :---: | :---: | :--- | :--- | :--- |
+| [`fix-theological-sanitation-and-combinatorial-rules`](fix-theological-sanitation-and-combinatorial-rules/goal.md) | `🗺️ Roadmap` | `⚡ Indep` | `@antigravity` | in progress | 0s ago |
+
+---
+
+## 🟡 Ready to Execute (Pending Goals)
+
+| Goal Package | Tier | Mode & Sequence | Dependencies | Focus & Description | Launch Command |
+| :--- | :---: | :---: | :--- | :--- | :--- |
+| [`fix-delimiter-safety-and-seed-determinism`](fix-delimiter-safety-and-seed-determinism/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent (#16)` | - | Fix Delimiter Safety Bypass and Suffix Seed Determinism — Resolve critical bugs in safety filtering, PRNG determinism, and error handling:... | `/goal goals/fix-delimiter-safety-and-seed-determinism/goal.md` |
+| [`prune-blocked-list-and-resolve-self-blocking`](prune-blocked-list-and-resolve-self-blocking/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent (#17)` | - | Prune False-Positive Blocked Words and Scraped Dictionary Noise — Resolve dictionary self-blocking and clean up scraped dictionary artifacts: 1. *... | `/goal goals/prune-blocked-list-and-resolve-self-blocking/goal.md` |
+| [`enhance-cli-ux-and-resolve-documentation-drift`](enhance-cli-ux-and-resolve-documentation-drift/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent (#19)` | - | Enhance CLI UX, Color Accessibility, and Align Documentation — Fix usability bugs and eliminate documentation inconsistencies: 1. **Accurate CL... | `/goal goals/enhance-cli-ux-and-resolve-documentation-drift/goal.md` |
+| [`reconcile-upstream-licensing-and-d1-pipeline`](reconcile-upstream-licensing-and-d1-pipeline/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent (#20)` | - | Reconcile Upstream Licensing Attribution and Harden D1 Pipeline — Resolve open-source licensing compliance and modernize the database pipeline: 1.... | `/goal goals/reconcile-upstream-licensing-and-d1-pipeline/goal.md` |
+| [`optimize-engine-allocations-and-word-normalization`](optimize-engine-allocations-and-word-normalization/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⛔ Blocked (#18)` | Prereqs: fix-delimiter-safety-and-seed-determinism | Optimize Generator Hot-Path and Pre-normalize Dictionary Words — Drastically reduce memory allocations and latency on the generator hot path: 1. ... | `/goal goals/optimize-engine-allocations-and-word-normalization/goal.md` |
 
 ---
 

@@ -474,3 +474,74 @@ func TestGoal_14_SanitizeAsmaAllahAndVirtues(t *testing.T) {
 		}
 	}
 }
+
+// TestGoal_15_TheologicalSanitationAndCombinatorialRules verifies removal of sacrilegious rules and concepts.
+func TestGoal_15_TheologicalSanitationAndCombinatorialRules(t *testing.T) {
+	// 1. Check prohibited rules are eliminated
+	disallowedPatterns := [][]string{
+		{"islamic_golden_age_scholars", "vegetables"},
+		{"colors_arabic", "muslim_names_male"},
+		{"colors_arabic", "muslim_names_female"},
+		{"animals", "adjectives"},
+	}
+	for _, rule := range words.Rules {
+		for _, dis := range disallowedPatterns {
+			if len(rule.Pattern) == len(dis) {
+				match := true
+				for i := range rule.Pattern {
+					if rule.Pattern[i] != dis[i] {
+						match = false
+						break
+					}
+				}
+				if match {
+					t.Fatalf("prohibited rule pattern %v must not exist in words.Rules", dis)
+				}
+			}
+		}
+	}
+
+	// 2. Check malevolent concepts are purged from nouns_concepts
+	malevolent := []string{
+		"dajjal", "jahannam", "fitna", "yajuj-majuj",
+		"kaba-structure", "masjid-al-haram", "masjid-al-nabawi", "quran",
+	}
+	for _, w := range words.Categories["nouns_concepts"] {
+		for _, mal := range malevolent {
+			if strings.EqualFold(w, mal) {
+				t.Errorf("malevolent or misplaced concept %q must not be in nouns_concepts", w)
+			}
+		}
+	}
+
+	// 3. Check exclusive divine names in muslim_names_male are prefixed
+	exclusiveDivine := []string{"qadir", "ghani", "wahid", "mu'izz"}
+	for _, m := range words.Categories["muslim_names_male"] {
+		norm := strings.ToLower(m)
+		for _, ed := range exclusiveDivine {
+			if norm == ed {
+				t.Errorf("exclusive divine name %q must not exist without servant prefix in muslim_names_male", m)
+			}
+		}
+	}
+
+	// 4. Check fattah in food categories is corrected
+	for _, food := range words.Categories["saudi_food"] {
+		if strings.EqualFold(food, "fattah") {
+			t.Errorf("food item 'Fattah' in saudi_food must be transliterated as 'Fatteh' or 'Fatta'")
+		}
+	}
+	for _, food := range words.Categories["arabic_food"] {
+		if strings.EqualFold(food, "fattah") {
+			t.Errorf("food item 'Fattah' in arabic_food must be transliterated as 'Fatteh' or 'Fatta'")
+		}
+	}
+
+	// 5. Check jannah-end is removed
+	for _, s := range words.Categories["suffixes"] {
+		if strings.EqualFold(s, "jannah-end") {
+			t.Errorf("eschatological violation 'jannah-end' must not exist in suffixes")
+		}
+	}
+}
+
