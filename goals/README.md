@@ -28,10 +28,10 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 
 ## Summary
 - **Total Goals**: 14
-- 🟢 **Implemented & Verified**: 8
-- 🟡 **Ready to Execute (Pending)**: 6 (5 independent ⚡, 1 unblocked 🔗)
+- 🟢 **Implemented & Verified**: 9
+- 🟡 **Ready to Execute (Pending)**: 5 (5 independent ⚡, 0 unblocked 🔗)
 - 🎯 **By Tier**: 0 immediate (Tier 1), 14 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
-- 📋 **Execution Tasks Progress**: 38/65 completed (58%)
+- 📋 **Execution Tasks Progress**: 43/65 completed (66%)
 
 ---
 
@@ -44,7 +44,6 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 | [`harden-d1-scripts-and-architecture`](harden-d1-scripts-and-architecture/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Harden D1 Population Script and Eliminate CI Blocking Prompts — Remove interactive input() prompts from populate_d1.py to fix CI/CD execution, a... | `/goal goals/harden-d1-scripts-and-architecture/goal.md` |
 | [`harmonize-licensing-and-security-policy`](harmonize-licensing-and-security-policy/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Harmonize License Inconsistency, Update Security Policy and Docs — Clarify MIT vs Waqf GPL copyleft conflict, attribute WaqfTech in the license, re... | `/goal goals/harmonize-licensing-and-security-policy/goal.md` |
 | [`sanitize-asma-allah-and-virtues`](sanitize-asma-allah-and-virtues/goal.md) | `🗺️ Roadmap` | `🚢 SHIP ⚡ Independent` | - | Segregate Asma' Allah al-Husna from Generic Adjectives — Segregate the 99 Names and Attributes of Allah from generic adjectives in words.... | `/goal goals/sanitize-asma-allah-and-virtues/goal.md` |
-| [`fix-makefile-and-scripts-stability`](fix-makefile-and-scripts-stability/goal.md) | `🗺️ Roadmap` | `🚢 SHIP 🔗 Ready` | Deps met: clean-repo-artifacts-and-clutter | Fix Makefile Typo, Process Fork Bomb, and Script Zero-Division — Fix %(GO_APP_NAME) typo in Makefile, replace the 1,000-process bash loop with a ... | `/goal goals/fix-makefile-and-scripts-stability/goal.md` |
 
 ---
 
@@ -58,5 +57,6 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 | [`sila-onboarding`](sila-onboarding/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `0fd3c0d` |
 | [`fix-separator-and-word-count-logic`](fix-separator-and-word-count-logic/goal.md) | `🔗 Dep` | 🚢 SHIP | Git Commit | `e732521` |
 | [`fix-category-filtering-and-fallback`](fix-category-filtering-and-fallback/goal.md) | `🔗 Dep` | 🚢 SHIP | Git Commit | `e664af4` |
+| [`fix-makefile-and-scripts-stability`](fix-makefile-and-scripts-stability/goal.md) | `🔗 Dep` | 🚢 SHIP | Git Commit | `317035e` |
 | [`fix-test-suite-and-panics`](fix-test-suite-and-panics/goal.md) | `🔗 Dep` | 🚢 SHIP | Git Commit | `509943b` |
 | [`optimize-generator-performance-and-allocations`](optimize-generator-performance-and-allocations/goal.md) | `🔗 Dep` | 🚢 SHIP | Git Commit | `65c7117` |
