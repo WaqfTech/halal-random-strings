@@ -27,11 +27,11 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 6. **Auto-Reconciliation**: Run `sila goals` to scan commits, mark 🟢 **Implemented**, and clear the claim lock.
 
 ## Summary
-- **Total Goals**: 22
-- 🟢 **Implemented & Verified**: 22
+- **Total Goals**: 23
+- 🟢 **Implemented & Verified**: 23
 - 🟡 **Ready to Execute (Pending)**: 0 (0 independent ⚡, 0 unblocked 🔗)
-- 🎯 **By Tier**: 0 immediate (Tier 1), 22 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
-- 📋 **Execution Tasks Progress**: 108/108 completed (100%)
+- 🎯 **By Tier**: 0 immediate (Tier 1), 23 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
+- 📋 **Execution Tasks Progress**: 112/112 completed (100%)
 
 ---
 
@@ -52,6 +52,7 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 | [`fix-sanctuaries-and-animal-rules`](fix-sanctuaries-and-animal-rules/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `7431c7e` |
 | [`harden-d1-scripts-and-architecture`](harden-d1-scripts-and-architecture/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `dfd58b1` |
 | [`harmonize-licensing-and-security-policy`](harmonize-licensing-and-security-policy/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `9626920` |
+| [`million-corpus-safety-audit`](million-corpus-safety-audit/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `a64caae` |
 | [`sanitize-asma-allah-and-virtues`](sanitize-asma-allah-and-virtues/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `fddf653` |
 | [`sanitize-theology-and-corpus-audit`](sanitize-theology-and-corpus-audit/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `fe6f332` |
 | [`sila-onboarding`](sila-onboarding/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `0fd3c0d` |
