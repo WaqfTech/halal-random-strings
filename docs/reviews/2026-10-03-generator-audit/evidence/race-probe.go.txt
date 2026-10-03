@@ -1,0 +1,30 @@
+package main
+
+import (
+	"sync"
+	hrs "github.com/WaqfTech/halal-random-strings"
+)
+
+func main() {
+	pattern := []string{"muslim_names_male", "muslim_names_male"}
+	e := hrs.NewEngine(hrs.Words{
+		Categories: map[string][]string{"muslim_names_male": {"ahmad"}, "animals": {"cow"}},
+		Rules: []hrs.Rule{{Pattern: pattern}},
+	})
+	var wg sync.WaitGroup
+	wg.Add(2)
+	go func() {
+		defer wg.Done()
+		for i := 0; i < 10000; i++ {
+			pattern[1] = "animals"
+			pattern[1] = "muslim_names_male"
+		}
+	}()
+	go func() {
+		defer wg.Done()
+		for i := 0; i < 1000; i++ {
+			_, _ = e.GenerateWithOptionsE(hrs.Options{Seed: 42, MinWords: 2, MaxWords: 2})
+		}
+	}()
+	wg.Wait()
+}

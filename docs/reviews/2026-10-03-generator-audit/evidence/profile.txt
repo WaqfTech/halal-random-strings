@@ -1,0 +1,7 @@
+goos: linux
+goarch: amd64
+pkg: github.com/WaqfTech/halal-random-strings
+cpu: Intel(R) Core(TM) i7-9700 CPU @ 3.00GHz
+BenchmarkGenerate-8   	  206552	      9726 ns/op	     605 B/op	      25 allocs/op
+PASS
+ok  	github.com/WaqfTech/halal-random-strings	2.317s

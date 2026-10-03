@@ -1,0 +1,30 @@
+[
+  {
+    "file": "corpus-seed42",
+    "lines": 100000,
+    "unique": 98283,
+    "duplicate_excess": 1717,
+    "sha256": "93dc10c7d10aeb7832f3f5af2c9587d94ffb8506924b8878fc740e9da00cd900"
+  },
+  {
+    "file": "corpus-seed2026",
+    "lines": 100000,
+    "unique": 98277,
+    "duplicate_excess": 1723,
+    "sha256": "99c5ce3afba3f3efbde392e3fc1fbc646e0e6755fc36894ae08e1eb8803743c4"
+  },
+  {
+    "file": "animals-places",
+    "lines": 10000,
+    "unique": 9981,
+    "duplicate_excess": 19,
+    "sha256": "f3f1960832a590b9296213761209b285bbdf6ff5252ea7afe3e0ff8253d16e11"
+  },
+  {
+    "file": "animals-architecture",
+    "lines": 10000,
+    "unique": 9995,
+    "duplicate_excess": 5,
+    "sha256": "42ec7b2016d27d28346363069a3a33f1cd97be82a32e25e23b50c26a04141728"
+  }
+]

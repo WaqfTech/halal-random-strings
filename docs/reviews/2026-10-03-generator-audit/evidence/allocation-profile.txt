@@ -1,0 +1,34 @@
+File: profile.test
+Build ID: 5380993e79ad33c7deb09775a482d5cb8ca42310
+Type: alloc_space
+Time: 2026-10-03 09:25:01 +03
+Showing nodes accounting for 130.51MB, 98.44% of 132.58MB total
+Dropped 25 nodes (cum <= 0.66MB)
+      flat  flat%   sum%        cum   cum%
+   87.50MB 66.00% 66.00%    87.50MB 66.00%  strings.(*Builder).WriteString (inline)
+      22MB 16.60% 82.60%       22MB 16.60%  strings.genSplit
+    9.50MB  7.17% 89.76%     9.50MB  7.17%  internal/bytealg.MakeNoZero
+    5.50MB  4.15% 93.91%   130.01MB 98.06%  github.com/WaqfTech/halal-random-strings.(*Engine).GenerateWithOptionsE
+       5MB  3.77% 97.68%        5MB  3.77%  strings.(*Builder).WriteByte (inline)
+       1MB  0.76% 98.44%        1MB  0.76%  runtime.mallocgc
+         0     0% 98.44%   130.01MB 98.06%  github.com/WaqfTech/halal-random-strings.(*Engine).Generate
+         0     0% 98.44%   130.01MB 98.06%  github.com/WaqfTech/halal-random-strings.(*Engine).GenerateWithOptions (inline)
+         0     0% 98.44%    88.50MB 66.76%  github.com/WaqfTech/halal-random-strings.(*Engine).isSafeLocked
+         0     0% 98.44%   130.01MB 98.06%  github.com/WaqfTech/halal-random-strings.BenchmarkGenerate
+         0     0% 98.44%   130.01MB 98.06%  github.com/WaqfTech/halal-random-strings.Generate (inline)
+         0     0% 98.44%     9.50MB  7.17%  github.com/WaqfTech/halal-random-strings.normalizeTokenString
+         0     0% 98.44%        1MB  0.76%  runtime.allocm
+         0     0% 98.44%        1MB  0.76%  runtime.mstart
+         0     0% 98.44%        1MB  0.76%  runtime.mstart0
+         0     0% 98.44%        1MB  0.76%  runtime.mstart1
+         0     0% 98.44%        1MB  0.76%  runtime.newm
+         0     0% 98.44%        1MB  0.76%  runtime.newobject
+         0     0% 98.44%        1MB  0.76%  runtime.resetspinning
+         0     0% 98.44%        1MB  0.76%  runtime.schedule
+         0     0% 98.44%        1MB  0.76%  runtime.startm
+         0     0% 98.44%        1MB  0.76%  runtime.wakep
+         0     0% 98.44%     9.50MB  7.17%  strings.(*Builder).Grow
+         0     0% 98.44%     9.50MB  7.17%  strings.(*Builder).grow
+         0     0% 98.44%       22MB 16.60%  strings.Split (inline)
+         0     0% 98.44%   130.01MB 98.06%  testing.(*B).launch
+         0     0% 98.44%   130.51MB 98.44%  testing.(*B).runN

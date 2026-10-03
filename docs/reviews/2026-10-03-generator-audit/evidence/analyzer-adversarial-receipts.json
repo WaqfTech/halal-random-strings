@@ -1,0 +1,27 @@
+[
+  {
+    "analyzer_input": "ahmad-cow-rice",
+    "exit": 0,
+    "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\n\n============================================================\n           SEMANTIC SENSITIVITY & AUDIT REPORT\n============================================================\nLength metrics: min=14 chars, max=14 chars, avg=14.0 chars\nWord count distribution:\n  3 words: 1 lines (100.00%)\n\n[FAIL] Found 1 Holy/Sacred entity + Mundane pairings:\n  Line 1: ahmad-cow-rice (Holy: ['ahmad'], Mundane: ['cow'])\n[PASS] Zero scraped glossary artifacts detected.\n============================================================\n\nWarning: Sensitivity violations detected in output corpus.\n"
+  },
+  {
+    "analyzer_input": "ahmad_cow_rice",
+    "exit": 0,
+    "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\n\n============================================================\n           SEMANTIC SENSITIVITY & AUDIT REPORT\n============================================================\nLength metrics: min=14 chars, max=14 chars, avg=14.0 chars\nWord count distribution:\n  1 words: 1 lines (100.00%)\n\n[PASS] Zero Holy entity (Qur'an, Prophets, Sahaba, Asma Allah) paired with food/animals.\n[PASS] Zero scraped glossary artifacts detected.\n============================================================\n"
+  },
+  {
+    "analyzer_input": "abu-ubaidah-ibn-al-jarrah-cow",
+    "exit": 0,
+    "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\n\n============================================================\n           SEMANTIC SENSITIVITY & AUDIT REPORT\n============================================================\nLength metrics: min=29 chars, max=29 chars, avg=29.0 chars\nWord count distribution:\n  6 words: 1 lines (100.00%)\n\n[PASS] Zero Holy entity (Qur'an, Prophets, Sahaba, Asma Allah) paired with food/animals.\n[PASS] Zero scraped glossary artifacts detected.\n============================================================\n"
+  },
+  {
+    "analyzer_input": "sad-ibn-abi-waqqas-cow",
+    "exit": 0,
+    "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\n\n============================================================\n           SEMANTIC SENSITIVITY & AUDIT REPORT\n============================================================\nLength metrics: min=22 chars, max=22 chars, avg=22.0 chars\nWord count distribution:\n  5 words: 1 lines (100.00%)\n\n[PASS] Zero Holy entity (Qur'an, Prophets, Sahaba, Asma Allah) paired with food/animals.\n[PASS] Zero scraped glossary artifacts detected.\n============================================================\n"
+  },
+  {
+    "analyzer_input": "ahmad-donkey-food",
+    "exit": 0,
+    "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\n\n============================================================\n           SEMANTIC SENSITIVITY & AUDIT REPORT\n============================================================\nLength metrics: min=17 chars, max=17 chars, avg=17.0 chars\nWord count distribution:\n  3 words: 1 lines (100.00%)\n\n[PASS] Zero Holy entity (Qur'an, Prophets, Sahaba, Asma Allah) paired with food/animals.\n[PASS] Zero scraped glossary artifacts detected.\n============================================================\n"
+  }
+]

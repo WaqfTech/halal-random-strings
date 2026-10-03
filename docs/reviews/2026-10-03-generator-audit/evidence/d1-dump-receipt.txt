@@ -1,0 +1,5 @@
+
+--- Populating D1 Database 'my-halal-strings-db' ---
+Preparing SQL statements from '/tmp/hrs-review/plain-failure.txt'...
+Prepared 1 strings in '/tmp/hrs-review/d1-dump.sql'.
+SQL dump completed successfully. File saved to '/tmp/hrs-review/d1-dump.sql'.

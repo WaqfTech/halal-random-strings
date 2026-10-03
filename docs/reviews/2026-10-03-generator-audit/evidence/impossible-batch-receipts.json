@@ -1,0 +1,20 @@
+[
+  {
+    "repeat": 1,
+    "seconds": 0.13789837800140958,
+    "exit": 1,
+    "stderr": "Error: failed to generate valid string for index 0 within retry limit\n"
+  },
+  {
+    "repeat": 10,
+    "seconds": 1.334182532998966,
+    "exit": 1,
+    "stderr": "Error: failed to generate valid string for index 0 within retry limit\n"
+  },
+  {
+    "repeat": 100,
+    "seconds": 25.8006426810025,
+    "exit": 1,
+    "stderr": "Error: failed to generate valid string for index 0 within retry limit\n"
+  }
+]

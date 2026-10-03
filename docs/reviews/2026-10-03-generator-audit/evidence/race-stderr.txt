@@ -1,0 +1,22 @@
+==================
+WARNING: DATA RACE
+Read at 0x00c00007c0f0 by goroutine 8:
+  github.com/WaqfTech/halal-random-strings.(*Engine).GenerateWithOptionsE()
+      /mnt/Jad/github/projects/waqftech/halal-random-strings/halal-random-strings.go:501 +0xa24
+  main.main.func2()
+      /tmp/hrs-review/race-probe.go:26 +0x156
+
+Previous write at 0x00c00007c0f0 by goroutine 7:
+  main.main.func1()
+      /tmp/hrs-review/race-probe.go:19 +0xe4
+
+Goroutine 8 (running) created at:
+  main.main()
+      /tmp/hrs-review/race-probe.go:23 +0x545
+
+Goroutine 7 (finished) created at:
+  main.main()
+      /tmp/hrs-review/race-probe.go:16 +0x49d
+==================
+Found 1 data race(s)
+exit status 66

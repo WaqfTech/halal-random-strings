@@ -1,0 +1,78 @@
+[
+  {
+    "case": "custom-engine-exact-prohibited-example",
+    "output": [
+      "ahmad-donkey-food"
+    ],
+    "seconds": 0.000014413
+  },
+  {
+    "case": "custom-engine-mixed-domain-rule-with-blocklist",
+    "output": [
+      "ahmad-cow-food"
+    ],
+    "seconds": 0.000009
+  },
+  {
+    "case": "caller-can-mutate-engine-rules-after-construction",
+    "output": [
+      "ahmad-cow-food"
+    ],
+    "seconds": 0.000008566
+  },
+  {
+    "case": "apostrophe-blocklist-normalization",
+    "output": [
+      "smores",
+      "date",
+      "smores",
+      "date",
+      "smores",
+      "date"
+    ],
+    "seconds": 0.000011193
+  },
+  {
+    "case": "five-token-blocked-phrase",
+    "output": [
+      "alpha-beta-gamma-delta-epsilon",
+      "date",
+      "alpha-beta-gamma-delta-epsilon",
+      "date",
+      "alpha-beta-gamma-delta-epsilon",
+      "date"
+    ],
+    "seconds": 0.000012306
+  },
+  {
+    "case": "alphabetic-separator-blocklist-bypass",
+    "output": [
+      "winexdate",
+      "winexdate",
+      "datexwine",
+      "datexwine",
+      "winexwine",
+      "datexdate"
+    ],
+    "seconds": 0.000010406
+  },
+  {
+    "case": "rule-template-is-ignored",
+    "output": [
+      "safe"
+    ],
+    "seconds": 0.000008361
+  },
+  {
+    "case": "missing-rule-category-silently-skipped",
+    "output": [
+      "safe"
+    ],
+    "seconds": 0.000008056
+  },
+  {
+    "case": "empty-dataset-load-succeeds",
+    "error": "no rules available for specified options",
+    "seconds": 3.59e-7
+  }
+]

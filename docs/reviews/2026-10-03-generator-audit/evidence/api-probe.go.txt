@@ -1,0 +1,72 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"time"
+
+	hrs "github.com/WaqfTech/halal-random-strings"
+)
+
+type receipt struct {
+	Case string `json:"case"`
+	Output []string `json:"output,omitempty"`
+	Error string `json:"error,omitempty"`
+	Seconds float64 `json:"seconds"`
+}
+
+func probe(label string, e *hrs.Engine, opts hrs.Options) receipt {
+	t := time.Now()
+	out, err := e.GenerateWithOptionsE(opts)
+	r := receipt{Case: label, Output: out, Seconds: time.Since(t).Seconds()}
+	if err != nil { r.Error = err.Error() }
+	return r
+}
+
+func main() {
+	opts := hrs.Options{Seed: 42, Repeat: 1, MinWords: 3, MaxWords: 3}
+	w := hrs.Words{
+		Categories: map[string][]string{"muslim_names_male": {"ahmad"}, "animals": {"donkey"}, "arabic_food": {"food"}},
+		Rules: []hrs.Rule{{Pattern: []string{"muslim_names_male", "animals", "arabic_food"}, Template: "{muslim_names_male}-{animals}-{arabic_food}"}},
+	}
+	rs := []receipt{probe("custom-engine-exact-prohibited-example", hrs.NewEngine(w), opts)}
+	w.Categories["animals"][0] = "cow"
+	w.Blocked = []string{"donkey"}
+	rs = append(rs, probe("custom-engine-mixed-domain-rule-with-blocklist", hrs.NewEngine(w), opts))
+
+	pattern := []string{"muslim_names_male", "muslim_names_male", "muslim_names_male"}
+	w.Rules = []hrs.Rule{{Pattern: pattern}}
+	e := hrs.NewEngine(w)
+	pattern[1], pattern[2] = "animals", "arabic_food"
+	rs = append(rs, probe("caller-can-mutate-engine-rules-after-construction", e, opts))
+
+	for _, item := range []struct{ name, value, blocked string }{
+		{"apostrophe-blocklist-normalization", "s'mores", "s'mores"},
+		{"five-token-blocked-phrase", "alpha-beta-gamma-delta-epsilon", "alpha-beta-gamma-delta-epsilon"},
+		{"alphabetic-separator-blocklist-bypass", "wine", "wine"},
+	} {
+		e := hrs.NewEngine(hrs.Words{Categories: map[string][]string{"custom": {item.value, "date"}}, Rules: []hrs.Rule{{Pattern: []string{"custom"}}}, Blocked: []string{item.blocked}})
+		o := hrs.Options{Seed: 42, Repeat: 6, MinWords: 1, MaxWords: 5}
+		if item.name == "alphabetic-separator-blocklist-bypass" { o.MinWords, o.MaxWords, o.Sep = 2, 2, "x" }
+		rs = append(rs, probe(item.name, e, o))
+	}
+
+	e = hrs.NewEngine(hrs.Words{Categories: map[string][]string{"custom": {"safe"}}, Rules: []hrs.Rule{{Pattern: []string{"custom"}, Template: "constant-{custom}-suffix"}}})
+	rs = append(rs, probe("rule-template-is-ignored", e, hrs.Options{Seed: 42, MinWords: 1, MaxWords: 1}))
+	e = hrs.NewEngine(hrs.Words{Categories: map[string][]string{"custom": {"safe"}}, Rules: []hrs.Rule{{Pattern: []string{"nonexistent", "custom"}}}})
+	rs = append(rs, probe("missing-rule-category-silently-skipped", e, hrs.Options{Seed: 42, MinWords: 1, MaxWords: 1}))
+
+	e, _ = hrs.NewDefaultEngine()
+	tmp, err := os.CreateTemp("", "hrs-review-empty-*.json")
+	if err != nil { panic(err) }
+	defer os.Remove(tmp.Name())
+	_, _ = tmp.WriteString("{}")
+	_ = tmp.Close()
+	loadErr := e.LoadWords(tmp.Name())
+	r := probe("empty-dataset-load-succeeds", e, opts)
+	if loadErr != nil { r.Error = fmt.Sprintf("load: %v; generate: %s", loadErr, r.Error) }
+	rs = append(rs, r)
+	out, _ := json.MarshalIndent(rs, "", "  ")
+	fmt.Println(string(out))
+}

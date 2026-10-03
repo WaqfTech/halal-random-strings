@@ -1,0 +1,7 @@
+Baseline 124f1c3; Go 1.27.1; linux/amd64; Intel Core i7-9700 @ 3.00 GHz
+Command: go test -run '^$' -bench '^BenchmarkGenerate' -benchmem -count=6 -benchtime=300ms
+BenchmarkGenerate-8: 1994, 2230, 1935, 1939, 1952, 2034 ns/op; 604-605 B/op; 25 allocs/op
+BenchmarkGenerateWithOptions-8: 1970, 1938, 1937, 1916, 1895, 1920 ns/op; 604-605 B/op; 25 allocs/op
+PASS
+Medians: Generate 1973 ns/op; GenerateWithOptions 1928.5 ns/op.
+These are baseline measurements, not before/after optimization results.

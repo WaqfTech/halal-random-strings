@@ -1,0 +1,9 @@
+cmd/halal-random-strings/main.go:145:16: undefined: halalrandomstrings (typecheck)
+	categories := halalrandomstrings.GetCategories()
+	              ^
+cmd/halal-random-strings/main.go:164:18: undefined: halalrandomstrings (typecheck)
+		opts           halalrandomstrings.Options
+		               ^
+cmd/halal-random-strings/main.go:205:12: undefined: halalrandomstrings (typecheck)
+	r, err := halalrandomstrings.GenerateWithOptionsE(opts)
+	          ^

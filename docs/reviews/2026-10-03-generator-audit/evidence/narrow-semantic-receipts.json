@@ -1,0 +1,685 @@
+[
+  {
+    "corpus": "corpus-seed42",
+    "entity_food_matches": 0,
+    "neutral_sensitive_food_matches": 43,
+    "entity_samples": [],
+    "neutral_sensitive_samples": [
+      {
+        "line": 247,
+        "text": "mausoleum-tomb-moment-sesame-seeds-knafeh",
+        "sensitive_markers": [
+          "mausoleum-tomb"
+        ],
+        "animals_or_food": [
+          "knafeh",
+          "sesame-seeds"
+        ]
+      },
+      {
+        "line": 7249,
+        "text": "clove-bud-watercress-shrine-holy-world",
+        "sensitive_markers": [
+          "shrine-holy"
+        ],
+        "animals_or_food": [
+          "clove-bud",
+          "watercress"
+        ]
+      },
+      {
+        "line": 9310,
+        "text": "khanqah-monastery-bright-martabak-dill-seed",
+        "sensitive_markers": [
+          "khanqah-monastery"
+        ],
+        "animals_or_food": [
+          "dill",
+          "dill-seed",
+          "martabak"
+        ]
+      },
+      {
+        "line": 10638,
+        "text": "shrine-holy-dwelling-green-peppercorn-falafel",
+        "sensitive_markers": [
+          "shrine-holy"
+        ],
+        "animals_or_food": [
+          "falafel",
+          "green-peppercorn"
+        ]
+      },
+      {
+        "line": 12866,
+        "text": "civet-jungle-shrine-holy-silver",
+        "sensitive_markers": [
+          "shrine-holy"
+        ],
+        "animals_or_food": [
+          "civet"
+        ]
+      },
+      {
+        "line": 14873,
+        "text": "khanqah-monastery-night-polar-bear-plateau-land",
+        "sensitive_markers": [
+          "khanqah-monastery"
+        ],
+        "animals_or_food": [
+          "bear",
+          "polar-bear"
+        ]
+      },
+      {
+        "line": 18131,
+        "text": "khanqah-monastery-emerald-nightingale-island",
+        "sensitive_markers": [
+          "khanqah-monastery"
+        ],
+        "animals_or_food": [
+          "nightingale"
+        ]
+      },
+      {
+        "line": 18811,
+        "text": "kalintita-tarragon-caliphate-root-lily-cosmos",
+        "sensitive_markers": [
+          "caliphate"
+        ],
+        "animals_or_food": [
+          "kalintita",
+          "tarragon"
+        ]
+      },
+      {
+        "line": 19493,
+        "text": "caliphate-sun-burquqi-lantern-kidney-bean-ancho-chili",
+        "sensitive_markers": [
+          "caliphate"
+        ],
+        "animals_or_food": [
+          "ancho-chili",
+          "kidney-bean"
+        ]
+      },
+      {
+        "line": 20906,
+        "text": "sesame-seed-karkadeh-shrine-holy-quest",
+        "sensitive_markers": [
+          "shrine-holy"
+        ],
+        "animals_or_food": [
+          "karkadeh",
+          "sesame-seed"
+        ]
+      },
+      {
+        "line": 24113,
+        "text": "ablution-area-wash-branch-galangal-halva",
+        "sensitive_markers": [
+          "ablution-area-wash"
+        ],
+        "animals_or_food": [
+          "galangal",
+          "halva"
+        ]
+      },
+      {
+        "line": 24703,
+        "text": "zawiya-shrine-dunia-black-mulberry-wadi-valley",
+        "sensitive_markers": [
+          "zawiya-shrine"
+        ],
+        "animals_or_food": [
+          "mulberry"
+        ]
+      }
+    ]
+  },
+  {
+    "corpus": "corpus-seed2026",
+    "entity_food_matches": 0,
+    "neutral_sensitive_food_matches": 37,
+    "entity_samples": [],
+    "neutral_sensitive_samples": [
+      {
+        "line": 5547,
+        "text": "tabouleh-star-fruit-mausoleum-tomb-network",
+        "sensitive_markers": [
+          "mausoleum-tomb"
+        ],
+        "animals_or_food": [
+          "star-fruit",
+          "tabouleh"
+        ]
+      },
+      {
+        "line": 7266,
+        "text": "harees-allspice-berry-khanqah-monastery-dew",
+        "sensitive_markers": [
+          "khanqah-monastery"
+        ],
+        "animals_or_food": [
+          "allspice",
+          "allspice-berry",
+          "harees"
+        ]
+      },
+      {
+        "line": 8181,
+        "text": "caliphate-clean-butterfly-wadi-valley",
+        "sensitive_markers": [
+          "caliphate"
+        ],
+        "animals_or_food": [
+          "butterfly"
+        ]
+      },
+      {
+        "line": 8913,
+        "text": "date-palm-app-zawiya-shrine-commons",
+        "sensitive_markers": [
+          "zawiya-shrine"
+        ],
+        "animals_or_food": [
+          "date"
+        ]
+      },
+      {
+        "line": 9439,
+        "text": "zawiya-shrine-breeze-pea-watercress-spice",
+        "sensitive_markers": [
+          "zawiya-shrine"
+        ],
+        "animals_or_food": [
+          "pea",
+          "watercress",
+          "watercress-spice"
+        ]
+      },
+      {
+        "line": 12641,
+        "text": "thyme-leaf-zaalouk-mausoleum-tomb-moon",
+        "sensitive_markers": [
+          "mausoleum-tomb"
+        ],
+        "animals_or_food": [
+          "thyme",
+          "thyme-leaf",
+          "zaalouk"
+        ]
+      },
+      {
+        "line": 16455,
+        "text": "athel-tamarisk-loquat-ablution-area-wash-innovator",
+        "sensitive_markers": [
+          "ablution-area-wash"
+        ],
+        "animals_or_food": [
+          "loquat"
+        ]
+      },
+      {
+        "line": 20075,
+        "text": "ant-lake-zawiya-shrine-source",
+        "sensitive_markers": [
+          "zawiya-shrine"
+        ],
+        "animals_or_food": [
+          "ant"
+        ]
+      },
+      {
+        "line": 22741,
+        "text": "zawiya-shrine-works-lynx-plateau",
+        "sensitive_markers": [
+          "zawiya-shrine"
+        ],
+        "animals_or_food": [
+          "lynx"
+        ]
+      },
+      {
+        "line": 22811,
+        "text": "spruce-quince-khanqah-monastery-truth",
+        "sensitive_markers": [
+          "khanqah-monastery"
+        ],
+        "animals_or_food": [
+          "quince"
+        ]
+      },
+      {
+        "line": 26115,
+        "text": "halaweh-guava-pink-shrine-holy-realm",
+        "sensitive_markers": [
+          "shrine-holy"
+        ],
+        "animals_or_food": [
+          "guava",
+          "guava-pink",
+          "halaweh"
+        ]
+      },
+      {
+        "line": 26644,
+        "text": "red-winged-blackbird-lake-ablution-area-wash-star",
+        "sensitive_markers": [
+          "ablution-area-wash"
+        ],
+        "animals_or_food": [
+          "blackbird",
+          "red-winged-blackbird"
+        ]
+      }
+    ]
+  },
+  {
+    "corpus": "animals-places",
+    "entity_food_matches": 0,
+    "neutral_sensitive_food_matches": 92,
+    "entity_samples": [],
+    "neutral_sensitive_samples": [
+      {
+        "line": 187,
+        "text": "theater-squirrel-shrine-holy-ox",
+        "sensitive_markers": [
+          "shrine-holy"
+        ],
+        "animals_or_food": [
+          "ox",
+          "squirrel"
+        ]
+      },
+      {
+        "line": 282,
+        "text": "ablution-area-wash-stoat-desert-dunes",
+        "sensitive_markers": [
+          "ablution-area-wash"
+        ],
+        "animals_or_food": [
+          "stoat"
+        ]
+      },
+      {
+        "line": 383,
+        "text": "hedgehog-caliphate-mongoose-lion-rabbit",
+        "sensitive_markers": [
+          "caliphate"
+        ],
+        "animals_or_food": [
+          "hedgehog",
+          "lion",
+          "mongoose",
+          "rabbit"
+        ]
+      },
+      {
+        "line": 413,
+        "text": "dove-mali-country-neighborhood-ablution-area-wash",
+        "sensitive_markers": [
+          "ablution-area-wash"
+        ],
+        "animals_or_food": [
+          "dove"
+        ]
+      },
+      {
+        "line": 448,
+        "text": "gazelle-newt-khanqah-monastery-alpaca",
+        "sensitive_markers": [
+          "khanqah-monastery"
+        ],
+        "animals_or_food": [
+          "alpaca",
+          "gazelle",
+          "newt"
+        ]
+      },
+      {
+        "line": 474,
+        "text": "jordan-country-bear-mausoleum-tomb",
+        "sensitive_markers": [
+          "mausoleum-tomb"
+        ],
+        "animals_or_food": [
+          "bear"
+        ]
+      },
+      {
+        "line": 668,
+        "text": "chicken-ouagadougou-shrine-holy-addis-ababa-city",
+        "sensitive_markers": [
+          "shrine-holy"
+        ],
+        "animals_or_food": [
+          "chicken"
+        ]
+      },
+      {
+        "line": 713,
+        "text": "basra-city-squirrel-khanqah-monastery",
+        "sensitive_markers": [
+          "khanqah-monastery"
+        ],
+        "animals_or_food": [
+          "squirrel"
+        ]
+      },
+      {
+        "line": 941,
+        "text": "ouagadougou-mausoleum-tomb-bee-ephesus-ruins",
+        "sensitive_markers": [
+          "mausoleum-tomb"
+        ],
+        "animals_or_food": [
+          "bee"
+        ]
+      },
+      {
+        "line": 977,
+        "text": "antelope-fish-goat-chicken-caliphate",
+        "sensitive_markers": [
+          "caliphate"
+        ],
+        "animals_or_food": [
+          "antelope",
+          "chicken",
+          "fish",
+          "goat"
+        ]
+      },
+      {
+        "line": 1051,
+        "text": "whale-caliphate-newt-lahore-chipmunk",
+        "sensitive_markers": [
+          "caliphate"
+        ],
+        "animals_or_food": [
+          "chipmunk",
+          "newt",
+          "whale"
+        ]
+      },
+      {
+        "line": 1305,
+        "text": "goat-shrimp-sector-khanqah-monastery",
+        "sensitive_markers": [
+          "khanqah-monastery"
+        ],
+        "animals_or_food": [
+          "goat",
+          "shrimp"
+        ]
+      }
+    ]
+  },
+  {
+    "corpus": "animals-architecture",
+    "entity_food_matches": 102,
+    "neutral_sensitive_food_matches": 200,
+    "entity_samples": [
+      {
+        "line": 24,
+        "text": "minbar-quadriporticus-squirrel-caravanserai-quoin",
+        "entities": [
+          "minbar"
+        ],
+        "animals_or_food": [
+          "squirrel"
+        ]
+      },
+      {
+        "line": 40,
+        "text": "mole-tiger-hamm\u0101m-minbar-stairs",
+        "entities": [
+          "minbar"
+        ],
+        "animals_or_food": [
+          "mole",
+          "tiger"
+        ]
+      },
+      {
+        "line": 233,
+        "text": "sheep-canal-dome-koala-mihrab",
+        "entities": [
+          "mihrab"
+        ],
+        "animals_or_food": [
+          "koala",
+          "sheep"
+        ]
+      },
+      {
+        "line": 303,
+        "text": "quail-cloister-mihrab-finial-buttress",
+        "entities": [
+          "mihrab"
+        ],
+        "animals_or_food": [
+          "quail"
+        ]
+      },
+      {
+        "line": 331,
+        "text": "tympanum-fountain-mihrab-ostrich-hippopotamus",
+        "entities": [
+          "mihrab"
+        ],
+        "animals_or_food": [
+          "hippopotamus",
+          "ostrich"
+        ]
+      },
+      {
+        "line": 407,
+        "text": "dove-walrus-coffer-mihrab-keep",
+        "entities": [
+          "mihrab"
+        ],
+        "animals_or_food": [
+          "dove",
+          "walrus"
+        ]
+      },
+      {
+        "line": 428,
+        "text": "arcade-mihrab-capital-lynx-gate",
+        "entities": [
+          "mihrab"
+        ],
+        "animals_or_food": [
+          "lynx"
+        ]
+      },
+      {
+        "line": 628,
+        "text": "atrium-reindeer-zawiya-minbar-stairs",
+        "entities": [
+          "minbar"
+        ],
+        "animals_or_food": [
+          "reindeer"
+        ]
+      },
+      {
+        "line": 641,
+        "text": "bison-grasshopper-oyster-ribat-mihrab",
+        "entities": [
+          "mihrab"
+        ],
+        "animals_or_food": [
+          "bison",
+          "grasshopper",
+          "oyster"
+        ]
+      },
+      {
+        "line": 704,
+        "text": "mihrab-locust-hedgehog-keep-hamm\u0101m",
+        "entities": [
+          "mihrab"
+        ],
+        "animals_or_food": [
+          "hedgehog",
+          "locust"
+        ]
+      },
+      {
+        "line": 726,
+        "text": "minbar-bison-buffalo-hare-nave",
+        "entities": [
+          "minbar"
+        ],
+        "animals_or_food": [
+          "bison",
+          "buffalo",
+          "hare"
+        ]
+      },
+      {
+        "line": 1212,
+        "text": "qanat-mihrab-iguana-dolphin-pylon",
+        "entities": [
+          "mihrab"
+        ],
+        "animals_or_food": [
+          "dolphin",
+          "iguana"
+        ]
+      }
+    ],
+    "neutral_sensitive_samples": [
+      {
+        "line": 24,
+        "text": "minbar-quadriporticus-squirrel-caravanserai-quoin",
+        "sensitive_markers": [
+          "minbar"
+        ],
+        "animals_or_food": [
+          "squirrel"
+        ]
+      },
+      {
+        "line": 40,
+        "text": "mole-tiger-hamm\u0101m-minbar-stairs",
+        "sensitive_markers": [
+          "minbar",
+          "minbar-stairs"
+        ],
+        "animals_or_food": [
+          "mole",
+          "tiger"
+        ]
+      },
+      {
+        "line": 113,
+        "text": "stoa-eagle-leopard-qibla-wall",
+        "sensitive_markers": [
+          "qibla-wall"
+        ],
+        "animals_or_food": [
+          "eagle",
+          "leopard"
+        ]
+      },
+      {
+        "line": 233,
+        "text": "sheep-canal-dome-koala-mihrab",
+        "sensitive_markers": [
+          "mihrab"
+        ],
+        "animals_or_food": [
+          "koala",
+          "sheep"
+        ]
+      },
+      {
+        "line": 292,
+        "text": "ant-beaver-adhan-tower-alley",
+        "sensitive_markers": [
+          "adhan-tower"
+        ],
+        "animals_or_food": [
+          "ant",
+          "beaver"
+        ]
+      },
+      {
+        "line": 303,
+        "text": "quail-cloister-mihrab-finial-buttress",
+        "sensitive_markers": [
+          "mihrab"
+        ],
+        "animals_or_food": [
+          "quail"
+        ]
+      },
+      {
+        "line": 331,
+        "text": "tympanum-fountain-mihrab-ostrich-hippopotamus",
+        "sensitive_markers": [
+          "mihrab"
+        ],
+        "animals_or_food": [
+          "hippopotamus",
+          "ostrich"
+        ]
+      },
+      {
+        "line": 407,
+        "text": "dove-walrus-coffer-mihrab-keep",
+        "sensitive_markers": [
+          "mihrab"
+        ],
+        "animals_or_food": [
+          "dove",
+          "walrus"
+        ]
+      },
+      {
+        "line": 428,
+        "text": "arcade-mihrab-capital-lynx-gate",
+        "sensitive_markers": [
+          "mihrab"
+        ],
+        "animals_or_food": [
+          "lynx"
+        ]
+      },
+      {
+        "line": 457,
+        "text": "canal-adhan-tower-whale-geometric-tile",
+        "sensitive_markers": [
+          "adhan-tower"
+        ],
+        "animals_or_food": [
+          "whale"
+        ]
+      },
+      {
+        "line": 492,
+        "text": "ant-base-prayer-niche-balcony",
+        "sensitive_markers": [
+          "prayer-niche"
+        ],
+        "animals_or_food": [
+          "ant"
+        ]
+      },
+      {
+        "line": 560,
+        "text": "starfish-atrium-seal-spire-qibla-wall",
+        "sensitive_markers": [
+          "qibla-wall"
+        ],
+        "animals_or_food": [
+          "seal",
+          "starfish"
+        ]
+      }
+    ]
+  }
+]

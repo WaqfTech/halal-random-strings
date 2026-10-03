@@ -1,0 +1,44 @@
+Total lines: 100000
+Unique lines: 98283
+Uniqueness percentage: 98.28%
+
+Duplicate lines:
+hamza-ibn-abd-al-muttalib (x24)
+abd-al-rahman-ibn-awf (x22)
+abdur-rahman-ibn-abu-bakr (x22)
+abdullah-ibn-amr-ibn-al-aas (x18)
+umm-hakim-bint-al-harith (x17)
+al-abbas-ibn-abd-al-muttalib (x16)
+abd-dhul-jalali-wal-ikram (x14)
+abu-ubaidah-ibn-al-jarrah (x14)
+safiyyah-bint-abd-al-muttalib (x13)
+al-ithnayn-caliphate-of-abu-bakr (x12)
+al-jumuah-construction-of-great-mosque-of-cordoba (x12)
+al-sabt-isra-wal-miraj (x12)
+al-arbaa-conquest-of-persia (x10)
+al-arbaa-night-journey-and-ascension (x10)
+al-thulatha-battle-of-ain-jalut (x10)
+al-thulatha-birth-of-prophet-muhammad (x10)
+al-thulatha-advances-in-medicine (x9)
+al-thulatha-battle-of-yarmouk (x9)
+al-thulatha-construction-of-masjid-nabawi (x9)
+al-arbaa-birth-of-prophet-muhammad (x8)
+... and 672 more duplicate entries.
+
+============================================================
+           SEMANTIC SENSITIVITY & AUDIT REPORT
+============================================================
+Length metrics: min=18 chars, max=84 chars, avg=40.1 chars
+Word count distribution:
+  5 words: 35560 lines (35.56%)
+  6 words: 38802 lines (38.80%)
+  7 words: 18174 lines (18.17%)
+  8 words: 7464 lines (7.46%)
+
+[PASS] Zero Holy entity (Qur'an, Prophets, Sahaba, Asma Allah) paired with food/animals.
+
+[FAIL] Found 1 scraped glossary artifacts:
+  Line 537: umm-kulthum-bint-muhammad-fajr-dawn
+============================================================
+
+Warning: Sensitivity violations detected in output corpus.

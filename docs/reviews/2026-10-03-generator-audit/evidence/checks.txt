@@ -1,0 +1,26 @@
+Baseline 124f1c3, 2026-10-03
+Go 1.27.1 linux/amd64; Python 3.13.5
+GOCACHE=/tmp/hrs-review-go-cache; Go resolved from /home/jad/.local/share/mise/installs/go/1.27.1/bin
+
+go test -race ./...: exit 0
+ok github.com/WaqfTech/halal-random-strings 1.475s
+? github.com/WaqfTech/halal-random-strings/cmd/halal-random-strings [no test files]
+go vet ./...: exit 0
+go build ./...: exit 0
+CLI build -o /tmp/hrs-review-cli ./cmd/halal-random-strings: exit 0
+
+govulncheck ./...: sandbox attempt failed on DNS socket permissions; approved network run exited 0
+No reachable vulnerabilities found. 0 findings in imported packages; 1 in required modules not called by this code.
+
+golangci-lint run ./...: exit 1, diagnostic retained in lint.txt
+Version v1.64.8 built with go1.27.1. Typecheck diagnostics conflict with successful build/vet; unresolved tooling issue.
+
+gofmt -l: reports halal-random-strings.go, halal-random-strings_test.go, cmd/halal-random-strings/main.go
+
+/usr/bin/python3.11 scripts/populate_d1.py --help: exit 1
+File scripts/populate_d1.py, line 56
+SyntaxError: f-string expression part cannot include a backslash
+
+Standalone adversarial go run -race: exit 1; program exit 66, one data race; see race-stderr.txt
+Existing analyzer of seed-42 corpus: exit 0 even though output contains [FAIL]; see existing-audit.txt
+D1 SQL dump: exit 0; contains unsafe fixture and explicit transaction statements; no database execution performed.
