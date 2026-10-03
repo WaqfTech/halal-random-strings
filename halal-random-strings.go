@@ -1,26 +1,19 @@
-// Package halalrandomstrings provides a human-readable random string generator.
+// Package halalrandomstrings generates identifiers from reviewed word lists.
+// These identifiers are not passwords or a religious certification.
 package halalrandomstrings
 
 import (
 	crand "crypto/rand"
 	_ "embed"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"math/rand"
-	"os"
 	"sort"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
-
-	"github.com/charmbracelet/x/exp/ordered"
-)
-
-const (
-	defaultPrefixThreshold = 0.2
-	defaultSuffixThreshold = 0.2
-	maxRetries             = 1000 // Increased max retries
 )
 
 //go:embed words.json
@@ -28,8 +21,9 @@ var defaultWordsData []byte
 
 type Words struct {
 	Categories map[string][]string `json:"categories"`
-	Rules      []Rule              `json:"rules"`	
+	Rules      []Rule              `json:"rules"`
 	Blocked    []string            `json:"blocked"`
+	Policy     MixingPolicy        `json:"policy"`
 }
 
 type Rule struct {
@@ -37,251 +31,117 @@ type Rule struct {
 	Template string   `json:"template"`
 }
 
+// MixingPolicy is embedded with the reviewed dictionary, not user configurable.
+type MixingPolicy struct {
+	Version            int               `json:"version"`
+	CategoryGroups     map[string]string `json:"category_groups"`
+	AllowedSeparators  []string          `json:"allowed_separators"`
+	DisabledCategories map[string]string `json:"disabled_categories"`
+	MaxWords           int               `json:"max_words"`
+	MaxRepeat          int               `json:"max_repeat"`
+}
+
 type wordToken struct {
 	text   string
 	tokens int
 }
+type wordBuckets [][]wordToken
 
-// Engine provides a thread-safe random string generator engine.
+// Engine is immutable after construction and safe for concurrent readers.
 type Engine struct {
-	mu                       sync.RWMutex
-	words                    Words
-	blockedSet               map[string]struct{}
-	normWords                map[string][]wordToken
-	defaultSacredCandidates  []Rule
-	defaultMundaneCandidates []Rule
+	words           Words
+	blockedSet      map[string]struct{}
+	blockedTrie     *blockedNode
+	normWords       map[string][]wordToken
+	catBuckets      map[string]wordBuckets
+	groupBuckets    map[string]wordBuckets
+	groupPhrases    map[string]map[string]struct{}
+	maxPhraseTokens map[string]int
+	defaultPlans    []generationPlan
+	err             error
 }
 
-var randPool = sync.Pool{
-	New: func() any {
-		return rand.New(rand.NewSource(time.Now().UnixNano()))
-	},
-}
+// ErrCustomDictionariesDisabled is returned for all custom dictionary requests.
+var ErrCustomDictionariesDisabled = errors.New("custom dictionaries are disabled; use NewDefaultEngine and reviewed categories")
 
-const (
-	domainNeutral = 0
-	domainSacred  = 1
-	domainMundane = 2
-)
+var randPool = sync.Pool{New: func() any { return rand.New(rand.NewSource(time.Now().UnixNano())) }}
+var apostropheNormalizer = strings.NewReplacer("'", "", "’", "")
 
-var (
-	sacredCategories = map[string]struct{}{
-		"sahaba":                      {},
-		"muslim_names_male":           {},
-		"muslim_names_female":         {},
-		"asma_allah":                  {},
-		"servant_prefixes":            {},
-		"holy_sanctuaries":            {},
-		"scholarly_terms":             {},
-		"islamic_events":              {},
-		"adab_terms":                  {},
-		"islamic_virtues":             {},
-		"islamic_art_forms":           {},
-		"islamic_golden_age_scholars": {},
-		"days_of_week_arabic":         {},
-		"islamic_months":              {},
-		"nouns_concepts":              {},
-		"adjectives":                  {},
-		"muslim_empires":              {},
-	}
+// NewEngine retains its old signature but returns a disabled engine.
+// Deprecated: use NewDefaultEngine. GenerateWithOptionsE reports the rejection.
+func NewEngine(_ Words) *Engine { return &Engine{err: ErrCustomDictionariesDisabled} }
 
-	mundaneCategories = map[string]struct{}{
-		"animals":        {},
-		"birds":          {},
-		"arabic_food":    {},
-		"jordanian_food": {},
-		"saudi_food":     {},
-		"yemeni_food":    {},
-		"vegetables":     {},
-		"fruits":         {},
-		"spices":         {},
-		"trees":          {},
-		"nouns_objects":  {},
-	}
-)
+// LoadWords rejects overrides without reading the file or changing the engine.
+// Deprecated: custom dictionaries are disabled.
+func (e *Engine) LoadWords(_ string) error { return ErrCustomDictionariesDisabled }
 
-func isSacredCategory(cat string) bool {
-	_, ok := sacredCategories[cat]
-	return ok
-}
+// LoadWords rejects overrides of the package default dictionary.
+// Deprecated: custom dictionaries are disabled.
+func LoadWords(_ string) error { return ErrCustomDictionariesDisabled }
 
-func isMundaneCategory(cat string) bool {
-	_, ok := mundaneCategories[cat]
-	return ok
-}
-
-func getRuleDomain(rule Rule) int {
-	for _, cat := range rule.Pattern {
-		if isSacredCategory(cat) {
-			return domainSacred
-		}
-		if isMundaneCategory(cat) {
-			return domainMundane
-		}
-	}
-	return domainNeutral
-}
-
-func normalizeTokenString(s string) string {
-	var sb strings.Builder
-	sb.Grow(len(s))
-	lastDash := true
-	for _, r := range strings.ToLower(strings.TrimSpace(s)) {
-		if (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9') {
-			sb.WriteRune(r)
-			lastDash = false
-		} else if !lastDash {
-			sb.WriteByte('-')
-			lastDash = true
-		}
-	}
-	res := sb.String()
-	return strings.TrimSuffix(res, "-")
-}
-
-func (e *Engine) rebuildIndexesLocked() {
-	e.blockedSet = make(map[string]struct{}, len(e.words.Blocked))
-	for _, b := range e.words.Blocked {
-		norm := normalizeTokenString(b)
-		if norm != "" {
-			e.blockedSet[norm] = struct{}{}
-		}
-	}
-
-	e.normWords = make(map[string][]wordToken, len(e.words.Categories))
-	for cat, list := range e.words.Categories {
-		tokens := make([]wordToken, 0, len(list))
-		for _, w := range list {
-			norm := normalizeWord(w, "-")
-			if norm != "" {
-				count := strings.Count(norm, "-") + 1
-				tokens = append(tokens, wordToken{
-					text:   norm,
-					tokens: count,
-				})
-			}
-		}
-		e.normWords[cat] = tokens
-	}
-
-	var sacredRules []Rule
-	var mundaneRules []Rule
-	var neutralRules []Rule
-	for _, rule := range e.words.Rules {
-		switch getRuleDomain(rule) {
-		case domainSacred:
-			sacredRules = append(sacredRules, rule)
-		case domainMundane:
-			mundaneRules = append(mundaneRules, rule)
-		default:
-			neutralRules = append(neutralRules, rule)
-		}
-	}
-
-	e.defaultSacredCandidates = append(sacredRules, neutralRules...)
-	if len(e.defaultSacredCandidates) == 0 {
-		e.defaultSacredCandidates = e.words.Rules
-	}
-
-	e.defaultMundaneCandidates = append(mundaneRules, neutralRules...)
-	if len(e.defaultMundaneCandidates) == 0 {
-		e.defaultMundaneCandidates = e.words.Rules
-	}
-}
-
-// NewEngine creates an Engine using the given Words dataset.
-func NewEngine(w Words) *Engine {
-	e := &Engine{words: w}
-	e.rebuildIndexesLocked()
-	return e
-}
-
-// NewDefaultEngine creates an Engine populated from embedded words.json.
+// NewDefaultEngine loads and validates the embedded, reviewed dataset.
 func NewDefaultEngine() (*Engine, error) {
 	var w Words
-	if len(defaultWordsData) > 0 {
-		if err := json.Unmarshal(defaultWordsData, &w); err != nil {
-			return nil, fmt.Errorf("failed to parse embedded words.json: %w", err)
-		}
+	if err := json.Unmarshal(defaultWordsData, &w); err != nil {
+		return nil, fmt.Errorf("parse embedded dictionary: %w", err)
 	}
 	e := &Engine{words: w}
-	e.rebuildIndexesLocked()
+	if err := e.buildIndexes(); err != nil {
+		return nil, fmt.Errorf("validate embedded dictionary: %w", err)
+	}
+	var err error
+	e.defaultPlans, err = e.plans(nil, 5, 8)
+	if err != nil {
+		return nil, err
+	}
 	return e, nil
 }
 
-
-var (
-	defaultEngine *Engine
-	words         Words // Populated by default from embedded words.json, overridable by LoadWords
-)
+var defaultEngine *Engine
+var words Words // Private snapshot for dataset checks; not an override API.
 
 func init() {
 	var err error
 	defaultEngine, err = NewDefaultEngine()
 	if err != nil {
-		panic(fmt.Sprintf("failed to parse embedded words.json: %v", err))
+		panic(err)
 	}
-	words = defaultEngine.words
+	// A separate copy prevents internal dataset checks from aliasing engine data.
+	if err := json.Unmarshal(defaultWordsData, &words); err != nil {
+		panic(err)
+	}
 }
 
-// DefaultEngine returns the package-level default engine.
-func DefaultEngine() *Engine {
-	return defaultEngine
-}
+func DefaultEngine() *Engine { return defaultEngine }
 
-// LoadWords reads words.json from the specified path and populates the engine words.
-func (e *Engine) LoadWords(filePath string) error {
-	byteValue, err := os.ReadFile(filePath)
-	if err != nil {
-		return fmt.Errorf("failed to open words.json: %w", err)
-	}
-
-	var newWords Words
-	if err := json.Unmarshal(byteValue, &newWords); err != nil {
-		return fmt.Errorf("failed to parse words.json: %w", err)
-	}
-
-	e.mu.Lock()
-	e.words = newWords
-	e.rebuildIndexesLocked()
-	e.mu.Unlock()
-	return nil
-}
-
-// LoadWords reads words.json from the specified path and updates defaultEngine and package-level words.
-func LoadWords(filePath string) error {
-	if err := defaultEngine.LoadWords(filePath); err != nil {
-		return err
-	}
-	defaultEngine.mu.RLock()
-	words = defaultEngine.words
-	defaultEngine.mu.RUnlock()
-	return nil
-}
-
-func (e *Engine) isSafeLocked(s string) bool {
-	norm := normalizeTokenString(s)
-	if norm == "" {
-		return true
-	}
-
-	tokens := strings.Split(norm, "-")
-	n := len(tokens)
-	// Fast-path: single token O(1) checks without any string building
-	for i := 0; i < n; i++ {
-		if _, blocked := e.blockedSet[tokens[i]]; blocked {
-			return false
+// Canonical apostrophe handling matches generation, blocking and corpus auditing.
+func normalizeTokenString(s string) string {
+	s = apostropheNormalizer.Replace(strings.ToLower(strings.TrimSpace(s)))
+	var b strings.Builder
+	lastDash := true
+	for _, r := range s {
+		if r >= 'a' && r <= 'z' || r >= '0' && r <= '9' {
+			b.WriteRune(r)
+			lastDash = false
+		} else if !lastDash {
+			b.WriteByte('-')
+			lastDash = true
 		}
 	}
-	// Multi-token phrase checks
-	for i := 0; i < n; i++ {
-		var sb strings.Builder
-		sb.WriteString(tokens[i])
-		for j := i + 1; j < n && j < i+4; j++ {
-			sb.WriteByte('-')
-			sb.WriteString(tokens[j])
-			phrase := sb.String()
-			if _, blocked := e.blockedSet[phrase]; blocked {
+	return strings.TrimSuffix(b.String(), "-")
+}
+
+func normalizeWord(s, sep string) string {
+	return strings.ReplaceAll(normalizeTokenString(s), "-", sep)
+}
+
+func (e *Engine) passesBlocklist(s string) bool {
+	tokens := strings.Split(normalizeTokenString(s), "-")
+	for i := range tokens {
+		node := e.blockedTrie
+		for j := i; j < len(tokens) && node != nil; j++ {
+			node = node.children[tokens[j]]
+			if node != nil && node.terminal {
 				return false
 			}
 		}
@@ -289,191 +149,254 @@ func (e *Engine) isSafeLocked(s string) bool {
 	return true
 }
 
-// IsSafe checks whether a string is safe against blocked words.
+// IsSafe checks blocked vocabulary only. Use ValidateString for the mixing policy.
 func (e *Engine) IsSafe(s string) bool {
-	e.mu.RLock()
-	defer e.mu.RUnlock()
-	return e.isSafeLocked(s)
+	return e != nil && e.err == nil && len(e.blockedSet) > 0 && e.passesBlocklist(s)
 }
+func isSafe(s string) bool { return defaultEngine.IsSafe(s) }
 
-func isSafe(s string) bool {
-	return defaultEngine.IsSafe(s)
-}
-
-func normalizeWord(s, sep string) string {
-	s = strings.ReplaceAll(s, "'", "")
-	if sep != "-" {
-		s = strings.ReplaceAll(s, "-", sep)
-	}
-	s = strings.ToLower(strings.ReplaceAll(s, " ", sep))
-	for strings.Contains(s, sep+sep) {
-		s = strings.ReplaceAll(s, sep+sep, sep)
-	}
-	return strings.Trim(s, sep)
-}
-
-func (e *Engine) getCategoriesLocked() []string {
-	keys := make([]string, 0, len(e.words.Categories))
-	for k := range e.words.Categories {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-	return keys
-}
-
-// GenerateWithOptionsE returns random strings generated by the engine with explicit error reporting.
-func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
-	e.mu.RLock()
-	defer e.mu.RUnlock()
-	engineWords := e.words
-
-	if opts.Repeat < 1 {
-		opts.Repeat = 1
-	}
-	opts.PrefixThreshold = ordered.Clamp(opts.PrefixThreshold, 0, 1)
-	opts.SuffixThreshold = ordered.Clamp(opts.SuffixThreshold, 0, 1)
-
-	if opts.Sep == "" {
-		opts.Sep = "-"
-	}
-
-	if opts.MinWords < 1 {
-		opts.MinWords = 5 // Default to 5 words
-	}
-
-	if opts.MaxWords < opts.MinWords {
-		if opts.MinWords > 8 {
-			opts.MaxWords = opts.MinWords
-		} else {
-			opts.MaxWords = 8 // Default to 8 words
+func (e *Engine) validSep(sep string) bool {
+	for _, allowed := range e.words.Policy.AllowedSeparators {
+		if sep == allowed {
+			return true
 		}
 	}
+	return false
+}
 
-	// Validate categories once before generation loops
-	var filteredRules []Rule
-	if len(opts.Categories) > 0 {
-		var hasSacred, hasMundane bool
-		for _, cat := range opts.Categories {
-			cat = strings.TrimSpace(cat)
-			if _, exists := engineWords.Categories[cat]; !exists {
-				return nil, fmt.Errorf("unknown category: %q (available: %s)", cat, strings.Join(e.getCategoriesLocked(), ", "))
-			}
-			if isSacredCategory(cat) {
-				hasSacred = true
-			}
-			if isMundaneCategory(cat) {
-				hasMundane = true
+// ValidateString checks formatting, blocked vocabulary and complete phrase
+// segmentation within one approved group. A trailing 4 digit number is optional.
+func (e *Engine) ValidateString(s, sep string) error {
+	if e == nil {
+		return errors.New("nil engine")
+	}
+	if e.err != nil {
+		return e.err
+	}
+	if len(e.groupPhrases) == 0 {
+		return errors.New("engine has no reviewed dictionary")
+	}
+	if sep == "" {
+		sep = "-"
+	}
+	if !e.validSep(sep) {
+		return fmt.Errorf("unsupported separator %q", sep)
+	}
+	tokens := strings.Split(s, sep)
+	if len(tokens) > 1 {
+		tail := tokens[len(tokens)-1]
+		if n, err := strconv.Atoi(tail); err == nil && len(tail) == 4 && n >= 1000 && n <= 9999 {
+			tokens = tokens[:len(tokens)-1]
+		}
+	}
+	if len(tokens) == 0 || len(tokens) > e.words.Policy.MaxWords {
+		return errors.New("invalid word count")
+	}
+	for _, token := range tokens {
+		if token == "" {
+			return errors.New("empty token")
+		}
+		for _, r := range token {
+			if r < 'a' || r > 'z' {
+				return errors.New("identifiers require lowercase ASCII words")
 			}
 		}
-		if hasSacred && hasMundane {
-			return nil, fmt.Errorf("incompatible categories: sacred Islamic terms cannot be combined with animals or food")
-		}
-
-		// Compound rule matching
-		var matchingRules []Rule
-		for _, rule := range engineWords.Rules {
-			allCategoriesMatch := true
-			for _, patternCategory := range rule.Pattern {
-				found := false
-				for _, selectedCategory := range opts.Categories {
-					if patternCategory == strings.TrimSpace(selectedCategory) {
-						found = true
-						break
-					}
+	}
+	canonical := strings.Join(tokens, "-")
+	if !e.passesBlocklist(canonical) {
+		return errors.New("blocked vocabulary")
+	}
+	for group, phrases := range e.groupPhrases {
+		reach := make([]bool, len(tokens)+1)
+		reach[0] = true
+		for i := range tokens {
+			if !reach[i] {
+				continue
+			}
+			for j := i + 1; j <= len(tokens) && j-i <= e.maxPhraseTokens[group]; j++ {
+				if _, ok := phrases[strings.Join(tokens[i:j], "-")]; ok {
+					reach[j] = true
 				}
-				if !found {
-					allCategoriesMatch = false
+			}
+		}
+		if reach[len(tokens)] {
+			return nil
+		}
+	}
+	return errors.New("unknown words or incompatible mixing groups")
+}
+
+func ValidateString(s, sep string) error { return defaultEngine.ValidateString(s, sep) }
+
+// generationPlan proves length feasibility before generation. Each requested
+// category supplies a whole expression, followed by optional same-group filler.
+type generationPlan struct {
+	required []wordBuckets
+	pool     wordBuckets
+	reach    [][]bool
+	totals   []int
+}
+
+func makePlan(required []wordBuckets, pool wordBuckets, min, max int) generationPlan {
+	p := generationPlan{required: required, pool: pool, reach: make([][]bool, len(required)+1)}
+	for i := range p.reach {
+		p.reach[i] = make([]bool, max+1)
+	}
+	fill := p.reach[len(required)]
+	fill[0] = true
+	for n := 1; n <= max; n++ {
+		for size := 1; size <= n; size++ {
+			if len(pool[size]) > 0 && fill[n-size] {
+				fill[n] = true
+				break
+			}
+		}
+	}
+	for i := len(required) - 1; i >= 0; i-- {
+		for n := 1; n <= max; n++ {
+			for size := 1; size <= n; size++ {
+				if len(required[i][size]) > 0 && p.reach[i+1][n-size] {
+					p.reach[i][n] = true
 					break
 				}
 			}
-			if allCategoriesMatch {
-				matchingRules = append(matchingRules, rule)
-			}
-		}
-
-		if len(opts.Categories) > 1 {
-			var fullMatchRules []Rule
-			for _, rule := range matchingRules {
-				hasAll := true
-				for _, selCat := range opts.Categories {
-					catFound := false
-					for _, patternCat := range rule.Pattern {
-						if patternCat == strings.TrimSpace(selCat) {
-							catFound = true
-							break
-						}
-					}
-					if !catFound {
-						hasAll = false
-						break
-					}
-				}
-				if hasAll {
-					fullMatchRules = append(fullMatchRules, rule)
-				}
-			}
-			if len(fullMatchRules) > 0 {
-				filteredRules = fullMatchRules
-			} else {
-				filteredRules = matchingRules
-			}
-		} else {
-			filteredRules = matchingRules
-		}
-
-		// Dynamic single-category rule fallback if no compound rules match
-		if len(filteredRules) == 0 {
-			for _, cat := range opts.Categories {
-				cat = strings.TrimSpace(cat)
-				filteredRules = append(filteredRules, Rule{
-					Pattern:  []string{cat},
-					Template: fmt.Sprintf("{%s}", cat),
-				})
-			}
-		}
-	} else {
-		filteredRules = engineWords.Rules
-	}
-
-	if len(filteredRules) == 0 {
-		return nil, fmt.Errorf("no rules available for specified options")
-	}
-
-	// Pre-partition rules by domain to eliminate per-string heap allocations
-	var sacredCandidates []Rule
-	var mundaneCandidates []Rule
-	if len(opts.Categories) == 0 {
-		sacredCandidates = e.defaultSacredCandidates
-		mundaneCandidates = e.defaultMundaneCandidates
-	} else {
-		var sacredRules []Rule
-		var mundaneRules []Rule
-		var neutralRules []Rule
-		for _, rule := range filteredRules {
-			switch getRuleDomain(rule) {
-			case domainSacred:
-				sacredRules = append(sacredRules, rule)
-			case domainMundane:
-				mundaneRules = append(mundaneRules, rule)
-			default:
-				neutralRules = append(neutralRules, rule)
-			}
-		}
-
-		sacredCandidates = append(sacredRules, neutralRules...)
-		if len(sacredCandidates) == 0 {
-			sacredCandidates = filteredRules
-		}
-
-		mundaneCandidates = append(mundaneRules, neutralRules...)
-		if len(mundaneCandidates) == 0 {
-			mundaneCandidates = filteredRules
 		}
 	}
+	for n := min; n <= max; n++ {
+		if p.reach[0][n] {
+			p.totals = append(p.totals, n)
+		}
+	}
+	return p
+}
 
-	r := make([]string, opts.Repeat)
+func (e *Engine) plans(categories []string, min, max int) ([]generationPlan, error) {
+	if len(categories) == 0 {
+		var plans []generationPlan
+		// Sort groups so seeded results never depend on map iteration order.
+		for _, g := range []string{"divine", "prophets", "names", "islamic", "general"} {
+			p := makePlan(nil, e.groupBuckets[g], min, max)
+			if len(p.totals) > 0 {
+				plans = append(plans, p)
+			}
+		}
+		if len(plans) == 0 {
+			return nil, errors.New("word count is infeasible")
+		}
+		return plans, nil
+	}
+	group := ""
+	seen := make(map[string]bool)
+	var required []wordBuckets
+	pool := make(wordBuckets, e.words.Policy.MaxWords+1)
+	for _, raw := range categories {
+		cat := strings.TrimSpace(raw)
+		if reason, disabled := e.words.Policy.DisabledCategories[cat]; disabled {
+			return nil, fmt.Errorf("disabled category %q: %s", cat, reason)
+		}
+		g, exists := e.words.Policy.CategoryGroups[cat]
+		if !exists {
+			return nil, fmt.Errorf("unknown category: %q", cat)
+		}
+		if group != "" && group != g {
+			return nil, fmt.Errorf("incompatible categories: %s belongs to %s, expected %s", cat, g, group)
+		}
+		group = g
+		if seen[cat] {
+			continue
+		}
+		seen[cat] = true
+		required = append(required, e.catBuckets[cat])
+		for size, ws := range e.catBuckets[cat] {
+			pool[size] = append(pool[size], ws...)
+		}
+	}
+	if len(required) > max {
+		return nil, errors.New("too many categories for maximum word count")
+	}
+	p := makePlan(required, pool, min, max)
+	if len(p.totals) == 0 {
+		return nil, errors.New("word count is infeasible for selected categories")
+	}
+	return []generationPlan{p}, nil
+}
 
-	// Use math/rand for word selection (faster)
+func chooseWord(src *rand.Rand, buckets wordBuckets, remaining int, next []bool) wordToken {
+	count := 0
+	for size := 1; size <= remaining; size++ {
+		if next[remaining-size] {
+			count += len(buckets[size])
+		}
+	}
+	pick := src.Intn(count)
+	for size := 1; size <= remaining; size++ {
+		if !next[remaining-size] {
+			continue
+		}
+		if pick < len(buckets[size]) {
+			return buckets[size][pick]
+		}
+		pick -= len(buckets[size])
+	}
+	panic("unreachable: validated generation plan has no word")
+}
+
+func (p generationPlan) generate(src *rand.Rand) string {
+	remaining := p.totals[src.Intn(len(p.totals))]
+	parts := make([]string, 0, remaining)
+	for i, buckets := range p.required {
+		wt := chooseWord(src, buckets, remaining, p.reach[i+1])
+		parts = append(parts, wt.text)
+		remaining -= wt.tokens
+	}
+	for remaining > 0 {
+		wt := chooseWord(src, p.pool, remaining, p.reach[len(p.required)])
+		parts = append(parts, wt.text)
+		remaining -= wt.tokens
+	}
+	return strings.Join(parts, "-")
+}
+
+// GenerateWithOptionsE returns complete results, or an explicit error.
+func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
+	if e == nil {
+		return nil, errors.New("nil engine")
+	}
+	if e.err != nil {
+		return nil, e.err
+	}
+	if len(e.normWords) == 0 {
+		return nil, errors.New("engine has no reviewed dictionary")
+	}
+	if opts.Repeat == 0 {
+		opts.Repeat = 1
+	}
+	if opts.Sep == "" {
+		opts.Sep = "-"
+	}
+	if opts.MinWords == 0 {
+		opts.MinWords = 5
+	}
+	if opts.MaxWords == 0 {
+		opts.MaxWords = 8
+	}
+	if opts.Repeat < 1 || opts.Repeat > e.words.Policy.MaxRepeat {
+		return nil, fmt.Errorf("repeat must be between 1 and %d", e.words.Policy.MaxRepeat)
+	}
+	if !e.validSep(opts.Sep) {
+		return nil, fmt.Errorf("unsupported separator %q; use -, _, . or /", opts.Sep)
+	}
+	if opts.MinWords < 1 || opts.MaxWords < opts.MinWords || opts.MaxWords > e.words.Policy.MaxWords {
+		return nil, fmt.Errorf("word bounds must satisfy 1 <= min <= max <= %d", e.words.Policy.MaxWords)
+	}
+	plans := e.defaultPlans
+	if len(opts.Categories) > 0 || opts.MinWords != 5 || opts.MaxWords != 8 {
+		var err error
+		plans, err = e.plans(opts.Categories, opts.MinWords, opts.MaxWords)
+		if err != nil {
+			return nil, err
+		}
+	}
 	var src *rand.Rand
 	if opts.Seed == 0 {
 		src = randPool.Get().(*rand.Rand)
@@ -481,195 +404,90 @@ func (e *Engine) GenerateWithOptionsE(opts Options) ([]string, error) {
 	} else {
 		src = rand.New(rand.NewSource(opts.Seed))
 	}
-
-	for i := range r {
-		for j := 0; j < maxRetries; j++ {
-			var currentBuilder strings.Builder
-			var currentWordCount int
-
-			targetCandidates := sacredCandidates
-			if len(mundaneCandidates) > 0 && (len(sacredCandidates) == 0 || src.Intn(100) >= 75) {
-				targetCandidates = mundaneCandidates
-			}
-
-			// Build the string iteratively using targetCandidates
-			for attempt := 0; attempt < maxRetries; attempt++ {
-				rule := targetCandidates[src.Intn(len(targetCandidates))]
-
-				var ruleBuilder strings.Builder
-				var ruleWordCount int
-				for _, category := range rule.Pattern {
-					categoryWords := e.normWords[category]
-					if len(categoryWords) == 0 {
-						continue
-					}
-					wt := categoryWords[src.Intn(len(categoryWords))]
-					var normWord string
-					if opts.Sep == "-" {
-						normWord = wt.text
-					} else {
-						normWord = strings.ReplaceAll(wt.text, "-", opts.Sep)
-					}
-					if normWord == "" {
-						continue
-					}
-					if ruleBuilder.Len() > 0 {
-						ruleBuilder.WriteString(opts.Sep)
-					}
-					ruleBuilder.WriteString(normWord)
-					ruleWordCount += wt.tokens
-				}
-				if ruleBuilder.Len() == 0 {
-					continue
-				}
-
-				// Check if adding this rule would exceed MaxWords
-				if currentWordCount+ruleWordCount > opts.MaxWords {
-					if currentWordCount >= opts.MinWords {
-						break // Already reached minimum words, finalize
-					}
-					// Not enough words yet; try another candidate rule without resetting accumulated words
-					continue
-				}
-
-				// Append the generated part
-				if currentBuilder.Len() > 0 {
-					currentBuilder.WriteString(opts.Sep)
-				}
-				currentBuilder.WriteString(ruleBuilder.String())
-				currentWordCount += ruleWordCount
-
-				if currentWordCount >= opts.MinWords && currentWordCount <= opts.MaxWords {
-					break // Successfully reached word count range
-				}
-			}
-
-			// Finalize the output if it meets criteria
-			if currentWordCount >= opts.MinWords && currentWordCount <= opts.MaxWords {
-				candidate := currentBuilder.String()
-				if e.isSafeLocked(candidate) {
-					if opts.IncludeRandomNumber {
-						var val int64
-						if opts.Seed != 0 {
-							val = int64(src.Intn(9000)) + 1000
-						} else {
-							var b [2]byte
-							for {
-								if _, err := crand.Read(b[:]); err != nil {
-									val = int64(src.Intn(9000)) + 1000
-									break
-								}
-								valUint := uint32(b[0])<<8 | uint32(b[1])
-								if valUint < 63000 {
-									val = int64(valUint%9000) + 1000
-									break
-								}
-							}
+	results := make([]string, opts.Repeat)
+	for i := range results {
+		for attempt := 0; attempt < 256; attempt++ {
+			candidate := plans[src.Intn(len(plans))].generate(src)
+			if opts.IncludeRandomNumber {
+				var n int
+				if opts.Seed != 0 {
+					n = src.Intn(9000) + 1000
+				} else {
+					var b [2]byte
+					for {
+						if _, err := crand.Read(b[:]); err != nil {
+							return nil, fmt.Errorf("random suffix: %w", err)
 						}
-						currentBuilder.WriteString(opts.Sep)
-						currentBuilder.WriteString(strconv.FormatInt(val, 10))
-						candidate = currentBuilder.String()
+						v := int(b[0])<<8 | int(b[1])
+						if v < 63000 {
+							n = v%9000 + 1000
+							break
+						}
 					}
-
-					r[i] = candidate
-					break // Break from maxRetries loop
 				}
+				candidate += "-" + strconv.Itoa(n)
 			}
+			if !e.passesBlocklist(candidate) {
+				continue
+			}
+			results[i] = strings.ReplaceAll(candidate, "-", opts.Sep)
+			break
+		}
+		if results[i] == "" {
+			return nil, fmt.Errorf("failed to generate safe string at index %d", i)
 		}
 	}
-
-	for i, s := range r {
-		if s == "" {
-			return nil, fmt.Errorf("failed to generate valid string for index %d within retry limit", i)
-		}
-	}
-
-	return r, nil
+	return results, nil
 }
 
-// GenerateWithOptions returns random strings generated by the engine.
+// Options controls length, output count and selection of reviewed categories.
+type Options struct {
+	PrefixThreshold     float64 // Deprecated: unused upstream compatibility field.
+	SuffixThreshold     float64 // Deprecated: unused upstream compatibility field.
+	Repeat              int     // 0 means 1; otherwise 1..1,000,000.
+	Sep                 string  // Empty means "-"; supported: "-", "_", ".", "/".
+	Seed                int64   // Nonzero seeds reproduce outputs; outputs are not secret tokens.
+	MinWords            int     // Separator-delimited tokens; 0 means 5. Numeric suffix excluded.
+	MaxWords            int     // 0 means 8; must be >= MinWords and <= 64.
+	IncludeRandomNumber bool
+	Categories          []string // Every distinct selected category contributes an expression.
+}
+
+// GenerateWithOptions is the compatibility wrapper; invalid options return nil.
 func (e *Engine) GenerateWithOptions(opts Options) []string {
 	r, _ := e.GenerateWithOptionsE(opts)
 	return r
 }
-
-// Options are options to customize output.
-type Options struct {
-	// PrefixThreshold is reserved for upstream compatibility and currently unused.
-	PrefixThreshold float64
-	// SuffixThreshold is reserved for upstream compatibility and currently unused.
-	SuffixThreshold float64
-
-	// Number of strings to generate.
-	Repeat int
-
-	// Separator to use between words.
-	Sep string
-
-	// Seed for the random number generator.
-	Seed int64
-
-	// Minimum number of words in the generated string.
-	MinWords int
-
-	// Maximum number of words in the generated string.
-	MaxWords int
-
-	// Whether to include a random number at the end of the string.
-	IncludeRandomNumber bool
-
-	// List of categories to use for string generation.
-	Categories []string
-}
-
-// Generate returns a random string.
 func (e *Engine) Generate() string {
-	res := e.GenerateWithOptions(Options{
-		Repeat:              1,
-		IncludeRandomNumber: true,
-	})
-	if len(res) == 0 {
+	r := e.GenerateWithOptions(Options{IncludeRandomNumber: true})
+	if len(r) == 0 {
 		return ""
 	}
-	return res[0]
+	return r[0]
 }
-
-// GenerateN returns n random strings.
 func (e *Engine) GenerateN(n int) []string {
-	return e.GenerateWithOptions(Options{
-		Repeat:              n,
-		IncludeRandomNumber: true,
-	})
+	return e.GenerateWithOptions(Options{Repeat: n, IncludeRandomNumber: true})
 }
-
-// GetCategories returns a sorted list of available categories.
 func (e *Engine) GetCategories() []string {
-	e.mu.RLock()
-	defer e.mu.RUnlock()
-	return e.getCategoriesLocked()
+	if e == nil {
+		return nil
+	}
+	keys := make([]string, 0, len(e.words.Categories))
+	for k := range e.words.Categories {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	return keys
 }
-
-// Generate returns a random string using the default engine.
-func Generate() string {
-	return defaultEngine.Generate()
+func Generate() string                                 { return defaultEngine.Generate() }
+func GenerateN(n int) []string                         { return defaultEngine.GenerateN(n) }
+func GenerateWithOptionsE(o Options) ([]string, error) { return defaultEngine.GenerateWithOptionsE(o) }
+func GenerateWithOptions(o Options) []string           { return defaultEngine.GenerateWithOptions(o) }
+func GetCategories() []string                          { return defaultEngine.GetCategories() }
+func isSacredCategory(cat string) bool {
+	g := defaultEngine.words.Policy.CategoryGroups[cat]
+	return g != "" && g != "general"
 }
-
-// GenerateN returns a given number of random strings using the default engine.
-func GenerateN(n int) []string {
-	return defaultEngine.GenerateN(n)
-}
-
-// GenerateWithOptionsE generates results against the given options using the default engine with explicit error reporting.
-func GenerateWithOptionsE(o Options) ([]string, error) {
-	return defaultEngine.GenerateWithOptionsE(o)
-}
-
-// GenerateWithOptions generates results against the given options using the default engine.
-func GenerateWithOptions(o Options) []string {
-	return defaultEngine.GenerateWithOptions(o)
-}
-
-// GetCategories returns a sorted list of available categories.
-func GetCategories() []string {
-	return defaultEngine.GetCategories()
+func isMundaneCategory(cat string) bool {
+	return defaultEngine.words.Policy.CategoryGroups[cat] == "general"
 }

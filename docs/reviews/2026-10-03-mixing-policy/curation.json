@@ -1,0 +1,950 @@
+[
+  {
+    "category": "islamic_virtues",
+    "word": "Naj\u00e2h",
+    "action": "normalize transliteration",
+    "replacement": "Najah"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Hamm\u0101m",
+    "action": "normalize transliteration",
+    "replacement": "Hammam"
+  },
+  {
+    "category": "adjectives",
+    "word": "salih",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Ahmed",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Muhammad",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Ibrahim",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Yusuf",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Musa",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Isa",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Dawud",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Sulayman",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Zakariya",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Yahya",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Adam",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Nuh",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Hud",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Shu'ayb",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Harun",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Ismail",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Mustafa",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Taha",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Yasin",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Younus",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Muhammed",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Ahmad",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Ayub",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Ishaq",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Yaqub",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Shoaib",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Ilyas",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "muslim_names_male",
+    "word": "Ayyub",
+    "action": "move",
+    "target": "prophets"
+  },
+  {
+    "category": "servant_prefixes",
+    "word": "abd",
+    "action": "disable standalone prefix"
+  },
+  {
+    "category": "servant_prefixes",
+    "word": "amat",
+    "action": "disable standalone prefix"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Minaret",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Mihrab",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Minbar",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Sahn",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Riwaq",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Ablution Fountain",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Calligraphy Panel",
+    "action": "move",
+    "target": "islamic_art_forms"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Kufic Inscription",
+    "action": "move",
+    "target": "islamic_art_forms"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Nastaliq Script",
+    "action": "move",
+    "target": "islamic_art_forms"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Thuluth Script",
+    "action": "move",
+    "target": "islamic_art_forms"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Diwani Script",
+    "action": "move",
+    "target": "islamic_art_forms"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Kuttab",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Madrasah",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Khanqah",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Zawiya",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Ribat",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Mausoleum",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Minbar Stairs",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Qibla Wall",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Adhan Tower",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Muezzin Balcony",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Wudu Area",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Prayer Niche",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Sahn-e-Chaman",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Zulla",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "nouns_places",
+    "word": "minaret",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "nouns_places",
+    "word": "madrasa-school",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "nouns_places",
+    "word": "khanqah-monastery",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "nouns_places",
+    "word": "zawiya-shrine",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "nouns_places",
+    "word": "ribat-fort",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "nouns_places",
+    "word": "shrine-holy",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "nouns_places",
+    "word": "mausoleum-tomb",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "nouns_places",
+    "word": "ablution-area-wash",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "nouns_places",
+    "word": "caliphate",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "nouns_places",
+    "word": "garden-paradise",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "nouns_places",
+    "word": "sahn-courtyard",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "nouns_places",
+    "word": "riwaq-arcade",
+    "action": "move",
+    "target": "holy_sanctuaries"
+  },
+  {
+    "category": "suffixes",
+    "word": "dunia",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "suffixes",
+    "word": "dunya",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "suffixes",
+    "word": "dunyah",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "suffixes",
+    "word": "sanctuary",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "suffixes",
+    "word": "heaven",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "suffixes",
+    "word": "nur",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "suffixes",
+    "word": "pilgrim",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "suffixes",
+    "word": "faith",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "suffixes",
+    "word": "minaret",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "suffixes",
+    "word": "paradise",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "suffixes",
+    "word": "creator",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "suffixes",
+    "word": "master",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "suffixes",
+    "word": "blessing",
+    "action": "move",
+    "target": "nouns_concepts"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Bell Tower",
+    "action": "exclude religious architecture from general generation"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Cloister",
+    "action": "exclude religious architecture from general generation"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Crypt",
+    "action": "exclude religious architecture from general generation"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Mandapa",
+    "action": "exclude religious architecture from general generation"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Nave",
+    "action": "exclude religious architecture from general generation"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Pagoda",
+    "action": "exclude religious architecture from general generation"
+  },
+  {
+    "category": "architectural_elements",
+    "word": "Ziggurat",
+    "action": "exclude religious architecture from general generation"
+  },
+  {
+    "category": "adjectives",
+    "word": "sadiq",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "adjectives",
+    "word": "amin",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "adjectives",
+    "word": "karim",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "adjectives",
+    "word": "muhsin",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "adjectives",
+    "word": "mubarak",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "adjectives",
+    "word": "hasan",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "adjectives",
+    "word": "jamal",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "adjectives",
+    "word": "zaki",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "adjectives",
+    "word": "najeeb",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "adjectives",
+    "word": "tahira",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "islamic_virtues",
+    "word": "Ihsan",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "islamic_virtues",
+    "word": "Adl",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "iman",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "'alim",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "'arif",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "'azim",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "'aziz",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "burhan",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "fajr",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "ghazi",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "hadi",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "hafiz",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "hakim",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "ihsan",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "khayr",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "qamar",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "rahma",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "rashid",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "salam",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "amal",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "shahid",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "mujahid",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "adl",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "haqq",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "jamal",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "rizq",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "jalal",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "wafa",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "dunya",
+    "action": "deduplicate normalized expression"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "nur",
+    "action": "deduplicate normalized expression"
+  },
+  {
+    "category": "scholarly_terms",
+    "word": "Ihsan",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "scholarly_terms",
+    "word": "Hasan",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "scholarly_terms",
+    "word": "Ahad",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "scholarly_terms",
+    "word": "Jami'",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "scholarly_terms",
+    "word": "Rizq",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "adab_terms",
+    "word": "Ihsan",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "adab_terms",
+    "word": "Rahma",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "names"
+  },
+  {
+    "category": "adab_terms",
+    "word": "Adl",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "divine"
+  },
+  {
+    "category": "islamic_art_forms",
+    "word": "Nastaliq Script",
+    "action": "deduplicate normalized expression"
+  },
+  {
+    "category": "islamic_art_forms",
+    "word": "Thuluth Script",
+    "action": "deduplicate normalized expression"
+  },
+  {
+    "category": "islamic_art_forms",
+    "word": "Diwani Script",
+    "action": "deduplicate normalized expression"
+  },
+  {
+    "category": "holy_sanctuaries",
+    "word": "Mihrab",
+    "action": "deduplicate normalized expression"
+  },
+  {
+    "category": "holy_sanctuaries",
+    "word": "Minbar",
+    "action": "deduplicate normalized expression"
+  },
+  {
+    "category": "holy_sanctuaries",
+    "word": "minaret",
+    "action": "deduplicate normalized expression"
+  },
+  {
+    "category": "nouns_objects",
+    "word": "globe",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "islamic"
+  },
+  {
+    "category": "nouns_objects",
+    "word": "astrolabe",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "islamic"
+  },
+  {
+    "category": "nouns_objects",
+    "word": "sextant",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "islamic"
+  },
+  {
+    "category": "nouns_places",
+    "word": "university",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "islamic"
+  },
+  {
+    "category": "suffixes",
+    "word": "hope",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "islamic"
+  },
+  {
+    "category": "suffixes",
+    "word": "wisdom",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "islamic"
+  },
+  {
+    "category": "suffixes",
+    "word": "serenity",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "islamic"
+  },
+  {
+    "category": "suffixes",
+    "word": "tranquility",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "islamic"
+  },
+  {
+    "category": "suffixes",
+    "word": "purity",
+    "action": "remove ambiguous cross-group alias",
+    "retained_group": "islamic"
+  },
+  {
+    "category": "spices",
+    "word": "Kaffir Lime Leaves",
+    "action": "replace sensitive botanical name",
+    "replacement": "Makrut Lime Leaves",
+    "source": "https://ahdictionary.com/word/search.html?q=kaffir+lime"
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "Mustafa",
+    "action": "protect associated title or name spelling",
+    "target": "prophets",
+    "note": "Conservative isolation, not a claim about disputed names or titles."
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "Taha",
+    "action": "protect associated title or name spelling",
+    "target": "prophets",
+    "note": "Conservative isolation, not a claim about disputed names or titles."
+  },
+  {
+    "category": "nouns_concepts",
+    "word": "Yasin",
+    "action": "protect associated title or name spelling",
+    "target": "prophets",
+    "note": "Conservative isolation, not a claim about disputed names or titles."
+  },
+  {
+    "category": "adjectives",
+    "word": "muzammil",
+    "action": "protect associated title or name spelling",
+    "target": "prophets",
+    "note": "Conservative isolation, not a claim about disputed names or titles."
+  },
+  {
+    "category": "adjectives",
+    "word": "mudathir",
+    "action": "protect associated title or name spelling",
+    "target": "prophets",
+    "note": "Conservative isolation, not a claim about disputed names or titles."
+  },
+  {
+    "category": "suffixes",
+    "word": "een",
+    "action": "remove unclear glossary fragment"
+  }
+]

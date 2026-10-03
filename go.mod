@@ -6,7 +6,6 @@ toolchain go1.22.5
 
 require (
 	github.com/charmbracelet/lipgloss v0.10.0 // Added for styling and coloring
-	github.com/charmbracelet/x/exp/ordered v0.1.0
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/spf13/pflag v1.0.6
 )

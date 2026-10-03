@@ -1,21 +1,21 @@
 # Halal Random Strings
 
-A wholesome, family-friendly random string generator designed for creating unique and meaningful identifiers, particularly suitable for applications like game lobby invitations.
+A random identifier generator using reviewed general, personal-name, and Islamic word lists. Category groups prevent protected names and religious expressions from being combined with animals, food, or other general words.
 
 This project aims to provide strings that are:
 
 *   **Halal-friendly:** Utilizing Islamic terms and concepts, transliterated into Latin script.
 *   **Kid-friendly:** Avoiding inappropriate or offensive language.
-*   **Unique:** Designed to generate a high volume of distinct strings for reliable identification.
-*   **Meaningful:** Combining words in a way that can evoke positive and inspiring associations.
+*   **Varied:** Produces many combinations; applications must enforce uniqueness when required.
+*   **Reviewed mixing:** Each identifier uses one approved category group. Random combinations still require ongoing cultural review.
 
 ## Features
 
 *   Generates random strings from curated lists of adjectives, nouns (objects, places, concepts), Islamic virtues, Sahaba names, and food items.
-*   Ensures strings are free from a comprehensive list of blocked words.
+*   Checks complete outputs against blocked words and phrases.
 *   Supports configurable string length (minimum 5, maximum 8 words by default).
-*   Appends a cryptographically secure random number for enhanced uniqueness.
-*   Integrates with Cloudflare D1 for persistent storage and API access.
+*   Appends an optional four digit random number (deterministic when seeded). Identifiers are not authentication secrets.
+*   Provides a validated SQL export script for Cloudflare D1. A serving API is not implemented.
 
 ## Project Structure
 
@@ -88,17 +88,39 @@ To generate multiple strings (e.g., 10 strings):
 Example output:
 
 ```
-al-khansa-salih-siraj-1234
-khalid-ibn-al-walid-haleem-wasif-9876
+olive-apple-pear-plum-peach-1234
+aisha-maher-amira-fatima-layla-9876
 # ... and so on
 ```
+
+#### Mixing policy and errors
+
+Asma Allah mixes only with Asma Allah; prophets only with prophets; personal names
+only with personal names; protected Islamic categories only within their group;
+and general categories only within theirs. Standalone servant prefixes and custom
+dictionaries are disabled. Some formerly general entries were moved or removed.
+See [the complete mixing policy and API migration](docs/MIXING_POLICY.md).
+
+```bash
+# Allowed general mix
+./halal-random-strings --categories colors_arabic,nouns_places -r 10
+# Allowed names-only mix
+./halal-random-strings --categories muslim_names_male,muslim_names_female -r 10
+# Rejected: protected names cannot mix with animals or food
+./halal-random-strings --categories prophets,animals,arabic_food
+```
+
+Use `GenerateWithOptionsE` to receive validation errors. `NewDefaultEngine` loads
+only the embedded reviewed dictionary. Separators are limited to `-`, `_`, `.`, `/`.
+`ValidateString` checks the full policy; `IsSafe` checks blocked vocabulary only.
 
 #### `words.json` Structure
 
 The `words.json` file is the heart of the generator. It contains:
 
 *   `categories`: A map where keys are category names (e.g., `adjectives`, `fruits`, `islamic_golden_age_scholars`) and values are arrays of strings (the words themselves).
-*   `rules`: An array of objects, each defining a `pattern` (which categories to combine) and a `template` for how to combine them (e.g., `"{adjectives}-{nouns_concepts}"`).
+*   `policy`: The required group classification, separator allowlist and limits, shared by generation and auditing.
+*   `rules`: Validated composition examples, retained for compatibility. Runtime generation uses the approved category pools.
 *   `blocked`: An array of strings that should never appear in generated names.
 
 #### Cloudflare D1 Integration
@@ -130,14 +152,16 @@ This project is designed to pre-generate a large pool of unique strings and stor
     ```bash
     make populate-d1
     ```
-    This script reads `output.txt` and inserts the strings into your D1 database. It includes batching for efficiency and basic error handling.
+    This script rejects unsafe input before Wrangler setup and batches validated strings. Use `--dump-sql /tmp/validated.sql` for an offline export. Python 3.9 or later is required.
 
-6.  **Deploy Cloudflare Worker API:**
-    Refer to the `api_worker.js` (or `api_worker.ts`) outline in the project for setting up your Cloudflare Worker to serve strings from D1 via API endpoints like `/invite/new` and `/invite/status`.
+A Worker serving or reservation API is future work. This repository contains the
+generator, schema, analyzer and import tooling; it does not deliver that service.
 
-> [!TIP]
-> **Architectural Recommendation (Edge Workers):**
-> For high-throughput production services, consider generating halal strings **on-the-fly** directly inside the Cloudflare Worker (by embedding the JSON dictionary or compiling the Go generator to WebAssembly) rather than reading from a pre-populated D1 table. On-the-fly generation eliminates D1 read-after-write concurrency races, removes database query latency, and avoids D1 row read/write billing overhead. Pre-populating D1 is best reserved for pre-allocated claim or single-use invitation tokens that require durable tracking.
+> **Architectural Recommendation (Edge Workers):** On-the-fly generation is an
+> option for readable labels after implementing an appropriate runtime generator.
+> A preallocated D1 pool can support single-use invitations, but requires atomic
+> allocation, collision handling and separate authorization checks. Neither a
+> serving Worker nor those reservation guarantees are implemented here.
 
 ## Contributing
 

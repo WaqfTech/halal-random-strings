@@ -1,0 +1,91 @@
+[
+  {
+    "arguments": [
+      "go",
+      "version"
+    ],
+    "exit": 0,
+    "stdout": "go version go1.27.1 linux/amd64\n",
+    "stderr": "",
+    "elapsed_seconds": 0.002525
+  },
+  {
+    "arguments": [
+      "go",
+      "test",
+      "-race",
+      "./..."
+    ],
+    "exit": 0,
+    "stdout": "ok  \tgithub.com/WaqfTech/halal-random-strings\t3.285s\n?   \tgithub.com/WaqfTech/halal-random-strings/cmd/halal-random-strings\t[no test files]\n",
+    "stderr": "",
+    "elapsed_seconds": 3.506502
+  },
+  {
+    "arguments": [
+      "go",
+      "vet",
+      "./..."
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "elapsed_seconds": 0.066137
+  },
+  {
+    "arguments": [
+      "go",
+      "build",
+      "./..."
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "elapsed_seconds": 0.231142
+  },
+  {
+    "arguments": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "test_analyzer_exit_counts_and_empty_input (test_naming_policy.NamingPolicyTests.test_analyzer_exit_counts_and_empty_input) ... ok\ntest_import_rejection_preserves_existing_dump (test_naming_policy.NamingPolicyTests.test_import_rejection_preserves_existing_dump) ... ok\ntest_missing_or_invalid_dictionary_fails_closed (test_naming_policy.NamingPolicyTests.test_missing_or_invalid_dictionary_fails_closed) ... ok\ntest_normalization_and_long_blocked_phrases (test_naming_policy.NamingPolicyTests.test_normalization_and_long_blocked_phrases) ... ok\ntest_reviewed_examples_and_separators (test_naming_policy.NamingPolicyTests.test_reviewed_examples_and_separators) ... ok\ntest_valid_sql_import_and_deduplication (test_naming_policy.NamingPolicyTests.test_valid_sql_import_and_deduplication) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.178s\n\nOK\n",
+    "elapsed_seconds": 0.227626
+  },
+  {
+    "arguments": [
+      "/usr/bin/python3.11",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "test_analyzer_exit_counts_and_empty_input (test_naming_policy.NamingPolicyTests.test_analyzer_exit_counts_and_empty_input) ... ok\ntest_import_rejection_preserves_existing_dump (test_naming_policy.NamingPolicyTests.test_import_rejection_preserves_existing_dump) ... ok\ntest_missing_or_invalid_dictionary_fails_closed (test_naming_policy.NamingPolicyTests.test_missing_or_invalid_dictionary_fails_closed) ... ok\ntest_normalization_and_long_blocked_phrases (test_naming_policy.NamingPolicyTests.test_normalization_and_long_blocked_phrases) ... ok\ntest_reviewed_examples_and_separators (test_naming_policy.NamingPolicyTests.test_reviewed_examples_and_separators) ... ok\ntest_valid_sql_import_and_deduplication (test_naming_policy.NamingPolicyTests.test_valid_sql_import_and_deduplication) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.191s\n\nOK\n",
+    "elapsed_seconds": 0.24055
+  },
+  {
+    "arguments": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "elapsed_seconds": 0.005345
+  }
+]

@@ -9,7 +9,6 @@ import (
 
 	"github.com/WaqfTech/halal-random-strings"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/charmbracelet/x/exp/ordered"
 	flag "github.com/spf13/pflag"
 )
 
@@ -65,7 +64,7 @@ func printUsage(out io.Writer) {
 	// Print Usage and Description
 	fmt.Fprintln(out, titleStyle.Render(fmt.Sprintf("Usage: %s [FLAGS]", appName)))
 	fmt.Fprintln(out, descriptionStyle.Render("A wholesome, family-friendly random string generator."))
-	fmt.Fprintln(out, descriptionStyle.Render("Generates unique and meaningful identifiers using Islamic terms and concepts."))
+	fmt.Fprintln(out, descriptionStyle.Render("Each identifier uses one approved mixing group. Outputs are not secret tokens."))
 
 	// Print Options
 	fmt.Fprintln(out, sectionStyle.Render("Options:"))
@@ -91,21 +90,21 @@ func printUsage(out io.Writer) {
 	printExample(
 		appName,
 		"Generates a single random string with a default length of 5-8 words and a numerical ending.",
-		"wisdom-qalam-light-station-1234",
+		"olive-apple-pear-plum-peach-1234",
 	)
 
 	printExample(
 		fmt.Sprintf("%s -r 3", appName),
 		"Generates 3 random strings.",
-		"salam-peace-mosque-9876",
-		"iman-truth-garden-1234",
-		"barakah-blessing-river-5678",
+		"aisha-maher-amira-fatima-layla-9876",
+		"rahman-rahim-quddus-salam-samad-1234",
+		"ahmad-musa-isa-nuh-hud-5678",
 	)
 
 	printExample(
 		fmt.Sprintf("%s --sep _", appName),
 		"Uses an underscore as the separator between words instead of a hyphen.",
-		"subhanallah_glory_mountain_4567",
+		"olive_apple_pear_plum_peach_4567",
 	)
 
 	printExample(
@@ -117,28 +116,30 @@ func printUsage(out io.Writer) {
 	printExample(
 		fmt.Sprintf("%s --min-words 3 --max-words 5", appName),
 		"Generates a string with 3 to 5 words.",
-		"jannah-tree-garden-7890",
+		"olive-apple-pear-7890",
 	)
 
 	printExample(
 		fmt.Sprintf("%s --no-random-number", appName),
 		"Generates a string without the numerical ending.",
-		"masjid-prayer-carpet",
+		"olive-apple-pear-plum-peach",
 	)
 
 	printExample(
-		fmt.Sprintf("%s --categories sahaba", appName),
-		"Generates a string using only Sahaba names.",
-		"umar-ibn-al-khattab-9876",
+		fmt.Sprintf("%s --categories sahaba,islamic_months --min-words 5 --max-words 5", appName),
+		"Combines only reviewed religious categories.",
+		"umar-ibn-al-khattab-ramadan-9876",
 	)
 
 	printExample(
-		fmt.Sprintf("%s --categories adjectives,nouns_places", appName),
-		"Combines words from 'adjectives' and 'nouns_places' categories.",
-		"beautiful-kaaba-city-3456",
+		fmt.Sprintf("%s --categories colors_arabic,nouns_places", appName),
+		"Combines general categories; every requested category contributes.",
+		"akhdar-city-town-house-azraq-3456",
 	)
 
 	fmt.Fprintln(out, noteStyle.Render("Note: Sample outputs are illustrative and actual outputs may vary due to randomness."))
+	fmt.Fprintln(out, "Mixing groups: Asma Allah only; prophets only; personal names only; Islamic categories only; general categories only.")
+	fmt.Fprintln(out, "Custom dictionaries and standalone servant_prefixes are disabled. See docs/MIXING_POLICY.md for the complete category table.")
 
 	// Print Available Categories
 	fmt.Fprintln(out, sectionStyle.Render("Available Categories:"))
@@ -154,8 +155,6 @@ func usage() {
 
 func main() {
 	const (
-		minResults     = 1
-		maxResults     = 1000000
 		defaultResults = 1
 	)
 
@@ -168,11 +167,11 @@ func main() {
 
 	flag.BoolVarP(&showHelp, "help", "h", false, "Show this help and exit")
 	flag.IntVarP(&opts.Repeat, "repeat", "r", defaultResults, "Number of strings to generate")
-	flag.StringVar(&opts.Sep, "sep", "-", "Separator to use between words")
+	flag.StringVar(&opts.Sep, "sep", "-", "Separator: -, _, . or / only")
 	flag.Int64Var(&opts.Seed, "seed", 0, "Optional int64 seed for reproducibility")
 	flag.IntVar(&opts.MinWords, "min-words", 0, "Minimum number of words in the generated string (default: 5)")
 	flag.IntVar(&opts.MaxWords, "max-words", 0, "Maximum number of words in the generated string (default: 8)")
-	flag.StringVar(&categoriesStr, "categories", "", "Comma-separated list of categories to use (e.g., adjectives,nouns_places)")
+	flag.StringVar(&categoriesStr, "categories", "", "Comma-separated reviewed categories from one mixing group (e.g., colors_arabic,nouns_places)")
 	flag.BoolVar(&noRandomNumber, "no-random-number", false, "Do not append a random number to the end of the string")
 
 	flag.CommandLine.SortFlags = false
@@ -199,8 +198,6 @@ func main() {
 
 	// Set random number option
 	opts.IncludeRandomNumber = !noRandomNumber
-
-	opts.Repeat = ordered.Clamp(opts.Repeat, minResults, maxResults)
 
 	r, err := halalrandomstrings.GenerateWithOptionsE(opts)
 	if err != nil {

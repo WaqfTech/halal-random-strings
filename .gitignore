@@ -11,3 +11,7 @@ goals/*/claim.json
 # Generated output
 output.txt
 generated.txt
+
+# Python validation cache
+__pycache__/
+*.pyc

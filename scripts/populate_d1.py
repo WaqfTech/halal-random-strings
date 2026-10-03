@@ -2,12 +2,8 @@
 """
 populate_d1.py - Populate Cloudflare D1 Database from generated strings.
 
-Architectural Guidance:
-For high-traffic production deployments, consider on-the-fly generation inside
-the Cloudflare Worker (e.g. bundling the dictionary or compiling to WebAssembly)
-to eliminate D1 read-after-write concurrency races and billing overhead (avoiding
-frequent database writes/reads per generated string). Pre-populating D1 is best
-suited for pre-allocated claim/reservation token pools.
+Only reviewed identifiers are accepted. A serving or reservation API requires
+separate implementation and verification; this script prepares and imports data.
 """
 
 import argparse
@@ -16,6 +12,8 @@ import subprocess
 import sys
 import tempfile
 import time
+
+from naming_policy import NamingPolicy, corpus_lines
 
 def run_command(command, check=True, capture_output=True, text=True):
     try:
@@ -44,45 +42,63 @@ def prompt_yes_no(question, default=False, interactive=False):
         return default
 
 def escape_sql_string(val: str) -> str:
-    """Sanitize and escape string literal for SQLite/D1."""
-    sanitized = val.replace("\x00", "").replace("\r", "").replace("\n", "")
-    return sanitized.replace("'", "''")
+    """Quote a validated string literal for SQLite/D1."""
+    return val.replace("'", "''")
 
 def format_insert_block(batch, timestamp):
     values = [f"('{escape_sql_string(item)}', NULL, NULL, {timestamp})" for item in batch]
+    joined = ',\n  '.join(values)
     return (
         f"INSERT OR IGNORE INTO generated_strings (id, used_at, used_by, created_at) VALUES\n"
-        f"  {',\n  '.join(values)};\n"
+        f"  {joined};\n"
     )
 
-def generate_sql_file(output_file, sql_file_path, chunk_size=500):
-    """Stream lines from output_file and write transactional SQL batches."""
+def validate_corpus(output_file, sep="-"):
+    policy = NamingPolicy()
+    total = 0
+    for number, value in corpus_lines(output_file):
+        try:
+            policy.validate(value, sep)
+        except ValueError as error:
+            raise ValueError(f"Line {number}: {error}") from error
+        total += 1
+    if not total:
+        raise ValueError("Empty corpus")
+
+
+def generate_sql_file(output_file, sql_file_path, chunk_size=500, sep="-"):
+    """Validate every identifier, then atomically publish D1-compatible SQL."""
+    if not 1 <= chunk_size <= 500:
+        raise ValueError("Batch size must be between 1 and 500")
+    if os.path.abspath(output_file) == os.path.abspath(sql_file_path):
+        raise ValueError("Input and SQL output must be different files")
+    policy = NamingPolicy()
     total_strings = 0
     timestamp = int(time.time())
-
-    with open(output_file, 'r', encoding='utf-8') as fin, open(sql_file_path, 'w', encoding='utf-8') as fout:
-        fout.write("-- Cloudflare D1 batch insert script\n")
-        fout.write("BEGIN TRANSACTION;\n")
-        
-        batch = []
-        for line in fin:
-            cleaned = line.strip()
-            if not cleaned:
-                continue
-            batch.append(cleaned)
-            total_strings += 1
-
-            if len(batch) >= chunk_size:
+    target = os.path.abspath(sql_file_path)
+    fd, staging = tempfile.mkstemp(prefix=".d1-validated-", suffix=".sql", dir=os.path.dirname(target))
+    try:
+        with os.fdopen(fd, 'w', encoding='utf-8') as fout:
+            fout.write("-- Cloudflare D1 validated batch insert script\n")
+            batch = []
+            for number, value in corpus_lines(output_file):
+                try:
+                    policy.validate(value, sep)
+                except ValueError as error:
+                    raise ValueError(f"Line {number}: {error}") from error
+                batch.append(value)
+                total_strings += 1
+                if len(batch) >= chunk_size:
+                    fout.write(format_insert_block(batch, timestamp))
+                    batch = []
+            if not total_strings:
+                raise ValueError("Empty corpus")
+            if batch:
                 fout.write(format_insert_block(batch, timestamp))
-                batch = []
-                if total_strings % 5000 == 0:
-                    fout.write("COMMIT;\nBEGIN TRANSACTION;\n")
-
-        if batch:
-            fout.write(format_insert_block(batch, timestamp))
-
-        fout.write("COMMIT;\n")
-
+        os.replace(staging, target)
+    finally:
+        if os.path.exists(staging):
+            os.remove(staging)
     return total_strings
 
 def check_wrangler_setup(db_name, auto_create=False, auto_apply_schema=False, interactive=False):
@@ -163,7 +179,7 @@ def check_wrangler_setup(db_name, auto_create=False, auto_apply_schema=False, in
     print("--- Wrangler Setup Complete ---")
     return True
 
-def populate_d1_from_output(output_file, db_name, batch_size=500, dump_sql=None):
+def populate_d1_from_output(output_file, db_name, batch_size=500, dump_sql=None, sep="-"):
     print(f"\n--- Populating D1 Database '{db_name}' ---")
     if not os.path.exists(output_file):
         print(f"Error: Output file '{output_file}' not found. Please run 'make generate' first.")
@@ -178,10 +194,7 @@ def populate_d1_from_output(output_file, db_name, batch_size=500, dump_sql=None)
 
     try:
         print(f"Preparing SQL statements from '{output_file}'...")
-        total = generate_sql_file(output_file, target_sql_path, chunk_size=batch_size)
-        if total == 0:
-            print(f"No valid strings found in {output_file}. Nothing to populate.")
-            return True
+        total = generate_sql_file(output_file, target_sql_path, chunk_size=batch_size, sep=sep)
         print(f"Prepared {total} strings in '{target_sql_path}'.")
 
         if dump_sql:
@@ -199,6 +212,9 @@ def populate_d1_from_output(output_file, db_name, batch_size=500, dump_sql=None)
 
         print("D1 population complete.")
         return True
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        print(f"[FAIL] Corpus rejected: {error}", file=sys.stderr)
+        return False
     finally:
         if is_temp and os.path.exists(target_sql_path):
             try:
@@ -226,7 +242,7 @@ def main():
         "--batch-size",
         type=int,
         default=500,
-        help="Batch size for D1 insert statements per transaction block (default: 500)",
+        help="Batch size for D1 insert statements, 1..500 (default: 500)",
     )
     parser.add_argument(
         "--dump-sql",
@@ -249,8 +265,17 @@ def main():
         action="store_true",
         help="Enable interactive confirmation prompts if running in a TTY",
     )
+    parser.add_argument("--sep", default="-", choices=["-", "_", ".", "/"])
 
     args = parser.parse_args()
+    if not 1 <= args.batch_size <= 500:
+        parser.error("--batch-size must be between 1 and 500")
+    # Reject an unsafe corpus before setup can create a database or apply schema.
+    try:
+        validate_corpus(args.output_file, args.sep)
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        print(f"[FAIL] Corpus rejected: {error}", file=sys.stderr)
+        sys.exit(1)
 
     # If user just wants to dump SQL to file, bypass Wrangler checks
     if args.dump_sql:
@@ -259,6 +284,7 @@ def main():
             args.db_name,
             batch_size=args.batch_size,
             dump_sql=args.dump_sql,
+            sep=args.sep,
         )
         sys.exit(0 if success else 1)
 
@@ -268,7 +294,7 @@ def main():
         auto_apply_schema=args.apply_schema,
         interactive=args.interactive,
     ):
-        success = populate_d1_from_output(args.output_file, args.db_name, batch_size=args.batch_size)
+        success = populate_d1_from_output(args.output_file, args.db_name, batch_size=args.batch_size, sep=args.sep)
         sys.exit(0 if success else 1)
     else:
         print("Wrangler setup failed. Please resolve the issues and try again.")

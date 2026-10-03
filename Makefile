@@ -1,4 +1,4 @@
-.PHONY: all setup generate analyze populate-d1 verify-corpus
+.PHONY: all setup build test generate analyze populate-d1 verify-corpus clean
 
 # Default target
 all: build test generate analyze
@@ -38,10 +38,11 @@ build:
 # Test target: Runs Go tests
 test:
 	@echo "Running Go tests..."
-	go test ./...
+	go test -race ./...
+	python3 -m unittest discover -s scripts -p 'test_*.py'
 
 # Generate target: Runs the Go application to generate strings
-generate:
+generate: build
 	@echo "Generating strings to $(OUTPUT_FILE)..."
 	@./$(GO_APP_NAME) -r 1000 > $(OUTPUT_FILE)
 	@echo "Generated 1000 strings."
@@ -53,7 +54,7 @@ analyze:
 
 # Verify corpus target: Runs large-scale generation and semantic sensitivity audit
 verify-corpus: build
-	@echo "Generating and auditing 10000 strings for semantic and theological compliance..."
+	@echo "Generating and auditing 10000 strings for the approved mixing policy..."
 	@./$(GO_APP_NAME) -r 10000 --no-random-number > $(OUTPUT_FILE)
 	python3 scripts/analyze.py $(OUTPUT_FILE)
 

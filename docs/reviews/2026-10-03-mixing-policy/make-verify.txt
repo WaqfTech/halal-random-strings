@@ -1,0 +1,23 @@
+Building Go application...
+go build -o halal-random-strings ./cmd/halal-random-strings
+Build complete: ./halal-random-strings
+Generating and auditing 10000 strings for the approved mixing policy...
+python3 scripts/analyze.py /tmp/hrs-policy-make-corpus.txt
+Total lines: 10000
+Unique lines: 10000
+Uniqueness percentage: 100.00%
+
+No duplicate lines found.
+Length metrics: min=17 chars, max=89 chars, avg=42.0 chars
+Word count distribution (valid identifiers):
+  5 words: 2538 lines
+  6 words: 2486 lines
+  7 words: 2522 lines
+  8 words: 2454 lines
+Mixing groups:
+  divine: 2000
+  general: 2024
+  islamic: 2032
+  names: 1990
+  prophets: 1954
+[PASS] Policy violations: 0

@@ -2,20 +2,10 @@
   "categories": {
     "adjectives": [
       "tayyib",
-      "sadiq",
-      "amin",
-      "salih",
       "nur",
-      "karim",
       "haleem",
       "baraka",
-      "muhsin",
-      "mubarak",
       "mubayyin",
-      "muzammil",
-      "mudathir",
-      "hasan",
-      "jamal",
       "qawi",
       "safi",
       "tahir",
@@ -30,11 +20,9 @@
       "tabassum",
       "mu'min",
       "mukhlis",
-      "zaki",
       "warid",
       "munir",
       "faruq",
-      "najeeb",
       "razi",
       "shakir",
       "mahmud",
@@ -43,7 +31,6 @@
       "aqil",
       "mu'minah",
       "saliha",
-      "tahira",
       "radiya",
       "hanifa",
       "safiya",
@@ -208,14 +195,12 @@
       "Contentment with God's Decree",
       "Acceptance of Fate",
       "Tawakkul",
-      "Ihsan",
       "Taqwa",
       "Zuhd",
       "Wara'",
       "Istiqama",
       "Shukr",
       "Sabr",
-      "Adl",
       "Rahmat",
       "Hilma",
       "Safa",
@@ -229,7 +214,7 @@
       "Nur",
       "Hidaya",
       "Falah",
-      "Naj\u00e2h",
+      "Najah",
       "Jihad of the soul",
       "Blessing-seeking",
       "Guidance-following",
@@ -272,7 +257,6 @@
       "quill",
       "scroll",
       "map",
-      "globe",
       "telescope",
       "microscope",
       "abacus",
@@ -307,9 +291,7 @@
       "inkwell",
       "parchment",
       "scroll-case",
-      "astrolabe",
       "sundial",
-      "sextant",
       "quiver",
       "bow",
       "arrow",
@@ -491,7 +473,6 @@
     ],
     "nouns_places": [
       "souk",
-      "minaret",
       "dome",
       "courtyard",
       "well",
@@ -537,7 +518,6 @@
       "hotel",
       "hospital",
       "school",
-      "university",
       "library",
       "museum",
       "theater",
@@ -728,13 +708,6 @@
       "inn-lodging",
       "hospice-shelter",
       "observatory-building",
-      "madrasa-school",
-      "khanqah-monastery",
-      "zawiya-shrine",
-      "ribat-fort",
-      "shrine-holy",
-      "mausoleum-tomb",
-      "garden-paradise",
       "orchard-fruit",
       "farm-land",
       "field-cultivated",
@@ -746,9 +719,6 @@
       "sabil-water",
       "hammam-bath",
       "public-bathhouse",
-      "ablution-area-wash",
-      "sahn-courtyard",
-      "riwaq-arcade",
       "citadel-fort",
       "gatehouse-structure",
       "watchtower-lookout",
@@ -774,11 +744,9 @@
       "country",
       "nation",
       "kingdom",
-      "empire",
-      "caliphate"
+      "empire"
     ],
     "nouns_concepts": [
-      "iman",
       "deen",
       "islam",
       "tawhid",
@@ -800,42 +768,26 @@
       "messenger",
       "sahabi",
       "tabi'i",
-      "'alim",
-      "'arif",
       "'abid",
       "'adil",
       "'amil",
       "'aqil",
       "'ashiq",
       "'atiq",
-      "'azim",
-      "'aziz",
-      "burhan",
       "danish",
-      "fajr",
       "fath",
       "fikri",
       "fuad",
-      "ghazi",
-      "hadi",
-      "hafiz",
       "hajj",
-      "hakim",
       "hanif",
       "hikma",
-      "ihsan",
       "jihad",
       "jumah",
-      "khayr",
       "qadr",
-      "qamar",
       "quds",
-      "rahma",
-      "rashid",
       "sabr",
       "sadaqa",
       "salah",
-      "salam",
       "sawm",
       "shams",
       "shukr",
@@ -920,15 +872,12 @@
       "qalb",
       "aql",
       "ilm",
-      "amal",
       "ikhlas",
       "risalah",
       "nubuwwa",
       "jihad-al-nafs",
       "jihad-al-akbar",
       "jihad-al-asghar",
-      "shahid",
-      "mujahid",
       "ansar",
       "muhajirun",
       "ahl-al-bayt",
@@ -966,14 +915,10 @@
       "community-ummah",
       "nation-state",
       "humankind-people",
-      "adl",
       "hubb",
-      "haqq",
-      "jamal",
       "nur",
       "hidaya",
       "baraka",
-      "rizq",
       "ghidha",
       "fadl",
       "nima",
@@ -986,7 +931,6 @@
       "izz",
       "karama",
       "quwwa",
-      "jalal",
       "azama",
       "hamd",
       "ibada",
@@ -1010,7 +954,6 @@
       "tafaul",
       "shajaa",
       "sumood",
-      "wafa",
       "ukhuwwa",
       "ittihad",
       "tawafuq",
@@ -1035,7 +978,19 @@
       "healer-of-hearts",
       "restorer-of-hope",
       "paradise-realm",
-      "heaven-garden"
+      "heaven-garden",
+      "caliphate",
+      "dunia",
+      "dunyah",
+      "sanctuary",
+      "heaven",
+      "pilgrim",
+      "faith",
+      "minaret",
+      "paradise",
+      "creator",
+      "master",
+      "blessing"
     ],
     "sahaba": [
       "Abu Bakr As-Siddiq",
@@ -1153,16 +1108,11 @@
       "garden",
       "light",
       "station",
-      "dunia",
-      "dunya",
-      "dunyah",
-      "een",
       "guide",
       "path",
       "journey",
       "quest",
       "haven",
-      "sanctuary",
       "source",
       "spring",
       "fount",
@@ -1189,11 +1139,8 @@
       "planet",
       "earth",
       "sky",
-      "heaven",
       "peace",
-      "nur",
       "truth",
-      "pilgrim",
       "traveler",
       "explorer",
       "seeker",
@@ -1202,40 +1149,31 @@
       "student",
       "scholar",
       "thinker",
-      "master",
       "elder",
       "leader",
       "speaker",
       "writer",
       "poet",
-      "creator",
       "maker",
       "builder",
       "innovator",
       "discoverer",
       "pioneer",
       "visionary",
-      "hope",
-      "faith",
       "trust",
       "care",
       "share",
       "unite",
       "growth",
-      "wisdom",
       "inspiration",
       "strength",
-      "blessing",
       "success",
       "abundance",
       "achievement",
       "victory",
       "excellence",
       "glow",
-      "serenity",
-      "tranquility",
       "calm",
-      "purity",
       "clean",
       "bright",
       "clarity",
@@ -1281,7 +1219,6 @@
       "fortress",
       "citadel",
       "tower",
-      "minaret",
       "dome",
       "arch",
       "pillar",
@@ -1295,8 +1232,7 @@
       "nest",
       "refuge",
       "shelter",
-      "oasis",
-      "paradise"
+      "oasis"
     ],
     "trees": [
       "Olive",
@@ -1976,8 +1912,6 @@
       "Kazandibi"
     ],
     "muslim_names_male": [
-      "Ahmed",
-      "Muhammad",
       "Ali",
       "Omar",
       "Uthman",
@@ -1989,18 +1923,6 @@
       "Hamza",
       "Zayd",
       "Bilal",
-      "Ibrahim",
-      "Yusuf",
-      "Musa",
-      "Isa",
-      "Dawud",
-      "Sulayman",
-      "Zakariya",
-      "Yahya",
-      "Adam",
-      "Nuh",
-      "Hud",
-      "Shu'ayb",
       "Luqman",
       "Imran",
       "Anas",
@@ -2032,12 +1954,10 @@
       "Abdul-Hafiz",
       "Abdul-Hakim",
       "Hani",
-      "Harun",
       "Haytham",
       "Hilal",
       "Husain",
       "Ihsan",
-      "Ismail",
       "Jafar",
       "Jalal",
       "Jamil",
@@ -2055,7 +1975,6 @@
       "Mujahid",
       "Muneer",
       "Murad",
-      "Mustafa",
       "Nabil",
       "Najeeb",
       "Najm",
@@ -2073,7 +1992,6 @@
       "Sajid",
       "Salim",
       "Sultan",
-      "Taha",
       "Talal",
       "Tamim",
       "Ubayd",
@@ -2081,19 +1999,10 @@
       "Abdul-Wahid",
       "Waleed",
       "Waseem",
-      "Yasin",
-      "Younus",
       "Zafar",
       "Abdul-Zahir",
       "Zubair",
-      "Muhammed",
-      "Ahmad",
       "Mahmood",
-      "Ayub",
-      "Ishaq",
-      "Yaqub",
-      "Shoaib",
-      "Ilyas",
       "Al-Hasan",
       "Al-Husayn",
       "Jaafar",
@@ -2104,7 +2013,6 @@
       "Abdur-Rahim",
       "Adel",
       "Arif",
-      "Ayyub",
       "Bashar",
       "Bassam",
       "Burhan",
@@ -2508,7 +2416,7 @@
       "Asafoetida",
       "Galangal",
       "Lemon Grass",
-      "Kaffir Lime Leaves",
+      "Makrut Lime Leaves",
       "Sichuan Pepper",
       "Curry Powder",
       "Chipotle",
@@ -2721,27 +2629,16 @@
     "architectural_elements": [
       "Arch",
       "Dome",
-      "Minaret",
       "Courtyard",
-      "Mihrab",
-      "Minbar",
-      "Sahn",
-      "Riwaq",
       "Iwan",
       "Mashrabiya",
       "Muqarnas",
-      "Calligraphy Panel",
       "Geometric Tile",
       "Mosaic",
       "Fountain",
-      "Ablution Fountain",
       "Gate",
       "Doorway",
       "Window",
-      "Kufic Inscription",
-      "Nastaliq Script",
-      "Thuluth Script",
-      "Diwani Script",
       "Vault",
       "Ceiling",
       "Column",
@@ -2760,16 +2657,10 @@
       "Niche",
       "Chashma",
       "Sabil",
-      "Kuttab",
-      "Hamm\u0101m",
+      "Hammam",
       "Caravanserai",
       "Qanat",
       "Wind Tower",
-      "Madrasah",
-      "Khanqah",
-      "Zawiya",
-      "Ribat",
-      "Mausoleum",
       "Canal",
       "Aqueduct",
       "Bridge",
@@ -2792,22 +2683,13 @@
       "Hypostyle Hall",
       "Squinch",
       "Pendentive",
-      "Minbar Stairs",
-      "Qibla Wall",
-      "Adhan Tower",
-      "Muezzin Balcony",
-      "Wudu Area",
-      "Prayer Niche",
       "Arcade",
       "Atrium",
       "Barracks",
-      "Bell Tower",
       "Buttress",
       "Cistern",
-      "Cloister",
       "Coffer",
       "Corbel",
-      "Crypt",
       "Donjon",
       "Engaged Column",
       "Fan Vault",
@@ -2818,11 +2700,8 @@
       "Jali",
       "Keep",
       "Lierne",
-      "Mandapa",
-      "Nave",
       "Obelisk",
       "Oculus",
-      "Pagoda",
       "Portico",
       "Pylon",
       "Quadriporticus",
@@ -2830,16 +2709,13 @@
       "Rampart",
       "Rotunda",
       "Rubble Masonry",
-      "Sahn-e-Chaman",
       "Spandrel",
       "Stoa",
       "Tympanum",
       "Undercroft",
       "Voussoir",
       "Whispering Gallery",
-      "Zigzag",
-      "Ziggurat",
-      "Zulla"
+      "Zigzag"
     ],
     "birds": [
       "Dove",
@@ -3058,7 +2934,6 @@
       "Usul al-Hadith",
       "Sirah",
       "Tazkiya",
-      "Ihsan",
       "Ilm",
       "Adab",
       "Akhlaq",
@@ -3114,15 +2989,12 @@
       "Isnad",
       "Rawi",
       "Sahih",
-      "Hasan",
       "Mutawatir",
-      "Ahad",
       "Gharib",
       "Musnad",
       "Musannaf",
       "Muwatta'",
       "Sunan",
-      "Jami'",
       "Mustadrak",
       "Sharh",
       "Hashiya",
@@ -3146,7 +3018,6 @@
       "Qadar",
       "Jabar",
       "Ikhtiyar",
-      "Rizq",
       "Ajl",
       "Shafa'a",
       "Barzakh",
@@ -3306,12 +3177,10 @@
     "adab_terms": [
       "Adab",
       "Akhlaq",
-      "Ihsan",
       "Khuluq",
       "Tawadu'",
       "Hilma",
       "Rifq",
-      "Rahma",
       "Shukr",
       "Sabr",
       "Sidq",
@@ -3328,7 +3197,6 @@
       "Qana'ah",
       "Tawakkul",
       "Mushawara",
-      "Adl",
       "Futuwwa",
       "Murua'",
       "Sakinah",
@@ -3457,7 +3325,9 @@
       "Stone Carving",
       "Plasterwork",
       "Stucco Decoration",
-      "Painted Ceilings"
+      "Painted Ceilings",
+      "Calligraphy Panel",
+      "Kufic Inscription"
     ],
     "islamic_golden_age_scholars": [
       "Jabir ibn Hayyan",
@@ -3537,7 +3407,35 @@
       "sajjadah",
       "masbaha",
       "prayer-beads",
-      "adhan-clock"
+      "adhan-clock",
+      "Minaret",
+      "Sahn",
+      "Riwaq",
+      "Ablution Fountain",
+      "Kuttab",
+      "Madrasah",
+      "Khanqah",
+      "Zawiya",
+      "Ribat",
+      "Mausoleum",
+      "Minbar Stairs",
+      "Qibla Wall",
+      "Adhan Tower",
+      "Muezzin Balcony",
+      "Wudu Area",
+      "Prayer Niche",
+      "Sahn-e-Chaman",
+      "Zulla",
+      "madrasa-school",
+      "khanqah-monastery",
+      "zawiya-shrine",
+      "ribat-fort",
+      "shrine-holy",
+      "mausoleum-tomb",
+      "ablution-area-wash",
+      "garden-paradise",
+      "sahn-courtyard",
+      "riwaq-arcade"
     ],
     "geographic_features": [
       "desert",
@@ -3662,9 +3560,43 @@
       "zahir",
       "rahim"
     ],
-    "servant_prefixes": [
-      "abd",
-      "amat"
+    "prophets": [
+      "Ahmed",
+      "Ahmad",
+      "Muhammad",
+      "Muhammed",
+      "Ibrahim",
+      "Yusuf",
+      "Musa",
+      "Isa",
+      "Dawud",
+      "Sulayman",
+      "Zakariya",
+      "Yahya",
+      "Adam",
+      "Nuh",
+      "Hud",
+      "Shu'ayb",
+      "Harun",
+      "Ismail",
+      "Younus",
+      "Ayub",
+      "Ishaq",
+      "Yaqub",
+      "Shoaib",
+      "Ilyas",
+      "Ayyub",
+      "Salih",
+      "Yunus",
+      "Idris",
+      "Lut",
+      "Al-Yasa",
+      "Dhul-Kifl",
+      "Mustafa",
+      "Taha",
+      "Yasin",
+      "muzammil",
+      "mudathir"
     ]
   },
   "rules": [
@@ -3681,13 +3613,6 @@
         "nouns_concepts"
       ],
       "template": "{islamic_virtues}-{nouns_concepts}"
-    },
-    {
-      "pattern": [
-        "adjectives",
-        "nouns_places"
-      ],
-      "template": "{adjectives}-{nouns_places}"
     },
     {
       "pattern": [
@@ -3786,38 +3711,10 @@
     },
     {
       "pattern": [
-        "muslim_names_male",
-        "islamic_virtues"
-      ],
-      "template": "{muslim_names_male}-{islamic_virtues}"
-    },
-    {
-      "pattern": [
-        "muslim_names_female",
-        "flowers"
-      ],
-      "template": "{muslim_names_female}-{flowers}"
-    },
-    {
-      "pattern": [
         "islamic_months",
         "nouns_concepts"
       ],
       "template": "{islamic_months}-{nouns_concepts}"
-    },
-    {
-      "pattern": [
-        "days_of_week_arabic",
-        "islamic_events"
-      ],
-      "template": "{days_of_week_arabic}-{islamic_events}"
-    },
-    {
-      "pattern": [
-        "architectural_elements",
-        "adjectives"
-      ],
-      "template": "{architectural_elements}-{adjectives}"
     },
     {
       "pattern": [
@@ -3828,52 +3725,10 @@
     },
     {
       "pattern": [
-        "muslim_empires",
-        "nouns_places"
-      ],
-      "template": "{muslim_empires}-{nouns_places}"
-    },
-    {
-      "pattern": [
         "scholarly_terms",
         "nouns_concepts"
       ],
       "template": "{scholarly_terms}-{nouns_concepts}"
-    },
-    {
-      "pattern": [
-        "adab_terms",
-        "suffixes"
-      ],
-      "template": "{adab_terms}-{suffixes}"
-    },
-    {
-      "pattern": [
-        "islamic_art_forms",
-        "nouns_places"
-      ],
-      "template": "{islamic_art_forms}-{nouns_places}"
-    },
-    {
-      "pattern": [
-        "nouns_concepts",
-        "suffixes"
-      ],
-      "template": "{nouns_concepts}-{suffixes}"
-    },
-    {
-      "pattern": [
-        "muslim_names_male",
-        "suffixes"
-      ],
-      "template": "{muslim_names_male}-{suffixes}"
-    },
-    {
-      "pattern": [
-        "muslim_names_female",
-        "suffixes"
-      ],
-      "template": "{muslim_names_female}-{suffixes}"
     },
     {
       "pattern": [
@@ -3891,27 +3746,6 @@
     },
     {
       "pattern": [
-        "islamic_virtues",
-        "suffixes"
-      ],
-      "template": "{islamic_virtues}-{suffixes}"
-    },
-    {
-      "pattern": [
-        "adjectives",
-        "suffixes"
-      ],
-      "template": "{adjectives}-{suffixes}"
-    },
-    {
-      "pattern": [
-        "islamic_events",
-        "suffixes"
-      ],
-      "template": "{islamic_events}-{suffixes}"
-    },
-    {
-      "pattern": [
         "nouns_objects",
         "suffixes"
       ],
@@ -3926,20 +3760,6 @@
     },
     {
       "pattern": [
-        "islamic_golden_age_scholars",
-        "suffixes"
-      ],
-      "template": "{islamic_golden_age_scholars}-{suffixes}"
-    },
-    {
-      "pattern": [
-        "islamic_inventions",
-        "suffixes"
-      ],
-      "template": "{islamic_inventions}-{suffixes}"
-    },
-    {
-      "pattern": [
         "spices",
         "vegetables"
       ],
@@ -3947,31 +3767,10 @@
     },
     {
       "pattern": [
-        "gems_minerals",
-        "adjectives"
-      ],
-      "template": "{gems_minerals}-{adjectives}"
-    },
-    {
-      "pattern": [
-        "architectural_elements",
-        "adjectives"
-      ],
-      "template": "{architectural_elements}-{adjectives}"
-    },
-    {
-      "pattern": [
         "birds",
         "geographic_features"
       ],
       "template": "{birds}-{geographic_features}"
-    },
-    {
-      "pattern": [
-        "flowers",
-        "adjectives"
-      ],
-      "template": "{flowers}-{adjectives}"
     },
     {
       "pattern": [
@@ -4052,34 +3851,6 @@
     },
     {
       "pattern": [
-        "nouns_places",
-        "muslim_names_male"
-      ],
-      "template": "{nouns_places}-{muslim_names_male}"
-    },
-    {
-      "pattern": [
-        "nouns_places",
-        "muslim_names_female"
-      ],
-      "template": "{nouns_places}-{muslim_names_female}"
-    },
-    {
-      "pattern": [
-        "islamic_virtues",
-        "muslim_names_male"
-      ],
-      "template": "{islamic_virtues}-{muslim_names_male}"
-    },
-    {
-      "pattern": [
-        "islamic_virtues",
-        "muslim_names_female"
-      ],
-      "template": "{islamic_virtues}-{muslim_names_female}"
-    },
-    {
-      "pattern": [
         "adjectives",
         "holy_sanctuaries"
       ],
@@ -4087,25 +3858,201 @@
     },
     {
       "pattern": [
-        "islamic_virtues",
-        "holy_sanctuaries"
+        "adjectives"
       ],
-      "template": "{islamic_virtues}-{holy_sanctuaries}"
+      "template": "{adjectives}"
     },
     {
       "pattern": [
-        "servant_prefixes",
-        "asma_allah"
-      ],
-      "template": "{servant_prefixes}-{asma_allah}"
-    },
-    {
-      "pattern": [
-        "servant_prefixes",
-        "asma_allah",
         "islamic_virtues"
       ],
-      "template": "{servant_prefixes}-{asma_allah}-{islamic_virtues}"
+      "template": "{islamic_virtues}"
+    },
+    {
+      "pattern": [
+        "nouns_objects"
+      ],
+      "template": "{nouns_objects}"
+    },
+    {
+      "pattern": [
+        "nouns_places"
+      ],
+      "template": "{nouns_places}"
+    },
+    {
+      "pattern": [
+        "nouns_concepts"
+      ],
+      "template": "{nouns_concepts}"
+    },
+    {
+      "pattern": [
+        "suffixes"
+      ],
+      "template": "{suffixes}"
+    },
+    {
+      "pattern": [
+        "trees"
+      ],
+      "template": "{trees}"
+    },
+    {
+      "pattern": [
+        "vegetables"
+      ],
+      "template": "{vegetables}"
+    },
+    {
+      "pattern": [
+        "fruits"
+      ],
+      "template": "{fruits}"
+    },
+    {
+      "pattern": [
+        "islamic_inventions"
+      ],
+      "template": "{islamic_inventions}"
+    },
+    {
+      "pattern": [
+        "jordanian_food"
+      ],
+      "template": "{jordanian_food}"
+    },
+    {
+      "pattern": [
+        "saudi_food"
+      ],
+      "template": "{saudi_food}"
+    },
+    {
+      "pattern": [
+        "yemeni_food"
+      ],
+      "template": "{yemeni_food}"
+    },
+    {
+      "pattern": [
+        "arabic_food"
+      ],
+      "template": "{arabic_food}"
+    },
+    {
+      "pattern": [
+        "islamic_months"
+      ],
+      "template": "{islamic_months}"
+    },
+    {
+      "pattern": [
+        "days_of_week_arabic"
+      ],
+      "template": "{days_of_week_arabic}"
+    },
+    {
+      "pattern": [
+        "colors_arabic"
+      ],
+      "template": "{colors_arabic}"
+    },
+    {
+      "pattern": [
+        "animals"
+      ],
+      "template": "{animals}"
+    },
+    {
+      "pattern": [
+        "spices"
+      ],
+      "template": "{spices}"
+    },
+    {
+      "pattern": [
+        "gems_minerals"
+      ],
+      "template": "{gems_minerals}"
+    },
+    {
+      "pattern": [
+        "architectural_elements"
+      ],
+      "template": "{architectural_elements}"
+    },
+    {
+      "pattern": [
+        "birds"
+      ],
+      "template": "{birds}"
+    },
+    {
+      "pattern": [
+        "flowers"
+      ],
+      "template": "{flowers}"
+    },
+    {
+      "pattern": [
+        "scholarly_terms"
+      ],
+      "template": "{scholarly_terms}"
+    },
+    {
+      "pattern": [
+        "islamic_events"
+      ],
+      "template": "{islamic_events}"
+    },
+    {
+      "pattern": [
+        "muslim_empires"
+      ],
+      "template": "{muslim_empires}"
+    },
+    {
+      "pattern": [
+        "adab_terms"
+      ],
+      "template": "{adab_terms}"
+    },
+    {
+      "pattern": [
+        "islamic_art_forms"
+      ],
+      "template": "{islamic_art_forms}"
+    },
+    {
+      "pattern": [
+        "islamic_golden_age_scholars"
+      ],
+      "template": "{islamic_golden_age_scholars}"
+    },
+    {
+      "pattern": [
+        "holy_sanctuaries"
+      ],
+      "template": "{holy_sanctuaries}"
+    },
+    {
+      "pattern": [
+        "geographic_features"
+      ],
+      "template": "{geographic_features}"
+    },
+    {
+      "pattern": [
+        "asma_allah"
+      ],
+      "template": "{asma_allah}"
+    },
+    {
+      "pattern": [
+        "prophets"
+      ],
+      "template": "{prophets}"
     }
   ],
   "blocked": [
@@ -4646,6 +4593,62 @@
     "workout",
     "yell",
     "yoga-mat",
-    "zombie"
-  ]
+    "zombie",
+    "kaffir",
+    "kaffer",
+    "kafir",
+    "caffre"
+  ],
+  "policy": {
+    "version": 1,
+    "category_groups": {
+      "adjectives": "islamic",
+      "islamic_virtues": "islamic",
+      "nouns_objects": "general",
+      "nouns_places": "general",
+      "nouns_concepts": "islamic",
+      "sahaba": "islamic",
+      "suffixes": "general",
+      "trees": "general",
+      "vegetables": "general",
+      "fruits": "general",
+      "islamic_inventions": "islamic",
+      "jordanian_food": "general",
+      "saudi_food": "general",
+      "yemeni_food": "general",
+      "arabic_food": "general",
+      "muslim_names_male": "names",
+      "muslim_names_female": "names",
+      "islamic_months": "islamic",
+      "days_of_week_arabic": "general",
+      "colors_arabic": "general",
+      "animals": "general",
+      "spices": "general",
+      "gems_minerals": "general",
+      "architectural_elements": "general",
+      "birds": "general",
+      "flowers": "general",
+      "scholarly_terms": "islamic",
+      "islamic_events": "islamic",
+      "muslim_empires": "islamic",
+      "adab_terms": "islamic",
+      "islamic_art_forms": "islamic",
+      "islamic_golden_age_scholars": "islamic",
+      "holy_sanctuaries": "islamic",
+      "geographic_features": "general",
+      "asma_allah": "divine",
+      "prophets": "prophets"
+    },
+    "allowed_separators": [
+      "-",
+      "_",
+      ".",
+      "/"
+    ],
+    "disabled_categories": {
+      "servant_prefixes": "Standalone prefixes are disabled; Asma Allah may mix only with Asma Allah."
+    },
+    "max_words": 64,
+    "max_repeat": 1000000
+  }
 }

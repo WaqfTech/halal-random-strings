@@ -71,10 +71,13 @@ func TestGoal_03_WordsEmbeddingAndInit(t *testing.T) {
 		Blocked:    []string{"badword"},
 	}
 	customEngine := NewEngine(customWords)
-	cats := customEngine.GetCategories()
-	if len(cats) != 1 || cats[0] != "test_cat" {
-		t.Fatalf("custom engine categories mismatch: %v", cats)
+	if len(customEngine.GetCategories()) != 0 {
+		t.Fatal("disabled custom engine exposes categories")
 	}
+	if _, err := customEngine.GenerateWithOptionsE(Options{}); err != ErrCustomDictionariesDisabled {
+		t.Fatalf("custom engine should report rejection: %v", err)
+	}
+
 }
 
 // TestGoal_04_ScunthorpeAndBlockedList verifies elimination of false positives and blocked filter accuracy.
@@ -195,15 +198,17 @@ func TestGoal_07_TestSuiteAndPanics(t *testing.T) {
 		t.Fatal("expected valid result with uninitialized Sep")
 	}
 
-	// Inverted MinWords > MaxWords should auto-clamp without panic
+	// Inverted bounds are rejected without panic under the approved policy.
 	optsInverted := Options{
 		Repeat:   1,
 		MinWords: 10,
 		MaxWords: 2,
 	}
-	resInv := GenerateWithOptions(optsInverted)
-	if len(resInv) != 1 || resInv[0] == "" {
-		t.Fatal("expected valid result with inverted MinWords/MaxWords")
+	if _, err := GenerateWithOptionsE(optsInverted); err == nil {
+		t.Fatal("inverted bounds must report an error")
+	}
+	if len(GenerateWithOptions(optsInverted)) != 0 {
+		t.Fatal("compatibility wrapper must fail closed")
 	}
 
 	// Concurrent access test
@@ -256,8 +261,8 @@ func TestGoal_09_MakefileAndScriptsStability(t *testing.T) {
 
 	cmd := exec.Command("python3", "scripts/analyze.py", tmpFile.Name())
 	out, err := cmd.CombinedOutput()
-	if err != nil {
-		t.Fatalf("analyze.py failed on empty file: %v (output: %s)", err, string(out))
+	if err == nil {
+		t.Fatal("analyze.py must fail closed on an empty corpus")
 	}
 	if !strings.Contains(string(out), "file is empty") {
 		t.Errorf("expected 'file is empty' message, got: %s", string(out))
@@ -450,29 +455,14 @@ func TestGoal_14_SanitizeAsmaAllahAndVirtues(t *testing.T) {
 		}
 	}
 
-	// Verify servant_prefixes exists and has abd and amat
-	prefixes, exists := words.Categories["servant_prefixes"]
-	if !exists || len(prefixes) < 2 {
-		t.Fatal("servant_prefixes category must exist with abd and amat")
+	// Latest user policy supersedes the old prefix formula.
+	if _, exists := words.Categories["servant_prefixes"]; exists {
+		t.Fatal("standalone prefixes must be disabled")
+	}
+	if _, err := GenerateWithOptionsE(Options{Categories: []string{"servant_prefixes", "asma_allah"}}); err == nil {
+		t.Fatal("mixed divine formula accepted")
 	}
 
-	// Verify respectful generation formula
-	opts := Options{
-		Repeat:              5,
-		Categories:          []string{"servant_prefixes", "asma_allah"},
-		MinWords:            2,
-		MaxWords:            2,
-		IncludeRandomNumber: false,
-	}
-	results, err := GenerateWithOptionsE(opts)
-	if err != nil {
-		t.Fatalf("failed to generate pious names: %v", err)
-	}
-	for _, r := range results {
-		if !strings.HasPrefix(r, "abd-") && !strings.HasPrefix(r, "amat-") {
-			t.Errorf("result %q must start with abd- or amat-", r)
-		}
-	}
 }
 
 // TestGoal_15_TheologicalSanitationAndCombinatorialRules verifies removal of sacrilegious rules and concepts.
@@ -762,7 +752,7 @@ func TestGoal_20_ReconcileUpstreamLicensingAndD1Pipeline(t *testing.T) {
 	}
 	defer os.Remove(tmpFile.Name())
 
-	content := "alpha-1234\nalpha-1234\nbeta-5678\n"
+	content := "olive-1234\nolive-1234\napple-5678\n"
 	if _, err := tmpFile.WriteString(content); err != nil {
 		t.Fatalf("failed to write to temp file: %v", err)
 	}
@@ -774,11 +764,11 @@ func TestGoal_20_ReconcileUpstreamLicensingAndD1Pipeline(t *testing.T) {
 		t.Fatalf("scripts/analyze.py failed: %v, output: %s", err, string(outBytes))
 	}
 	outStr := string(outBytes)
-	if !strings.Contains(outStr, "alpha-1234 (x2)") {
+	if !strings.Contains(outStr, "olive-1234 (x2)") {
 		t.Errorf("analyze.py should format duplicates with frequency '(x2)', got:\n%s", outStr)
 	}
 
-	// 4. Verify scripts/populate_d1.py --dump-sql generates transactional SQL
+	// 4. Verify the validated SQL dump is compatible with D1 import.
 	tmpSql, err := os.CreateTemp("", "test_dump_*.sql")
 	if err != nil {
 		t.Fatalf("failed to create temp SQL file: %v", err)
@@ -798,8 +788,8 @@ func TestGoal_20_ReconcileUpstreamLicensingAndD1Pipeline(t *testing.T) {
 		t.Fatalf("failed to read generated SQL file: %v", err)
 	}
 	sqlStr := string(sqlBytes)
-	if !strings.Contains(sqlStr, "BEGIN TRANSACTION;") || !strings.Contains(sqlStr, "COMMIT;") {
-		t.Errorf("generated SQL must wrap inserts in transaction block")
+	if strings.Contains(sqlStr, "BEGIN TRANSACTION;") || strings.Contains(sqlStr, "COMMIT;") {
+		t.Error("D1 import SQL must not contain unsupported transaction statements")
 	}
 	if !strings.Contains(sqlStr, "INSERT OR IGNORE INTO generated_strings") {
 		t.Errorf("generated SQL must contain INSERT OR IGNORE statement")

@@ -1,0 +1,829 @@
+{
+  "dictionary_sha256": "5571a76622f3820f8f2d45007cd6872d7e133edd220043dfbfd7de68dfac024f",
+  "cli_sha256": "9182a87ea2660ff12afe35497d6fbc1e658f79044ac3dd64d92f3b0900752808",
+  "cli_cases": [
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "42",
+        "-r",
+        "8",
+        "--categories",
+        "asma_allah",
+        "--min-words",
+        "2",
+        "--max-words",
+        "12",
+        "--no-random-number"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 0.006969,
+      "stdout": "ghafir-warith-ghaffar-salam-wahhab-samad-khabir-salam-mutakabbir-wasi-awwal\nhafiz-basit-latif-hamid-muqit\nnafi-mujib-musawwir-jalil-qawiyy-darr-kabir-muhsi-muqsit\nrafi-rauf-tawwab-badi-afuww-batin-haqq-hasib-ghafur\nmatin-haqq-muqaddim-adl-majid-wahhab-wahid-azim-shahid\nmutakabbir-muakhkhir-hafiz-rahim-afuww\nrashid-dhul-jalali-wal-ikram-haqq-muhaymin-basiir\nhaqq-azim-hasib-muqaddim-jami-hakam-ghaffar-ahad-qabid-mumit-muqtadir-qayyum\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "42",
+        "-r",
+        "8",
+        "--categories",
+        "prophets",
+        "--min-words",
+        "2",
+        "--max-words",
+        "12",
+        "--no-random-number"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 0.006285,
+      "stdout": "muzammil-taha-yasin-salih-mudathir-dawud-ishaq-isa-ahmad-yahya-ismail\nsulayman-dawud-yusuf-dhul-kifl\nmusa-lut-idris-harun-ismail-hud-ayub-yasin-yahya-younus-ayyub\nismail-shoaib-younus-ayub-ahmed-ilyas-ilyas-yasin\ndawud-ibrahim-taha-ahmed-mudathir-shuayb-al-yasa-ishaq\ndawud-ahmed-younus-shuayb\nharun-musa-muhammed-dawud-idris\nishaq-yunus\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "42",
+        "-r",
+        "8",
+        "--categories",
+        "muslim_names_male,muslim_names_female",
+        "--min-words",
+        "2",
+        "--max-words",
+        "12",
+        "--no-random-number"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 0.006336,
+      "stdout": "karim-hadiya-khadijah-sabah-waseem-rabiha-reem-qabila-abdul-qadir-muneera\nbadir-rima-abdul-hadi-aqeel-luqman-warda-batool\namir-maimoona-kareem-ghada-hani-maymunah-hazem-sameer-muhsin-ruqayyah-jamal\nmujtaba-zahida-abdul-muizz-najla-basira-firdaws-marwa-abbas-mounir\nhabib-samira-alia-mona\nabdul-latif-salma-latifa-ummamah-hadiya\nhusayn-hadiya-muneer-hind-jamal\niyad-shaista\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "42",
+        "-r",
+        "8",
+        "--categories",
+        "sahaba,islamic_months",
+        "--min-words",
+        "2",
+        "--max-words",
+        "12",
+        "--no-random-number"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 0.006236,
+      "stdout": "khalid-ibn-al-walid-dhul-qadah-kab-ibn-malik-safar\nrayhanah-bint-zayd-dhul-hijjah-umm-ayman-rajab-shaban\nmaymunah-bint-al-harith-rajab\nkab-ibn-zuhayr-jumada-al-ula-umm-ayman\nabdullah-ibn-amr-shawwal-abu-hurairah-ramadan-safar\nuqbah-ibn-nafi-shaban-muharram\nhamza-ibn-abd-al-muttalib-dhul-hijjah-abu-hurairah-rajab-shawwal\nfatimah-bint-muhammad-rabi-al-awwal-ramadan\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "42",
+        "-r",
+        "8",
+        "--categories",
+        "islamic_golden_age_scholars,islamic_inventions",
+        "--min-words",
+        "2",
+        "--max-words",
+        "12",
+        "--no-random-number"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 0.006277,
+      "stdout": "ibn-bajjah-mineralogy-crankshaft-urban-planning-muhammad-al-fazari-diplomacy-foundations\nahmad-ibn-majid-alchemy\nnasir-al-din-al-tusi-pharmacies-chemotherapy-algebra\nal-sufi-hygiene-practices-mariam-al-asturlabi\nal-khazini-chess-popularization-fractals-trigonometry-al-masudi\nthabit-ibn-qurra-reading-stones-al-masudi\nal-samawal-al-maghribi-crankshaft-surgical-instruments-al-khazini-fractals-disinfection\nmaimonides-aerodynamics\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "42",
+        "-r",
+        "8",
+        "--categories",
+        "animals,architectural_elements",
+        "--min-words",
+        "2",
+        "--max-words",
+        "12",
+        "--no-random-number"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 0.006477,
+      "stdout": "elephant-portico-salamander-rampart-turtle-fountain-atrium-otter-kangaroo-rabbit-camel\nox-battlement-chicken-komodo-dragon\nostrich-qanat-cricket-cow-cistern-zigzag-squirrel-nightingale-whispering-gallery-camel\nclam-keyhole-arch-crenellation-stoat-crab-leaf-insect-window\nbobcat-spire-jaguar-aqueduct-fan-vault-loggia-turtle\nhyrax-frieze-courtyard-octopus-deer-mantis-courtyard-pendentive-beaver\nmantis-base-peacock-chameleon-gecko-bison-cicada-gazelle\niguana-crenellation-barnacle-cow-cistern-beaver-finial-groin-vault-fennec-fox-tympanum\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "42",
+        "-r",
+        "8",
+        "--categories",
+        "colors_arabic,nouns_places",
+        "--min-words",
+        "2",
+        "--max-words",
+        "12",
+        "--no-random-number"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 0.006605,
+      "stdout": "akhdar-shop-tunisia-country-house-ahmar-isfahan-benghazi-city-comoros-jungle\nsand-tirana-city-uzbekistan-country-camp\nlazwardi-chad-country-male\nlazwardi-amman-zone-village-burquqi-gaza-city-ndjamena-city-gate-egypt-country\nfuddi-oman-country-city-house-village-building\nwardi-petra-city\nburquqi-timbuktu-singapore-citystate\nindigo-nineveh-ruins-river\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "42",
+        "-r",
+        "8",
+        "--categories",
+        "arabic_food,spices",
+        "--min-words",
+        "2",
+        "--max-words",
+        "12",
+        "--no-random-number"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 0.006516,
+      "stdout": "pita-bread-oregano-leaf-salep-wasabi-safra-fenugreek-poppy-seed-cardamom\nrice-pudding-pasilla-chili\nkaran-makrut-lime-leaves-rue-chili-powder\nknafeh-paprika-fekkas-fattat-lahmeh-hummus-tajine-zitoun-savory\nfrikeh-sage-leaf\ntabouleh-asafoetida-watercress-spice-cardamom-thareed-warbat\nrfissa-mace-blade\nqidreh-mint-leaf-ginger\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "42",
+        "-r",
+        "8",
+        "--categories",
+        "birds,flowers",
+        "--min-words",
+        "2",
+        "--max-words",
+        "12",
+        "--no-random-number"
+      ],
+      "exit": 0,
+      "elapsed_seconds": 0.006349,
+      "stdout": "heron-orchid-wagtail-ranunculus-tree-swallow-wisteria-daisy-yucca-tuberose-bluebell\nrobin-portulaca-magnolia-phoebe-edelweiss-hibiscus-dahlia-wren\nnuthatch-protea-white-throated-sparrow-eagle-hoopoe-clematis-vireo-impatiens-snapdragon-nightingale\nfalcon-coral-bells-petunia-turkey-white-throated-sparrow-buttercup-frigatebird\nsparrow-aster\nnorthern-flicker-cosmos-lark-hibiscus-coral-bells-magpie-ruby-throated-hummingbird\nfairy-wren-lotus\nblue-jay-trillium-zinnia-albatross-red-winged-blackbird\n",
+      "stderr": ""
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--categories",
+        "asma_allah,prophets"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006457,
+      "stdout": "",
+      "stderr": "Error: incompatible categories: prophets belongs to prophets, expected divine\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--categories",
+        "asma_allah,islamic_virtues"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006175,
+      "stdout": "",
+      "stderr": "Error: incompatible categories: islamic_virtues belongs to islamic, expected divine\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--categories",
+        "asma_allah,muslim_names_male"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006793,
+      "stdout": "",
+      "stderr": "Error: incompatible categories: muslim_names_male belongs to names, expected divine\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--categories",
+        "servant_prefixes,asma_allah"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.00622,
+      "stdout": "",
+      "stderr": "Error: disabled category \"servant_prefixes\": Standalone prefixes are disabled; Asma Allah may mix only with Asma Allah.\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--categories",
+        "prophets,sahaba"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006305,
+      "stdout": "",
+      "stderr": "Error: incompatible categories: sahaba belongs to islamic, expected prophets\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--categories",
+        "prophets,animals,arabic_food"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006291,
+      "stdout": "",
+      "stderr": "Error: incompatible categories: animals belongs to general, expected prophets\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--categories",
+        "muslim_names_male,animals"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006201,
+      "stdout": "",
+      "stderr": "Error: incompatible categories: animals belongs to general, expected names\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--categories",
+        "muslim_names_female,islamic_virtues"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006227,
+      "stdout": "",
+      "stderr": "Error: incompatible categories: islamic_virtues belongs to islamic, expected names\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--categories",
+        "sahaba,nouns_places"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006209,
+      "stdout": "",
+      "stderr": "Error: incompatible categories: nouns_places belongs to general, expected islamic\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--categories",
+        "islamic_inventions,animals"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006344,
+      "stdout": "",
+      "stderr": "Error: incompatible categories: animals belongs to general, expected islamic\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--categories",
+        "adjectives,nouns_places"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006232,
+      "stdout": "",
+      "stderr": "Error: incompatible categories: nouns_places belongs to general, expected islamic\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--categories",
+        "nouns_concepts,fruits"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006311,
+      "stdout": "",
+      "stderr": "Error: incompatible categories: fruits belongs to general, expected islamic\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--categories",
+        "muslim_empires,animals"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006279,
+      "stdout": "",
+      "stderr": "Error: incompatible categories: animals belongs to general, expected islamic\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--sep",
+        "donkey",
+        "--categories",
+        "prophets"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.00623,
+      "stdout": "",
+      "stderr": "Error: unsupported separator \"donkey\"; use -, _, . or /\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--sep",
+        "wine",
+        "--categories",
+        "prophets"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006184,
+      "stdout": "",
+      "stderr": "Error: unsupported separator \"wine\"; use -, _, . or /\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--sep",
+        "x",
+        "--categories",
+        "prophets"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006285,
+      "stdout": "",
+      "stderr": "Error: unsupported separator \"x\"; use -, _, . or /\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--sep",
+        "\n",
+        "--categories",
+        "prophets"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006876,
+      "stdout": "",
+      "stderr": "Error: unsupported separator \"\\n\"; use -, _, . or /\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--sep",
+        " ",
+        "--categories",
+        "prophets"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006165,
+      "stdout": "",
+      "stderr": "Error: unsupported separator \" \"; use -, _, . or /\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "--sep",
+        "--",
+        "--categories",
+        "prophets"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006267,
+      "stdout": "",
+      "stderr": "Error: unsupported separator \"--\"; use -, _, . or /\n"
+    },
+    {
+      "arguments": [
+        "/tmp/hrs-policy-cli",
+        "-r",
+        "1000000",
+        "--categories",
+        "sahaba",
+        "--min-words",
+        "1",
+        "--max-words",
+        "1"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.006411,
+      "stdout": "",
+      "stderr": "Error: word count is infeasible for selected categories\n"
+    }
+  ],
+  "corpora": [
+    {
+      "name": "default_numbered",
+      "generation_arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "424242",
+        "-r",
+        "200000",
+        "--sep",
+        "-"
+      ],
+      "generation_seconds": 0.366546,
+      "count": 200000,
+      "sha256": "b52cc61f6476f341505a3a7bfa2c6bcb4afaa6c951fc3c5e636db3431e8e7d33",
+      "samples": [
+        "cairo-butter-lettuce-corundum-cumin-seed-scissors-2025",
+        "ahmed-idris-taha-yahya-nuh-yaqub-5296",
+        "pen-orchard-fruit-mustard-squirrel-elder-kunafa-turret-4050",
+        "younus-adam-zakariya-al-yasa-isa-9881",
+        "lynx-raven-rice-pudding-kufa-city-3303",
+        "adam-salih-ishaq-yusuf-sulayman-ahmad-yasin-2123",
+        "balance-good-manners-ibn-rushd-jumah-mukhlis-niyyah-3900",
+        "yusuf-nuh-isa-mustafa-harun-6749",
+        "hisab-sultanate-abu-hurairah-universe-cosmos-1556",
+        "mercifulness-razi-tayyib-fitra-mecca-5480",
+        "yusuf-hud-dhul-kifl-al-yasa-1292",
+        "qabid-wakil-wahid-raqib-ghaffar-razzaq-fattah-7450"
+      ],
+      "audit": {
+        "arguments": [
+          "/usr/bin/python3",
+          "scripts/analyze.py",
+          "/tmp/hrs-policy-replay-gsnevsdg/default_numbered.txt",
+          "--sep",
+          "-"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 2.991816,
+        "stdout": "Total lines: 200000\nUnique lines: 200000\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=23 chars, max=90 chars, avg=47.0 chars\nWord count distribution (valid identifiers):\n  5 words: 50084 lines\n  6 words: 50140 lines\n  7 words: 49987 lines\n  8 words: 49789 lines\nMixing groups:\n  divine: 39726\n  general: 40419\n  islamic: 39804\n  names: 39914\n  prophets: 40137\n[PASS] Policy violations: 0\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "default_no_number",
+      "generation_arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "424242",
+        "-r",
+        "100000",
+        "--sep",
+        "-",
+        "--no-random-number"
+      ],
+      "generation_seconds": 0.166786,
+      "count": 100000,
+      "sha256": "5e3ea0a107d9a6a6c8eecba7ead9007ebff110b39ac2ec396a6cfad85d7606da",
+      "samples": [
+        "cairo-butter-lettuce-corundum-cumin-seed-scissors",
+        "salam-hafiz-rafi-shakur-fatah-qayyum-hasib-samad",
+        "pen-orchard-fruit-mustard-squirrel-elder-kunafa-turret",
+        "qadir-muakhkhir-fattah-ghafur-jalil-basir",
+        "salih-shoaib-salih-yaqub-muzammil",
+        "akhlaq-khilafah-abbas-ibn-firnas-khuluq",
+        "ahmad-ahmad-isa-yasin-idris-dawud",
+        "adam-ayub-shoaib-ishaq-zakariya-ibrahim-yusuf-yasin",
+        "wajid-ghani-hamid-muhaymin-ghaffar-mudhill",
+        "sirwal-algorithm-adhan-clock-illumination-globe-shifa",
+        "wael-abdul-zahir-wijdane-qays",
+        "anisa-waleed-kamal-safiyyah-burhan-talal-mazen-huda"
+      ],
+      "audit": {
+        "arguments": [
+          "/usr/bin/python3",
+          "scripts/analyze.py",
+          "/tmp/hrs-policy-replay-gsnevsdg/default_no_number.txt",
+          "--sep",
+          "-"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 1.464307,
+        "stdout": "Total lines: 100000\nUnique lines: 99915\nUniqueness percentage: 99.91%\n\nDuplicate lines:\nabd-al-rahman-ibn-awf (x6)\nage-of-exploration-by-muslims (x6)\nhamza-ibn-abd-al-muttalib (x6)\nsafiyyah-bint-abd-al-muttalib (x6)\nabdullah-ibn-amr-ibn-al-aas (x5)\nabu-ubaidah-ibn-al-jarrah (x5)\nal-abbas-ibn-abd-al-muttalib (x5)\nbuilding-of-dome-of-the-rock (x5)\nnasir-al-din-al-tusi (x5)\nabdur-rahman-ibn-abu-bakr (x4)\ncompendious-book-on-calculation-by-completion-and-balancing (x4)\nfounding-of-house-of-wisdom (x4)\nhayy-dhul-jalali-wal-ikram (x4)\nabd-al-rahman-al-sufi (x3)\nconstruction-of-great-mosque-of-cordoba (x3)\ndhul-jalali-wal-ikram-khaliq (x3)\nmuizz-dhul-jalali-wal-ikram (x3)\nablution-area-wash-gratitude-to-parents (x2)\nadl-dhul-jalali-wal-ikram (x2)\navoidance-of-anger-battle-of-qadisiyyah (x2)\n... and 22 more duplicate entries.\nLength metrics: min=17 chars, max=88 chars, avg=42.0 chars\nWord count distribution (valid identifiers):\n  5 words: 24797 lines\n  6 words: 25054 lines\n  7 words: 25243 lines\n  8 words: 24906 lines\nMixing groups:\n  divine: 19985\n  general: 19931\n  islamic: 20084\n  names: 19955\n  prophets: 20045\n[PASS] Policy violations: 0\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "animals_architecture",
+      "generation_arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "424242",
+        "-r",
+        "10000",
+        "--sep",
+        "-",
+        "--categories",
+        "animals,architectural_elements",
+        "--no-random-number"
+      ],
+      "generation_seconds": 0.024555,
+      "count": 10000,
+      "sha256": "82263e437a31893b16f8e8c2bcde5d071a04325fba454312ca4c482c2c1e628d",
+      "samples": [
+        "penguin-portico-mongoose-leaf-insect-dragonfly-oyster",
+        "civet-caravanserai-bastion-panda-voussoir-ceiling",
+        "capybara-groin-vault-loggia-alcove",
+        "bobcat-ogee-arch-oculus-ceiling",
+        "goose-base-penguin-salamander-voussoir-road-bee",
+        "mongoose-portico-bridge-voussoir-column-peacock",
+        "deer-portico-arch-black-bear",
+        "squirrel-muqarnas-gecko-capybara-armadillo-giraffe-bee-quadriporticus",
+        "grasshopper-sabil-chameleon-squinch-street",
+        "shrimp-rampart-raven-bison-spire-cicada-ogee-arch",
+        "whale-window-sheep-muqarnas-terrace-mongoose-oyster-chipmunk",
+        "kangaroo-barracks-vault-mole-mashrabiya-reindeer-chashma-beaver"
+      ],
+      "audit": {
+        "arguments": [
+          "/usr/bin/python3",
+          "scripts/analyze.py",
+          "/tmp/hrs-policy-replay-gsnevsdg/animals_architecture.txt",
+          "--sep",
+          "-"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.201519,
+        "stdout": "Total lines: 10000\nUnique lines: 10000\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=23 chars, max=79 chars, avg=45.3 chars\nWord count distribution (valid identifiers):\n  5 words: 2502 lines\n  6 words: 2504 lines\n  7 words: 2474 lines\n  8 words: 2520 lines\nMixing groups:\n  general: 10000\n[PASS] Policy violations: 0\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "default_sep_0",
+      "generation_arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "424242",
+        "-r",
+        "10000",
+        "--sep",
+        "_"
+      ],
+      "generation_seconds": 0.026779,
+      "count": 10000,
+      "sha256": "9432ccdeab186deea6f925111aa71b912320ff2976d08a6190d947a2e69fac44",
+      "samples": [
+        "cairo_butter_lettuce_corundum_cumin_seed_scissors_2025",
+        "ahmed_idris_taha_yahya_nuh_yaqub_5296",
+        "pen_orchard_fruit_mustard_squirrel_elder_kunafa_turret_4050",
+        "younus_adam_zakariya_al_yasa_isa_9881",
+        "lynx_raven_rice_pudding_kufa_city_3303",
+        "adam_salih_ishaq_yusuf_sulayman_ahmad_yasin_2123",
+        "balance_good_manners_ibn_rushd_jumah_mukhlis_niyyah_3900",
+        "yusuf_nuh_isa_mustafa_harun_6749",
+        "hisab_sultanate_abu_hurairah_universe_cosmos_1556",
+        "mercifulness_razi_tayyib_fitra_mecca_5480",
+        "yusuf_hud_dhul_kifl_al_yasa_1292",
+        "qabid_wakil_wahid_raqib_ghaffar_razzaq_fattah_7450"
+      ],
+      "audit": {
+        "arguments": [
+          "/usr/bin/python3",
+          "scripts/analyze.py",
+          "/tmp/hrs-policy-replay-gsnevsdg/default_sep_0.txt",
+          "--sep",
+          "_"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.17787,
+        "stdout": "Total lines: 10000\nUnique lines: 10000\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=25 chars, max=83 chars, avg=47.0 chars\nWord count distribution (valid identifiers):\n  5 words: 2532 lines\n  6 words: 2428 lines\n  7 words: 2510 lines\n  8 words: 2530 lines\nMixing groups:\n  divine: 1970\n  general: 2036\n  islamic: 2001\n  names: 2040\n  prophets: 1953\n[PASS] Policy violations: 0\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "default_sep_1",
+      "generation_arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "424242",
+        "-r",
+        "10000",
+        "--sep",
+        "."
+      ],
+      "generation_seconds": 0.026543,
+      "count": 10000,
+      "sha256": "49b9b2f121f5e41bc83f7fba7b3d3aa9e00ba1e1ceda4b0428aa01ee509e3e57",
+      "samples": [
+        "cairo.butter.lettuce.corundum.cumin.seed.scissors.2025",
+        "ahmed.idris.taha.yahya.nuh.yaqub.5296",
+        "pen.orchard.fruit.mustard.squirrel.elder.kunafa.turret.4050",
+        "younus.adam.zakariya.al.yasa.isa.9881",
+        "lynx.raven.rice.pudding.kufa.city.3303",
+        "adam.salih.ishaq.yusuf.sulayman.ahmad.yasin.2123",
+        "balance.good.manners.ibn.rushd.jumah.mukhlis.niyyah.3900",
+        "yusuf.nuh.isa.mustafa.harun.6749",
+        "hisab.sultanate.abu.hurairah.universe.cosmos.1556",
+        "mercifulness.razi.tayyib.fitra.mecca.5480",
+        "yusuf.hud.dhul.kifl.al.yasa.1292",
+        "qabid.wakil.wahid.raqib.ghaffar.razzaq.fattah.7450"
+      ],
+      "audit": {
+        "arguments": [
+          "/usr/bin/python3",
+          "scripts/analyze.py",
+          "/tmp/hrs-policy-replay-gsnevsdg/default_sep_1.txt",
+          "--sep",
+          "."
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.178587,
+        "stdout": "Total lines: 10000\nUnique lines: 10000\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=25 chars, max=83 chars, avg=47.0 chars\nWord count distribution (valid identifiers):\n  5 words: 2532 lines\n  6 words: 2428 lines\n  7 words: 2510 lines\n  8 words: 2530 lines\nMixing groups:\n  divine: 1970\n  general: 2036\n  islamic: 2001\n  names: 2040\n  prophets: 1953\n[PASS] Policy violations: 0\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "default_sep_2",
+      "generation_arguments": [
+        "/tmp/hrs-policy-cli",
+        "--seed",
+        "424242",
+        "-r",
+        "10000",
+        "--sep",
+        "/"
+      ],
+      "generation_seconds": 0.027633,
+      "count": 10000,
+      "sha256": "51660a2e78566649c607d56ef830c014a549d98458e9a315f8f253fd6d40c505",
+      "samples": [
+        "cairo/butter/lettuce/corundum/cumin/seed/scissors/2025",
+        "ahmed/idris/taha/yahya/nuh/yaqub/5296",
+        "pen/orchard/fruit/mustard/squirrel/elder/kunafa/turret/4050",
+        "younus/adam/zakariya/al/yasa/isa/9881",
+        "lynx/raven/rice/pudding/kufa/city/3303",
+        "adam/salih/ishaq/yusuf/sulayman/ahmad/yasin/2123",
+        "balance/good/manners/ibn/rushd/jumah/mukhlis/niyyah/3900",
+        "yusuf/nuh/isa/mustafa/harun/6749",
+        "hisab/sultanate/abu/hurairah/universe/cosmos/1556",
+        "mercifulness/razi/tayyib/fitra/mecca/5480",
+        "yusuf/hud/dhul/kifl/al/yasa/1292",
+        "qabid/wakil/wahid/raqib/ghaffar/razzaq/fattah/7450"
+      ],
+      "audit": {
+        "arguments": [
+          "/usr/bin/python3",
+          "scripts/analyze.py",
+          "/tmp/hrs-policy-replay-gsnevsdg/default_sep_2.txt",
+          "--sep",
+          "/"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 0.174515,
+        "stdout": "Total lines: 10000\nUnique lines: 10000\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=25 chars, max=83 chars, avg=47.0 chars\nWord count distribution (valid identifiers):\n  5 words: 2532 lines\n  6 words: 2428 lines\n  7 words: 2510 lines\n  8 words: 2530 lines\nMixing groups:\n  divine: 1970\n  general: 2036\n  islamic: 2001\n  names: 2040\n  prophets: 1953\n[PASS] Policy violations: 0\n",
+        "stderr": ""
+      }
+    }
+  ],
+  "analyzer_regressions": [
+    {
+      "input": "ahmad-donkey-food",
+      "arguments": [
+        "/usr/bin/python3",
+        "scripts/analyze.py",
+        "/tmp/hrs-policy-replay-gsnevsdg/bad-0.txt"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.034734,
+      "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=17 chars, max=17 chars, avg=17.0 chars\nWord count distribution (valid identifiers):\nMixing groups:\n[FAIL] Policy violations: 1\n  Line 1: 'ahmad-donkey-food' (Blocked vocabulary)\n",
+      "stderr": ""
+    },
+    {
+      "input": "ahmad-cow-olive",
+      "arguments": [
+        "/usr/bin/python3",
+        "scripts/analyze.py",
+        "/tmp/hrs-policy-replay-gsnevsdg/bad-1.txt"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.03475,
+      "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=15 chars, max=15 chars, avg=15.0 chars\nWord count distribution (valid identifiers):\nMixing groups:\n[FAIL] Policy violations: 1\n  Line 1: 'ahmad-cow-olive' (Unknown words or incompatible mixing groups)\n",
+      "stderr": ""
+    },
+    {
+      "input": "aisha-ramadan",
+      "arguments": [
+        "/usr/bin/python3",
+        "scripts/analyze.py",
+        "/tmp/hrs-policy-replay-gsnevsdg/bad-2.txt"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.034525,
+      "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=13 chars, max=13 chars, avg=13.0 chars\nWord count distribution (valid identifiers):\nMixing groups:\n[FAIL] Policy violations: 1\n  Line 1: 'aisha-ramadan' (Unknown words or incompatible mixing groups)\n",
+      "stderr": ""
+    },
+    {
+      "input": "rahman-ramadan",
+      "arguments": [
+        "/usr/bin/python3",
+        "scripts/analyze.py",
+        "/tmp/hrs-policy-replay-gsnevsdg/bad-3.txt"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.034726,
+      "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=14 chars, max=14 chars, avg=14.0 chars\nWord count distribution (valid identifiers):\nMixing groups:\n[FAIL] Policy violations: 1\n  Line 1: 'rahman-ramadan' (Unknown words or incompatible mixing groups)\n",
+      "stderr": ""
+    },
+    {
+      "input": "mihrab-cow",
+      "arguments": [
+        "/usr/bin/python3",
+        "scripts/analyze.py",
+        "/tmp/hrs-policy-replay-gsnevsdg/bad-4.txt"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.034139,
+      "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=10 chars, max=10 chars, avg=10.0 chars\nWord count distribution (valid identifiers):\nMixing groups:\n[FAIL] Policy violations: 1\n  Line 1: 'mihrab-cow' (Unknown words or incompatible mixing groups)\n",
+      "stderr": ""
+    },
+    {
+      "input": "sad-ibn-abi-waqqas-cow",
+      "arguments": [
+        "/usr/bin/python3",
+        "scripts/analyze.py",
+        "/tmp/hrs-policy-replay-gsnevsdg/bad-5.txt"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.035222,
+      "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=22 chars, max=22 chars, avg=22.0 chars\nWord count distribution (valid identifiers):\nMixing groups:\n[FAIL] Policy violations: 1\n  Line 1: 'sad-ibn-abi-waqqas-cow' (Unknown words or incompatible mixing groups)\n",
+      "stderr": ""
+    },
+    {
+      "input": "hamza-ibn-abd-al-muttalib-olive",
+      "arguments": [
+        "/usr/bin/python3",
+        "scripts/analyze.py",
+        "/tmp/hrs-policy-replay-gsnevsdg/bad-6.txt"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.034309,
+      "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=31 chars, max=31 chars, avg=31.0 chars\nWord count distribution (valid identifiers):\nMixing groups:\n[FAIL] Policy violations: 1\n  Line 1: 'hamza-ibn-abd-al-muttalib-olive' (Unknown words or incompatible mixing groups)\n",
+      "stderr": ""
+    },
+    {
+      "input": "shrine-holy-dwelling-green-peppercorn-falafel",
+      "arguments": [
+        "/usr/bin/python3",
+        "scripts/analyze.py",
+        "/tmp/hrs-policy-replay-gsnevsdg/bad-7.txt"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.034904,
+      "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=45 chars, max=45 chars, avg=45.0 chars\nWord count distribution (valid identifiers):\nMixing groups:\n[FAIL] Policy violations: 1\n  Line 1: 'shrine-holy-dwelling-green-peppercorn-falafel' (Unknown words or incompatible mixing groups)\n",
+      "stderr": ""
+    },
+    {
+      "input": "kaffir-lime-leaves",
+      "arguments": [
+        "/usr/bin/python3",
+        "scripts/analyze.py",
+        "/tmp/hrs-policy-replay-gsnevsdg/bad-8.txt"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.035157,
+      "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=18 chars, max=18 chars, avg=18.0 chars\nWord count distribution (valid identifiers):\nMixing groups:\n[FAIL] Policy violations: 1\n  Line 1: 'kaffir-lime-leaves' (Blocked vocabulary)\n",
+      "stderr": ""
+    },
+    {
+      "input": "smores",
+      "arguments": [
+        "/usr/bin/python3",
+        "scripts/analyze.py",
+        "/tmp/hrs-policy-replay-gsnevsdg/bad-9.txt"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.03474,
+      "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=6 chars, max=6 chars, avg=6.0 chars\nWord count distribution (valid identifiers):\nMixing groups:\n[FAIL] Policy violations: 1\n  Line 1: 'smores' (Blocked vocabulary)\n",
+      "stderr": ""
+    },
+    {
+      "input": "",
+      "arguments": [
+        "/usr/bin/python3",
+        "scripts/analyze.py",
+        "/tmp/hrs-policy-replay-gsnevsdg/bad-10.txt"
+      ],
+      "exit": 1,
+      "elapsed_seconds": 0.034554,
+      "stdout": "Total lines: 1\nUnique lines: 1\nUniqueness percentage: 100.00%\n\nNo duplicate lines found.\nLength metrics: min=0 chars, max=0 chars, avg=0.0 chars\nWord count distribution (valid identifiers):\nMixing groups:\n[FAIL] Policy violations: 1\n  Line 1: '' (Invalid identifier format or word count)\n",
+      "stderr": ""
+    }
+  ],
+  "import_rejection": {
+    "arguments": [
+      "/usr/bin/python3",
+      "scripts/populate_d1.py",
+      "/tmp/hrs-policy-replay-gsnevsdg/bad-import.txt",
+      "--dump-sql",
+      "/tmp/hrs-policy-replay-gsnevsdg/dump.sql"
+    ],
+    "exit": 1,
+    "elapsed_seconds": 0.039628,
+    "stdout": "",
+    "stderr": "[FAIL] Corpus rejected: Line 2: Blocked vocabulary\n"
+  }
+}

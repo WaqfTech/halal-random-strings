@@ -27,11 +27,20 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 6. **Auto-Reconciliation**: Run `sila goals` to scan commits, mark 🟢 **Implemented**, and clear the claim lock.
 
 ## Summary
-- **Total Goals**: 21
+- **Total Goals**: 22
 - 🟢 **Implemented & Verified**: 21
+- 🔵 **In Progress (Claimed)**: 1
 - 🟡 **Ready to Execute (Pending)**: 0 (0 independent ⚡, 0 unblocked 🔗)
-- 🎯 **By Tier**: 0 immediate (Tier 1), 21 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
-- 📋 **Execution Tasks Progress**: 104/104 completed (100%)
+- 🎯 **By Tier**: 0 immediate (Tier 1), 22 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
+- 📋 **Execution Tasks Progress**: 107/108 completed (99%)
+
+---
+
+## 🔵 In Progress (Claimed Goals)
+
+| Goal Package | Tier | Mode | Agent | Status & Note | Started |
+| :--- | :---: | :---: | :--- | :--- | :--- |
+| [`enforce-category-mixing-policy`](enforce-category-mixing-policy/goal.md) | `🗺️ Roadmap` | `⚡ Indep` | `@codex` | Implemented approved grouping and disabled custom dictionaries; 340k CLI corpus, 1296 ordered pairs, race tests, vet/build and Python regression checks passed. Final documentation gate and focused local commit in progress. | 39m0s ago |
 
 ---
 

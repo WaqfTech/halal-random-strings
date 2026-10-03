@@ -35,19 +35,22 @@ func TestWordsLoad(t *testing.T) {
 func TestWordCount(t *testing.T) {
 	opts := Options{
 		Repeat:              10, // Test multiple strings
-		MinWords:            5, 
-		MaxWords:            8, 
+		MinWords:            5,
+		MaxWords:            8,
 		IncludeRandomNumber: true,
 	}
 	results := GenerateWithOptions(opts)
+	if len(results) != opts.Repeat {
+		t.Fatalf("expected %d results, got %d", opts.Repeat, len(results))
+	}
 	for _, result := range results {
 		parts := strings.Split(result, "-")
 		if len(parts) <= 1 {
 			t.Fatalf("generated string has too few parts: %q", result)
 		}
 		// The last part is the random number, so we subtract 1 from the total parts
-		wordCount := len(parts) - 1 
-		
+		wordCount := len(parts) - 1
+
 		if wordCount < opts.MinWords || wordCount > opts.MaxWords {
 			t.Fatalf("generated string has %d words, but expected between %d and %d words: %q", wordCount, opts.MinWords, opts.MaxWords, result)
 		}
@@ -102,54 +105,49 @@ func TestCategories(t *testing.T) {
 		Repeat:              10,
 		Categories:          []string{"sahaba"},
 		Sep:                 "-",
-		MinWords:            1, 
+		MinWords:            1,
 		MaxWords:            5, // Sahaba names can be multi-word
-		IncludeRandomNumber: false, 
+		IncludeRandomNumber: false,
 	}
-	resultsSahaba := GenerateWithOptions(optsSahaba)
+	resultsSahaba, err := GenerateWithOptionsE(optsSahaba)
+	if err != nil || len(resultsSahaba) != optsSahaba.Repeat {
+		t.Fatalf("sahaba generation: count=%d, error=%v", len(resultsSahaba), err)
+	}
 	for _, result := range resultsSahaba {
-		found := false
-		// Normalize the generated result for comparison
-		normalizedResult := strings.Join(strings.Fields(strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(result, optsSahaba.Sep, " "), "-", " "))), " ")
-		for _, sahabi := range words.Categories["sahaba"] {
-			// Normalize the sahabi name for comparison
-			normalizedSahabi := strings.Join(strings.Fields(strings.ToLower(strings.ReplaceAll(strings.ReplaceAll(sahabi, "'", ""), "-", " "))), " ")
-			if normalizedSahabi == normalizedResult {
-				found = true
-				break
-			}
-		}
-		if !found {
-			t.Fatalf("generated string %q not found in sahaba category (normalized: %q)", result, normalizedResult)
+		if !fitsCategory(result, "sahaba") {
+			t.Fatalf("not composed of whole sahaba names: %q", result)
 		}
 	}
 
-	// Test with multiple categories (adjectives, nouns_places)
+	// Test with multiple categories (colors_arabic, nouns_places)
 	optsMulti := Options{
 		Repeat:              10,
-		Categories:          []string{"adjectives", "nouns_places"},
+		Categories:          []string{"colors_arabic", "nouns_places"},
 		Sep:                 "-",
-		MinWords:            2, 
+		MinWords:            2,
 		MaxWords:            2,
 		IncludeRandomNumber: false,
 	}
-	resultsMulti := GenerateWithOptions(optsMulti)
+	resultsMulti, err := GenerateWithOptionsE(optsMulti)
+	if err != nil || len(resultsMulti) != optsMulti.Repeat {
+		t.Fatalf("multi-category generation: %d, %v", len(resultsMulti), err)
+	}
 	for _, result := range resultsMulti {
 		parts := strings.Split(result, optsMulti.Sep)
 		if len(parts) != 2 {
 			t.Fatalf("expected 2 words for multi-category test, got %d in %q", len(parts), result)
 		}
-		
+
 		// Check if first word is an adjective and second is a place
 		adjFound := false
-		for _, adj := range words.Categories["adjectives"] {
+		for _, adj := range words.Categories["colors_arabic"] {
 			if normalizeWord(adj, "-") == parts[0] {
 				adjFound = true
 				break
 			}
 		}
 		if !adjFound {
-			t.Fatalf("first word %q not found in adjectives category for %q", parts[0], result)
+			t.Fatalf("first word %q not found in colors_arabic category for %q", parts[0], result)
 		}
 
 		placeFound := false
@@ -382,26 +380,20 @@ func TestAsmaAllahSegregation(t *testing.T) {
 		}
 	}
 
-	// 3. Test respectful generation with servant_prefixes and asma_allah
-	opts := Options{
-		Repeat:              5,
-		Categories:          []string{"servant_prefixes", "asma_allah"},
-		MinWords:            2,
-		MaxWords:            2,
-		IncludeRandomNumber: false,
+	// The approved policy permits only self-mixing, without standalone prefixes.
+	results, err := GenerateWithOptionsE(Options{Repeat: 5, Categories: []string{"asma_allah"}, MinWords: 2, MaxWords: 2})
+	if err != nil || len(results) != 5 {
+		t.Fatalf("Asma-only generation: %d, %v", len(results), err)
 	}
-	results, err := GenerateWithOptionsE(opts)
-	if err != nil {
-		t.Fatalf("failed to generate with servant_prefixes and asma_allah: %v", err)
-	}
-	if len(results) != 5 {
-		t.Fatalf("expected 5 results, got %d", len(results))
-	}
-	for _, r := range results {
-		if !strings.HasPrefix(r, "abd-") && !strings.HasPrefix(r, "amat-") {
-			t.Errorf("expected result to start with abd- or amat-, got %q", r)
+	for _, result := range results {
+		if !fitsCategory(result, "asma_allah") {
+			t.Fatalf("non-Asma term: %s", result)
 		}
 	}
+	if _, err := GenerateWithOptionsE(Options{Categories: []string{"servant_prefixes", "asma_allah"}}); err == nil {
+		t.Fatal("standalone prefixes must be rejected")
+	}
+
 }
 
 func BenchmarkGenerate(b *testing.B) {
@@ -475,76 +467,12 @@ func TestTheologicalQuarantineAndSensitivityGuarantees(t *testing.T) {
 		t.Fatalf("batch generation failed: %v", err)
 	}
 
-	sacredSets := map[string]struct{}{
-		"sahaba":              {},
-		"muslim_names_male":   {},
-		"muslim_names_female": {},
-		"asma_allah":          {},
-		"holy_sanctuaries":    {},
-		"muslim_empires":      {},
-		"adab_terms":          {},
+	if len(results) != opts.Repeat {
+		t.Fatalf("batch length=%d", len(results))
 	}
-	sacredWords := make(map[string]bool)
-	for cat := range sacredSets {
-		for _, w := range words.Categories[cat] {
-			norm := normalizeTokenString(w)
-			if norm != "" {
-				sacredWords[norm] = true
-			}
-		}
-	}
-
-	animalFoodSets := map[string]struct{}{
-		"animals":        {},
-		"arabic_food":    {},
-		"jordanian_food": {},
-		"saudi_food":     {},
-		"yemeni_food":    {},
-		"vegetables":     {},
-		"fruits":         {},
-		"spices":         {},
-	}
-	animalFoodWords := make(map[string]bool)
-	for cat := range animalFoodSets {
-		for _, w := range words.Categories[cat] {
-			norm := normalizeTokenString(w)
-			if norm != "" {
-				animalFoodWords[norm] = true
-			}
-		}
-	}
-
-	for _, res := range results {
-		parts := strings.Split(res, "-")
-		if len(parts) > 1 {
-			// strip random number suffix if present
-			if _, err := strconv.Atoi(parts[len(parts)-1]); err == nil {
-				parts = parts[:len(parts)-1]
-			}
-		}
-		hasSacred := false
-		hasAnimalFood := false
-
-		for i := 0; i < len(parts); i++ {
-			if sacredWords[parts[i]] {
-				hasSacred = true
-			}
-			if animalFoodWords[parts[i]] {
-				hasAnimalFood = true
-			}
-			for j := i + 1; j < len(parts) && j < i+4; j++ {
-				phrase := strings.Join(parts[i:j+1], "-")
-				if sacredWords[phrase] {
-					hasSacred = true
-				}
-				if animalFoodWords[phrase] {
-					hasAnimalFood = true
-				}
-			}
-		}
-
-		if hasSacred && hasAnimalFood {
-			t.Fatalf("theological quarantine violated in generated string: %q", res)
+	for _, result := range results {
+		if err := ValidateString(result, "-"); err != nil {
+			t.Fatalf("policy failure %q: %v", result, err)
 		}
 	}
 }
