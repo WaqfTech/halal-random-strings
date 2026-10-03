@@ -1,0 +1,33 @@
+[
+  {
+    "accepted": true,
+    "value": "amr-ibn-al-as-jinn"
+  },
+  {
+    "accepted": true,
+    "value": "abdur-rahman-ibn-abu-bakr-makruh"
+  },
+  {
+    "accepted": true,
+    "value": "prophet-said-ibn-zayd-illumination-qadr"
+  },
+  {
+    "accepted": true,
+    "value": "abdul-hafiz-yumna-success-salwa-sumaira"
+  },
+  {
+    "accepted": false,
+    "error": "blocked vocabulary",
+    "value": "ahmad-donkey-food"
+  },
+  {
+    "accepted": false,
+    "error": "unknown words or incompatible mixing groups",
+    "value": "aisha-cow-olive"
+  },
+  {
+    "accepted": false,
+    "error": "unknown words or incompatible mixing groups",
+    "value": "rahman-ramadan"
+  }
+]

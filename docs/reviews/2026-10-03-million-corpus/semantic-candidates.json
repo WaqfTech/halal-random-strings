@@ -1,0 +1,1048 @@
+[
+  {
+    "name": "default-numbered",
+    "sha256": "0b202bd3dd89313cd044fda08de0705bc5b535a4cd3206d0e4954f1f867875c8",
+    "physical_lines": 1000000,
+    "unique_candidate_lines": 1649,
+    "cue_person_lines": {
+      "creator": 275,
+      "jinn": 267,
+      "makruh": 277,
+      "messenger": 290,
+      "prophet": 284,
+      "prophethood": 270
+    },
+    "examples": {
+      "jinn": [
+        {
+          "line": 3945,
+          "value": "migration-to-abyssinia-mikhdad-ibn-amr-qada-jinn-6651",
+          "people": [
+            {
+              "value": "mikhdad-ibn-amr",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 7378,
+          "value": "jinn-muadh-ibn-jabal-riwaq-arcade-sidq-3587",
+          "people": [
+            {
+              "value": "muadh-ibn-jabal",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 7880,
+          "value": "jinn-mahmud-mural-decoration-al-razi-9991",
+          "people": [
+            {
+              "value": "al-razi",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 8517,
+          "value": "said-ibn-zayd-jinn-basata-shakir-3045",
+          "people": [
+            {
+              "value": "said-ibn-zayd",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 10951,
+          "value": "suleiman-al-mahri-jinn-suhoor-masbaha-safa-marwah-4847",
+          "people": [
+            {
+              "value": "suleiman-al-mahri",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 17213,
+          "value": "ibn-yunus-umrah-jinn-nasrid-dynasty-jannah-5135",
+          "people": [
+            {
+              "value": "ibn-yunus",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 20668,
+          "value": "ibn-zuhr-covenant-fulfiller-sawab-baqa-zawiya-jinn-5311",
+          "people": [
+            {
+              "value": "ibn-zuhr",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 23340,
+          "value": "ulama-tawbah-dihyah-al-kalbi-aqida-jinn-7219",
+          "people": [
+            {
+              "value": "dihyah-al-kalbi",
+              "category": "sahaba"
+            }
+          ]
+        }
+      ],
+      "creator": [
+        {
+          "line": 603,
+          "value": "creator-public-library-network-ibn-battuta-6640",
+          "people": [
+            {
+              "value": "ibn-battuta",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 1728,
+          "value": "zahid-serenity-abdullah-ibn-rawaha-rahmah-unity-creator-9939",
+          "people": [
+            {
+              "value": "abdullah-ibn-rawaha",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 3775,
+          "value": "creator-thobe-wajib-abdullah-ibn-unais-ummah-tariqa-1189",
+          "people": [
+            {
+              "value": "abdullah-ibn-unais",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 7053,
+          "value": "qadar-abu-lubabah-al-ansari-helpfulness-respect-creator-3611",
+          "people": [
+            {
+              "value": "abu-lubabah-al-ansari",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 14312,
+          "value": "disinfection-muawiyah-ibn-abi-sufyan-sama-creator-3774",
+          "people": [
+            {
+              "value": "muawiyah-ibn-abi-sufyan",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 16684,
+          "value": "al-haram-mercy-creator-fatwa-kab-ibn-zuhayr-5530",
+          "people": [
+            {
+              "value": "kab-ibn-zuhayr",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 33197,
+          "value": "fatimid-egypt-creator-muhammad-ibn-maslamah-rashidun-caliphate-4342",
+          "people": [
+            {
+              "value": "muhammad-ibn-maslamah",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 34059,
+          "value": "fatima-al-fihri-sanad-public-health-creator-nazafa-4185",
+          "people": [
+            {
+              "value": "fatima-al-fihri",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        }
+      ],
+      "prophet": [
+        {
+          "line": 5676,
+          "value": "muhammad-al-fazari-frequency-analysis-prophet-9433",
+          "people": [
+            {
+              "value": "muhammad-al-fazari",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 9151,
+          "value": "safa-marwah-artistic-flourishing-al-jazari-prophet-1893",
+          "people": [
+            {
+              "value": "al-jazari",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 11660,
+          "value": "prophet-jumah-qawi-kuttab-quran-stand-abu-salamah-8094",
+          "people": [
+            {
+              "value": "abu-salamah",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 12758,
+          "value": "rifq-thabit-ibn-qurra-prophet-1791",
+          "people": [
+            {
+              "value": "thabit-ibn-qurra",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 19916,
+          "value": "zaynab-bint-muhammad-purity-ubayy-ibn-kab-prophet-1356",
+          "people": [
+            {
+              "value": "zaynab-bint-muhammad",
+              "category": "sahaba"
+            },
+            {
+              "value": "ubayy-ibn-kab",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 20477,
+          "value": "sincerity-aerodynamics-nazafa-ibn-nafis-prophet-1565",
+          "people": [
+            {
+              "value": "ibn-nafis",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 22895,
+          "value": "jabir-ibn-abdullah-prophet-wajih-8733",
+          "people": [
+            {
+              "value": "jabir-ibn-abdullah",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 22939,
+          "value": "mechanical-clocks-hanzala-ibn-abi-amir-prudence-prophet-8376",
+          "people": [
+            {
+              "value": "hanzala-ibn-abi-amir",
+              "category": "sahaba"
+            }
+          ]
+        }
+      ],
+      "messenger": [
+        {
+          "line": 2159,
+          "value": "messenger-qadi-warid-mikhdad-ibn-amr-surgical-catgut-9664",
+          "people": [
+            {
+              "value": "mikhdad-ibn-amr",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 5055,
+          "value": "abu-salamah-garden-paradise-charitableness-messenger-mubah-6722",
+          "people": [
+            {
+              "value": "abu-salamah",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 7495,
+          "value": "umar-khayyam-ilkhanate-messenger-tasawwuf-marifa-2994",
+          "people": [
+            {
+              "value": "umar-khayyam",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 10332,
+          "value": "mutawatir-ulama-nusaybah-bint-kaab-messenger-idrisid-dynasty-4983",
+          "people": [
+            {
+              "value": "nusaybah-bint-kaab",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 10759,
+          "value": "sad-ibn-abi-waqqas-al-khazini-messenger-7422",
+          "people": [
+            {
+              "value": "sad-ibn-abi-waqqas",
+              "category": "sahaba"
+            },
+            {
+              "value": "al-khazini",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 10887,
+          "value": "messenger-mufti-equanimity-miniature-crafting-labid-ibn-rabiah-8123",
+          "people": [
+            {
+              "value": "labid-ibn-rabiah",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 16422,
+          "value": "hind-bint-utbah-messenger-fath-zakat-1928",
+          "people": [
+            {
+              "value": "hind-bint-utbah",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 17769,
+          "value": "al-khansa-shaykh-messenger-friendliness-ibn-bajjah-9945",
+          "people": [
+            {
+              "value": "al-khansa",
+              "category": "sahaba"
+            },
+            {
+              "value": "ibn-bajjah",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        }
+      ],
+      "prophethood": [
+        {
+          "line": 1621,
+          "value": "hafsa-bint-umar-prophethood-ruh-abu-hurairah-windmill-9493",
+          "people": [
+            {
+              "value": "hafsa-bint-umar",
+              "category": "sahaba"
+            },
+            {
+              "value": "abu-hurairah",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 2403,
+          "value": "umrah-kab-ibn-zuhayr-jalsah-dhul-qadah-prophethood-3086",
+          "people": [
+            {
+              "value": "kab-ibn-zuhayr",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 7106,
+          "value": "thabit-ibn-qurra-prophethood-iftar-7677",
+          "people": [
+            {
+              "value": "thabit-ibn-qurra",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 14416,
+          "value": "carpet-weaving-ibn-rushd-tawadu-prophethood-islam-3999",
+          "people": [
+            {
+              "value": "ibn-rushd",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 26211,
+          "value": "prophethood-faruq-abu-hurairah-tolerance-2388",
+          "people": [
+            {
+              "value": "abu-hurairah",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 27054,
+          "value": "sextant-prophethood-mariam-al-asturlabi-salamah-2523",
+          "people": [
+            {
+              "value": "mariam-al-asturlabi",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 32355,
+          "value": "ibn-al-awwam-adhan-dunya-prophethood-dam-construction-2384",
+          "people": [
+            {
+              "value": "ibn-al-awwam",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 33989,
+          "value": "atiq-naji-amil-decimal-system-prophethood-al-sufi-1609",
+          "people": [
+            {
+              "value": "al-sufi",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        }
+      ],
+      "makruh": [
+        {
+          "line": 1293,
+          "value": "tadarru-jubayr-ibn-mutim-mausoleum-tomb-makruh-fidelity-2372",
+          "people": [
+            {
+              "value": "jubayr-ibn-mutim",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 1756,
+          "value": "tayammum-makruh-ukhuwwa-abdullah-ibn-jafar-1048",
+          "people": [
+            {
+              "value": "abdullah-ibn-jafar",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 2702,
+          "value": "makruh-surgical-instruments-hunayn-ibn-ishaq-5700",
+          "people": [
+            {
+              "value": "hunayn-ibn-ishaq",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 3866,
+          "value": "ceramics-barakah-umm-ayman-masjid-makruh-mahabbah-4583",
+          "people": [
+            {
+              "value": "barakah-umm-ayman",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 6329,
+          "value": "shrine-holy-nabataeans-horticulture-amir-ibn-fuhayra-makruh-2630",
+          "people": [
+            {
+              "value": "amir-ibn-fuhayra",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 9622,
+          "value": "tasbih-quarantine-al-khansa-makruh-qawi-obedience-nazafa-9431",
+          "people": [
+            {
+              "value": "al-khansa",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 11925,
+          "value": "salman-al-farsi-mutakallim-tilework-tasbih-makruh-8526",
+          "people": [
+            {
+              "value": "salman-al-farsi",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 17578,
+          "value": "jerusalem-makruh-wisdom-umm-sharik-7397",
+          "people": [
+            {
+              "value": "umm-sharik",
+              "category": "sahaba"
+            }
+          ]
+        }
+      ]
+    },
+    "yumna_success_lines": 3667,
+    "excluded_atomic_cue_containers": [
+      "birth-of-prophet-muhammad"
+    ],
+    "interpretation": "Heuristic candidates, not automatic policy violations or religious judgments. Whole-token dictionary person expressions occur with standalone concept tokens. Different cue counts can overlap on the same line."
+  },
+  {
+    "name": "default-unnumbered",
+    "sha256": "4cbd19a0a21bcea2e51e8e9d373421953ba19c47082dfb423f0ac4fa9bfc3465",
+    "physical_lines": 1000000,
+    "unique_candidate_lines": 1618,
+    "cue_person_lines": {
+      "creator": 248,
+      "jinn": 275,
+      "makruh": 273,
+      "messenger": 267,
+      "prophet": 282,
+      "prophethood": 285
+    },
+    "examples": {
+      "jinn": [
+        {
+          "line": 5617,
+          "value": "abdullah-ibn-umar-jinn-jerusalem-itidal-isnad",
+          "people": [
+            {
+              "value": "abdullah-ibn-umar",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 7752,
+          "value": "jinn-arwa-bint-kurayz-dietetics-benevolence",
+          "people": [
+            {
+              "value": "arwa-bint-kurayz",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 10096,
+          "value": "abu-salamah-cooperation-shawwal-jinn-sahn-courtyard-gratitude",
+          "people": [
+            {
+              "value": "abu-salamah",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 10743,
+          "value": "eid-al-adha-celebration-umm-ayman-jinn",
+          "people": [
+            {
+              "value": "umm-ayman",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 13440,
+          "value": "jinn-loyalty-umm-ayman-ribat-fort-mantiq",
+          "people": [
+            {
+              "value": "umm-ayman",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 14035,
+          "value": "almoravid-dynasty-ghiyath-al-din-al-kashi-jinn",
+          "people": [
+            {
+              "value": "ghiyath-al-din-al-kashi",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 16763,
+          "value": "ibn-arabi-wajib-guardian-of-trust-adil-jinn",
+          "people": [
+            {
+              "value": "ibn-arabi",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 18315,
+          "value": "guide-to-goodness-maimonides-madrasa-jinn-rajab-ittihad",
+          "people": [
+            {
+              "value": "maimonides",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        }
+      ],
+      "creator": [
+        {
+          "line": 1486,
+          "value": "creator-warmth-nusaybah-bint-kaab-aerodynamics",
+          "people": [
+            {
+              "value": "nusaybah-bint-kaab",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 1835,
+          "value": "creator-tulunid-dynasty-kab-ibn-zuhayr-helpfulness",
+          "people": [
+            {
+              "value": "kab-ibn-zuhayr",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 10483,
+          "value": "al-masudi-serenity-dunyah-creator-good-manners",
+          "people": [
+            {
+              "value": "al-masudi",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 12140,
+          "value": "nasir-al-din-al-tusi-sufi-creator-shaban",
+          "people": [
+            {
+              "value": "nasir-al-din-al-tusi",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 18365,
+          "value": "al-farabi-creator-mushahada-mutakallim-silat-al-rahim",
+          "people": [
+            {
+              "value": "al-farabi",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 23094,
+          "value": "sahn-e-chaman-abu-ayub-al-ansari-creator",
+          "people": [
+            {
+              "value": "abu-ayub-al-ansari",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 27025,
+          "value": "creator-mamluk-sultanate-ammar-ibn-yasir-riyadhah-optimism",
+          "people": [
+            {
+              "value": "ammar-ibn-yasir",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 32849,
+          "value": "creator-musab-ibn-umayr-lutf-nahy-anil-munkar",
+          "people": [
+            {
+              "value": "musab-ibn-umayr",
+              "category": "sahaba"
+            }
+          ]
+        }
+      ],
+      "prophet": [
+        {
+          "line": 3288,
+          "value": "tayyib-waqf-tilawa-said-ibn-zayd-hisab-prophet",
+          "people": [
+            {
+              "value": "said-ibn-zayd",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 11314,
+          "value": "prophet-said-ibn-zayd-illumination-qadr",
+          "people": [
+            {
+              "value": "said-ibn-zayd",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 13632,
+          "value": "khulafa-rashidun-perseverance-abu-musa-al-ashari-prophet",
+          "people": [
+            {
+              "value": "abu-musa-al-ashari",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 14896,
+          "value": "musnad-prophet-public-health-kufi-ruqayyah-bint-muhammad",
+          "people": [
+            {
+              "value": "ruqayyah-bint-muhammad",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 17736,
+          "value": "abdullah-ibn-zubayr-devotion-prophet-mufassir-ruya-reliability",
+          "people": [
+            {
+              "value": "abdullah-ibn-zubayr",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 29287,
+          "value": "prophet-khanqah-monastery-aisha-bint-abi-bakr",
+          "people": [
+            {
+              "value": "aisha-bint-abi-bakr",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 29819,
+          "value": "prophet-ibn-sina-ilkhanate-masjid",
+          "people": [
+            {
+              "value": "ibn-sina",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 34883,
+          "value": "prophet-sahabi-piri-reis-mumin-disinfection",
+          "people": [
+            {
+              "value": "piri-reis",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        }
+      ],
+      "messenger": [
+        {
+          "line": 662,
+          "value": "purity-messenger-tadarru-kab-ibn-zuhayr",
+          "people": [
+            {
+              "value": "kab-ibn-zuhayr",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 3026,
+          "value": "messenger-shauq-nasr-usama-ibn-zayd-devotion",
+          "people": [
+            {
+              "value": "usama-ibn-zayd",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 8651,
+          "value": "messenger-great-seljuk-empire-ibn-nafis-fractals",
+          "people": [
+            {
+              "value": "ibn-nafis",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 15769,
+          "value": "messenger-masjid-ghidha-al-idrisi-muezzin-balcony-munir",
+          "people": [
+            {
+              "value": "al-idrisi",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 18440,
+          "value": "messenger-abdullah-ibn-amr-ibn-al-aas",
+          "people": [
+            {
+              "value": "abdullah-ibn-amr-ibn-al-aas",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 24276,
+          "value": "al-khazini-itidal-messenger-falsafa-supportiveness-mausoleum-tomb",
+          "people": [
+            {
+              "value": "al-khazini",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 34438,
+          "value": "messenger-timurid-empire-amir-ibn-fuhayra",
+          "people": [
+            {
+              "value": "amir-ibn-fuhayra",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 37829,
+          "value": "al-farabi-messenger-ilkhanate-remembrance-discipline",
+          "people": [
+            {
+              "value": "al-farabi",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        }
+      ],
+      "prophethood": [
+        {
+          "line": 5211,
+          "value": "al-wafa-al-ghazali-paradise-realm-piety-prophethood",
+          "people": [
+            {
+              "value": "al-ghazali",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 7720,
+          "value": "prophethood-ayyubid-dynasty-zayd-ibn-thabit",
+          "people": [
+            {
+              "value": "zayd-ibn-thabit",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 17184,
+          "value": "prophethood-ceramics-khadijah-bint-khuwaylid-generosity-jerusalem",
+          "people": [
+            {
+              "value": "khadijah-bint-khuwaylid",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 19028,
+          "value": "umm-salamah-courage-gunpowder-refinement-sadaqah-jariyah-prophethood",
+          "people": [
+            {
+              "value": "umm-salamah",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 24184,
+          "value": "mikhdad-ibn-amr-prophethood-tahara",
+          "people": [
+            {
+              "value": "mikhdad-ibn-amr",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 24317,
+          "value": "prophethood-social-responsibility-navigation-ibn-nafis",
+          "people": [
+            {
+              "value": "ibn-nafis",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 28232,
+          "value": "mahdi-prophethood-sini-script-tawadu-yaqeen-al-khwarizmi",
+          "people": [
+            {
+              "value": "al-khwarizmi",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 30725,
+          "value": "prophethood-razi-quwwa-zaynab-bint-khuzaymah-hospitals-system",
+          "people": [
+            {
+              "value": "zaynab-bint-khuzaymah",
+              "category": "sahaba"
+            }
+          ]
+        }
+      ],
+      "makruh": [
+        {
+          "line": 5508,
+          "value": "kashf-umar-ibn-al-khattab-caliphate-makruh",
+          "people": [
+            {
+              "value": "umar-ibn-al-khattab",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 9928,
+          "value": "makruh-fitra-ibn-al-baytar-sacrifice",
+          "people": [
+            {
+              "value": "ibn-al-baytar",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 12701,
+          "value": "nabataeans-shawwal-ibn-rushd-makruh",
+          "people": [
+            {
+              "value": "ibn-rushd",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        },
+        {
+          "line": 16717,
+          "value": "makruh-hydraulics-sad-ibn-abi-waqqas",
+          "people": [
+            {
+              "value": "sad-ibn-abi-waqqas",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 17604,
+          "value": "abdur-rahman-ibn-abu-bakr-makruh",
+          "people": [
+            {
+              "value": "abdur-rahman-ibn-abu-bakr",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 17624,
+          "value": "makruh-avoidance-of-anger-abu-lubabah-al-ansari",
+          "people": [
+            {
+              "value": "abu-lubabah-al-ansari",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 21086,
+          "value": "umar-khayyam-makruh-amr-ibn-al-aas",
+          "people": [
+            {
+              "value": "umar-khayyam",
+              "category": "islamic_golden_age_scholars"
+            },
+            {
+              "value": "amr-ibn-al-aas",
+              "category": "sahaba"
+            }
+          ]
+        },
+        {
+          "line": 26977,
+          "value": "abbas-ibn-firnas-faithfulness-makruh-soap-making-kaaba",
+          "people": [
+            {
+              "value": "abbas-ibn-firnas",
+              "category": "islamic_golden_age_scholars"
+            }
+          ]
+        }
+      ]
+    },
+    "yumna_success_lines": 3622,
+    "excluded_atomic_cue_containers": [
+      "birth-of-prophet-muhammad"
+    ],
+    "interpretation": "Heuristic candidates, not automatic policy violations or religious judgments. Whole-token dictionary person expressions occur with standalone concept tokens. Different cue counts can overlap on the same line."
+  }
+]

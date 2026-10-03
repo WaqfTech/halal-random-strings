@@ -1,0 +1,53 @@
+{
+  "product_source_commit": "24138744a6281fcd99ef06fc6447b9660a0c83c6",
+  "checks": [
+    {
+      "command": "PATH=/home/jad/.local/share/mise/installs/go/1.27.1/bin:$PATH GOCACHE=/tmp/hrs-review-go-cache go build -o /tmp/hrs-million-cli ./cmd/halal-random-strings",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "PATH=/home/jad/.local/share/mise/installs/go/1.27.1/bin:$PATH GOCACHE=/tmp/hrs-review-go-cache go test -race ./...",
+      "exit": 0,
+      "output": "ok  github.com/WaqfTech/halal-random-strings (cached)\n? github.com/WaqfTech/halal-random-strings/cmd/halal-random-strings [no test files]\n",
+      "cached": true
+    },
+    {
+      "command": "PATH=/home/jad/.local/share/mise/installs/go/1.27.1/bin:$PATH GOCACHE=/tmp/hrs-review-go-cache go vet ./...",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "python3 -m unittest discover -s scripts -p 'test_*.py'",
+      "exit": 0,
+      "output": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.221s\n\nOK\n"
+    },
+    {
+      "command": "python3 docs/reviews/2026-10-03-million-corpus/replay.py --cli /tmp/hrs-million-cli --corpus-dir /tmp/hrs-million-audit-2026-10-03",
+      "exit": 0,
+      "generated_physical_lines": 2000000,
+      "production_audited_lines": 2000000,
+      "independent_audited_lines": 2000000,
+      "mechanical_violations": 0,
+      "negative_control_physical_lines": 1000000,
+      "negative_control_expected_and_observed_violations": 3,
+      "negative_control_expected_and_observed_exit": 1,
+      "semantic_candidate_lines": 3267
+    },
+    {
+      "command": "PATH=/home/jad/.local/share/mise/installs/go/1.27.1/bin:$PATH GOCACHE=/tmp/hrs-review-go-cache go run /tmp/hrs-million-semantic-probe.go",
+      "exit": 0,
+      "accepted_sensitive_examples": 4,
+      "rejected_prohibited_examples": 3,
+      "receipt": "go-validation.json"
+    },
+    {
+      "command": "git diff --check",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

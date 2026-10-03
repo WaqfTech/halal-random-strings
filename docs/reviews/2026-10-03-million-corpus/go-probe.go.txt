@@ -1,0 +1,37 @@
+package main
+
+import (
+	"encoding/json"
+	"os"
+
+	hrs "github.com/WaqfTech/halal-random-strings"
+)
+
+func main() {
+	engine, err := hrs.NewDefaultEngine()
+	if err != nil {
+		panic(err)
+	}
+	rows := []map[string]any{}
+	for _, value := range []string{
+		"amr-ibn-al-as-jinn",
+		"abdur-rahman-ibn-abu-bakr-makruh",
+		"prophet-said-ibn-zayd-illumination-qadr",
+		"abdul-hafiz-yumna-success-salwa-sumaira",
+		"ahmad-donkey-food",
+		"aisha-cow-olive",
+		"rahman-ramadan",
+	} {
+		err := engine.ValidateString(value, "-")
+		row := map[string]any{"value": value, "accepted": err == nil}
+		if err != nil {
+			row["error"] = err.Error()
+		}
+		rows = append(rows, row)
+	}
+	encoder := json.NewEncoder(os.Stdout)
+	encoder.SetIndent("", "  ")
+	if err := encoder.Encode(rows); err != nil {
+		panic(err)
+	}
+}

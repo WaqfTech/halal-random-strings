@@ -1,0 +1,1254 @@
+{
+  "started_utc": "2026-10-03T09:51:10.263929+00:00",
+  "source_commit": "24138744a6281fcd99ef06fc6447b9660a0c83c6",
+  "dictionary_sha256": "5571a76622f3820f8f2d45007cd6872d7e133edd220043dfbfd7de68dfac024f",
+  "cli_sha256": "45558db95813c51dd1f732d3c4a7b5f398564d7e66b9ec39022ceccf1aae4d2a",
+  "corpora": [
+    {
+      "name": "default-numbered",
+      "path": "/tmp/hrs-million-audit-2026-10-03/default-numbered.txt",
+      "numbered": true,
+      "seed": 1003202601,
+      "generation_arguments": [
+        "/tmp/hrs-million-cli",
+        "--seed",
+        "1003202601",
+        "-r",
+        "1000000"
+      ],
+      "generation_exit": 0,
+      "generation_stderr": "",
+      "generation_seconds": 1.895715,
+      "physical_lines": 1000000,
+      "bytes": 47996694,
+      "sha256": "0b202bd3dd89313cd044fda08de0705bc5b535a4cd3206d0e4954f1f867875c8",
+      "audit": {
+        "arguments": [
+          "/usr/bin/python3",
+          "scripts/analyze.py",
+          "/tmp/hrs-million-audit-2026-10-03/default-numbered.txt",
+          "--sep",
+          "-"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 15.25003,
+        "stdout": "Total lines: 1000000\nUnique lines: 999998\nUniqueness percentage: 100.00%\n\nDuplicate lines:\nhabib-ibn-zayd-al-ansari-1328 (x2)\numm-hakim-bint-al-harith-8629 (x2)\nLength metrics: min=22 chars, max=101 chars, avg=47.0 chars\nWord count distribution (valid identifiers):\n  5 words: 250422 lines\n  6 words: 250235 lines\n  7 words: 249098 lines\n  8 words: 250245 lines\nMixing groups:\n  divine: 199987\n  general: 200400\n  islamic: 200661\n  names: 199119\n  prophets: 199833\n[PASS] Policy violations: 0\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "default-unnumbered",
+      "path": "/tmp/hrs-million-audit-2026-10-03/default-unnumbered.txt",
+      "numbered": false,
+      "seed": 1003202602,
+      "generation_arguments": [
+        "/tmp/hrs-million-cli",
+        "--seed",
+        "1003202602",
+        "-r",
+        "1000000",
+        "--no-random-number"
+      ],
+      "generation_exit": 0,
+      "generation_stderr": "",
+      "generation_seconds": 1.686329,
+      "physical_lines": 1000000,
+      "bytes": 42998812,
+      "sha256": "4cbd19a0a21bcea2e51e8e9d373421953ba19c47082dfb423f0ac4fa9bfc3465",
+      "audit": {
+        "arguments": [
+          "/usr/bin/python3",
+          "scripts/analyze.py",
+          "/tmp/hrs-million-audit-2026-10-03/default-unnumbered.txt",
+          "--sep",
+          "-"
+        ],
+        "exit": 0,
+        "elapsed_seconds": 15.105175,
+        "stdout": "Total lines: 1000000\nUnique lines: 997385\nUniqueness percentage: 99.74%\n\nDuplicate lines:\nnasir-al-din-al-tusi (x55)\nabu-kamil-shuja-ibn-aslam (x52)\nabdur-rahman-ibn-abu-bakr (x51)\nbuilding-of-dome-of-the-rock (x51)\nhamza-ibn-abd-al-muttalib (x51)\nabd-al-rahman-ibn-awf (x50)\nabd-al-rahman-al-sufi (x48)\nfounding-of-house-of-wisdom (x48)\nsafiyyah-bint-abd-al-muttalib (x48)\nabdullah-ibn-amr-ibn-al-aas (x47)\nage-of-exploration-by-muslims (x47)\nconstruction-of-great-mosque-of-cordoba (x47)\ngolden-age-of-islam-start (x47)\nhabib-ibn-zayd-al-ansari (x47)\nghiyath-al-din-al-kashi (x45)\ncompendious-book-on-calculation-by-completion-and-balancing (x44)\nabu-ubaidah-ibn-al-jarrah (x43)\numm-hakim-bint-al-harith (x43)\nal-abbas-ibn-abd-al-muttalib (x37)\ndhul-jalali-wal-ikram-qabid (x14)\n... and 1033 more duplicate entries.\nLength metrics: min=18 chars, max=99 chars, avg=42.0 chars\nWord count distribution (valid identifiers):\n  5 words: 249832 lines\n  6 words: 249642 lines\n  7 words: 249968 lines\n  8 words: 250558 lines\nMixing groups:\n  divine: 200203\n  general: 199644\n  islamic: 199911\n  names: 200420\n  prophets: 199822\n[PASS] Policy violations: 0\n",
+        "stderr": ""
+      }
+    }
+  ],
+  "finished_utc": "2026-10-03T09:51:14.357056+00:00",
+  "independent_parser": "explicit category table, shared token trie, group hypothesis bitmasks",
+  "independent_scans": [
+    {
+      "name": "default-numbered",
+      "physical_lines": 1000000,
+      "bytes": 47996694,
+      "sha256": "0b202bd3dd89313cd044fda08de0705bc5b535a4cd3206d0e4954f1f867875c8",
+      "unique_lines": 999998,
+      "duplicate_excess": 2,
+      "duplicate_identifiers": 2,
+      "max_occurrences": 2,
+      "top_repeated": [
+        {
+          "value": "habib-ibn-zayd-al-ansari-1328",
+          "count": 2
+        },
+        {
+          "value": "umm-hakim-bint-al-harith-8629",
+          "count": 2
+        }
+      ],
+      "group_counts": {
+        "divine": 199987,
+        "general": 200400,
+        "islamic": 200661,
+        "names": 199119,
+        "prophets": 199833
+      },
+      "word_counts": {
+        "5": 250422,
+        "6": 250235,
+        "7": 249098,
+        "8": 250245
+      },
+      "matches_one_complete_expression": {
+        "islamic": 896
+      },
+      "blocked_lines": 0,
+      "ambiguous_group_lines": 0,
+      "sensitivity_probe_hits": {},
+      "violations": 0,
+      "violation_examples": [],
+      "reservoir_samples": {
+        "divine": [
+          {
+            "line": 28541,
+            "value": "wahhab-malik-al-mulk-samad-8159"
+          },
+          {
+            "line": 41899,
+            "value": "qabid-hamid-samii-khafid-muhsi-8663"
+          },
+          {
+            "line": 57962,
+            "value": "mani-ahad-hasib-rauf-raqib-baseer-khafid-kabir-6235"
+          },
+          {
+            "line": 75846,
+            "value": "nafi-wahhab-nafi-hafiz-aliyy-5267"
+          },
+          {
+            "line": 78549,
+            "value": "basiir-hasib-hadi-darr-hasib-majid-khaliq-matin-8002"
+          },
+          {
+            "line": 187155,
+            "value": "rashid-quddus-hayy-hayy-raziq-3431"
+          },
+          {
+            "line": 236026,
+            "value": "waliyy-majid-qawiyy-aziz-mubdi-8273"
+          },
+          {
+            "line": 363229,
+            "value": "qabid-razzaq-wakil-latif-hafiz-7690"
+          },
+          {
+            "line": 364543,
+            "value": "bari-wakil-hadi-aliyy-akhir-8443"
+          },
+          {
+            "line": 395756,
+            "value": "rauf-muhsi-khabir-zahir-mumit-7558"
+          },
+          {
+            "line": 419530,
+            "value": "rafi-mudhill-muqaddim-wadud-shakur-mani-2513"
+          },
+          {
+            "line": 536801,
+            "value": "wahhab-baseer-khaliq-darr-hamid-ghafir-fatah-hafiz-8224"
+          },
+          {
+            "line": 590457,
+            "value": "muqaddim-waliyy-mumit-baith-waliyy-baith-badi-bari-9102"
+          },
+          {
+            "line": 631560,
+            "value": "muakhkhir-akhir-hayy-quddus-wahhab-qawiyy-baith-muqit-9216"
+          },
+          {
+            "line": 741314,
+            "value": "mutakabbir-adl-hakim-muid-raqib-haqq-baseer-7240"
+          },
+          {
+            "line": 793051,
+            "value": "salam-mughni-baqi-mani-salam-1390"
+          },
+          {
+            "line": 872915,
+            "value": "hadi-hakam-shakur-afuww-raziq-hayy-9897"
+          },
+          {
+            "line": 924083,
+            "value": "aliyy-hakim-basit-muqtadir-hasib-aziz-samii-6689"
+          },
+          {
+            "line": 948600,
+            "value": "latif-muakhkhir-rauf-wakil-mumit-samii-1232"
+          },
+          {
+            "line": 948819,
+            "value": "basir-muakhkhir-ghaffar-hasib-qayyum-batin-8388"
+          }
+        ],
+        "prophets": [
+          {
+            "line": 12847,
+            "value": "ismail-ilyas-yahya-ishaq-mustafa-yahya-isa-shuayb-1139"
+          },
+          {
+            "line": 107085,
+            "value": "shoaib-idris-yusuf-hud-ibrahim-adam-shoaib-2134"
+          },
+          {
+            "line": 125488,
+            "value": "ismail-muzammil-taha-ayyub-ayyub-sulayman-2062"
+          },
+          {
+            "line": 129229,
+            "value": "yaqub-al-yasa-yasin-younus-ishaq-ishaq-zakariya-4737"
+          },
+          {
+            "line": 162303,
+            "value": "younus-muzammil-ishaq-ishaq-mustafa-shoaib-yunus-3254"
+          },
+          {
+            "line": 197719,
+            "value": "younus-isa-taha-ahmad-mustafa-muhammed-8716"
+          },
+          {
+            "line": 202712,
+            "value": "musa-younus-younus-yasin-taha-6565"
+          },
+          {
+            "line": 207253,
+            "value": "salih-ayub-dawud-ahmed-ahmad-dhul-kifl-5201"
+          },
+          {
+            "line": 259120,
+            "value": "hud-shoaib-zakariya-ismail-adam-2497"
+          },
+          {
+            "line": 281441,
+            "value": "muzammil-ibrahim-sulayman-shoaib-muzammil-yaqub-adam-adam-1595"
+          },
+          {
+            "line": 304524,
+            "value": "yahya-ismail-nuh-al-yasa-mustafa-3700"
+          },
+          {
+            "line": 388192,
+            "value": "younus-salih-ahmed-ishaq-ishaq-1731"
+          },
+          {
+            "line": 423215,
+            "value": "yahya-nuh-mudathir-idris-mudathir-yaqub-shoaib-5998"
+          },
+          {
+            "line": 471539,
+            "value": "ibrahim-ishaq-dhul-kifl-musa-ibrahim-ahmed-1531"
+          },
+          {
+            "line": 475081,
+            "value": "musa-yusuf-mudathir-mudathir-yunus-6468"
+          },
+          {
+            "line": 553111,
+            "value": "yahya-shoaib-al-yasa-taha-dawud-mustafa-8527"
+          },
+          {
+            "line": 583876,
+            "value": "musa-ahmad-hud-ahmad-ayub-ayub-ilyas-1342"
+          },
+          {
+            "line": 636999,
+            "value": "muhammed-yahya-dhul-kifl-salih-8727"
+          },
+          {
+            "line": 866689,
+            "value": "hud-yunus-ishaq-musa-ibrahim-muhammed-4101"
+          },
+          {
+            "line": 920493,
+            "value": "harun-yusuf-yaqub-musa-mustafa-ismail-8419"
+          }
+        ],
+        "names": [
+          {
+            "line": 29692,
+            "value": "afra-razan-hana-wahida-mujtaba-najat-noor-3325"
+          },
+          {
+            "line": 64067,
+            "value": "farah-zubaida-zakiya-mazen-uthman-2283"
+          },
+          {
+            "line": 234055,
+            "value": "uthman-jamila-radwa-anisa-muhsin-rawan-rahaf-sajid-6434"
+          },
+          {
+            "line": 283231,
+            "value": "iman-dalal-hala-khadijah-adel-ola-7776"
+          },
+          {
+            "line": 332846,
+            "value": "jafar-inas-dina-mazen-lubna-zubaida-abdur-rahim-3317"
+          },
+          {
+            "line": 445753,
+            "value": "rahma-hilal-jamil-farooq-zubair-6771"
+          },
+          {
+            "line": 465036,
+            "value": "noor-abdullah-rawan-malik-ihsan-areej-abdul-hakim-8741"
+          },
+          {
+            "line": 480371,
+            "value": "sajid-inas-ummamah-souad-salim-3207"
+          },
+          {
+            "line": 550665,
+            "value": "hala-faris-zainab-zahra-jamal-inas-abdul-majid-6887"
+          },
+          {
+            "line": 561136,
+            "value": "abdul-rahman-laila-sameer-abdullah-wael-farah-mazen-7432"
+          },
+          {
+            "line": 599081,
+            "value": "zakiya-zainab-maram-zaki-bilal-jibreel-aqeel-5796"
+          },
+          {
+            "line": 663886,
+            "value": "zakiya-ruqayyah-abdul-muizz-fajr-said-thuraya-fatih-7183"
+          },
+          {
+            "line": 707189,
+            "value": "nawal-mounir-fajr-sameer-nadia-3001"
+          },
+          {
+            "line": 740323,
+            "value": "mona-abdul-wahid-talal-wafiya-7002"
+          },
+          {
+            "line": 755371,
+            "value": "abdul-hafiz-thuraya-malika-rabia-8856"
+          },
+          {
+            "line": 816287,
+            "value": "farida-hazem-maimoona-riham-nazli-5299"
+          },
+          {
+            "line": 820440,
+            "value": "hajar-ali-hadiya-jawad-fatima-lubna-2462"
+          },
+          {
+            "line": 863744,
+            "value": "suha-mujtaba-ruwaida-hamza-husain-8902"
+          },
+          {
+            "line": 918671,
+            "value": "sad-yasmin-hisham-tariq-bushra-nawaf-thuraya-abdullah-2533"
+          },
+          {
+            "line": 985408,
+            "value": "zafar-shukriyah-burhan-sameena-ruqayyah-hassan-6973"
+          }
+        ],
+        "islamic": [
+          {
+            "line": 25025,
+            "value": "safa-marwah-thankfulness-sound-principles-zirid-dynasty-8396"
+          },
+          {
+            "line": 106946,
+            "value": "sahn-ghiyath-al-din-al-kashi-temperance-8161"
+          },
+          {
+            "line": 224690,
+            "value": "horticulture-dedication-dome-adornment-masjid-2651"
+          },
+          {
+            "line": 271080,
+            "value": "algebraic-geometry-shauq-sultanate-tranquility-4965"
+          },
+          {
+            "line": 276427,
+            "value": "umayr-ibn-wahb-mountains-firm-piety-2208"
+          },
+          {
+            "line": 279121,
+            "value": "abu-saeed-al-khudri-agricultural-innovations-calligraphy-2235"
+          },
+          {
+            "line": 319184,
+            "value": "shauq-repentance-equitableness-birr-al-khansa-number-theory-5367"
+          },
+          {
+            "line": 325312,
+            "value": "ilham-illumination-ibn-rushd-quilting-perseverance-najah-5301"
+          },
+          {
+            "line": 348253,
+            "value": "quds-calendars-jumah-tawaf-arafat-6407"
+          },
+          {
+            "line": 376543,
+            "value": "rivers-of-jannah-accountability-ghibtah-7314"
+          },
+          {
+            "line": 444438,
+            "value": "ulama-tawbah-rahmah-hajj-tadhakkur-miswak-6152"
+          },
+          {
+            "line": 449670,
+            "value": "philosophical-debates-birr-al-walidayn-5601"
+          },
+          {
+            "line": 456586,
+            "value": "calculus-principles-amr-ibn-al-aas-8995"
+          },
+          {
+            "line": 467027,
+            "value": "conquest-of-constantinople-isnad-hidaya-qawi-nabataeans-sanctuary-7219"
+          },
+          {
+            "line": 661382,
+            "value": "enamelwork-muawiyah-ibn-abi-sufyan-4256"
+          },
+          {
+            "line": 682975,
+            "value": "uthman-ibn-affan-purity-cosmos-order-al-khansa-5857"
+          },
+          {
+            "line": 779532,
+            "value": "simplicity-mushawara-battle-of-qadisiyyah-healer-of-hearts-9467"
+          },
+          {
+            "line": 828822,
+            "value": "haqiqa-calligraphy-panel-tafakkur-al-aqsa-carpet-weaving-7878"
+          },
+          {
+            "line": 840162,
+            "value": "rahmat-courtyard-mosaics-fatimid-caliphate-almohad-caliphate-heaven-6428"
+          },
+          {
+            "line": 955687,
+            "value": "codification-of-hadith-khuluq-muraqaba-3907"
+          }
+        ],
+        "general": [
+          {
+            "line": 14016,
+            "value": "manakish-zaatar-akhdar-safra-fox-cinnabar-rhinoceros-3470"
+          },
+          {
+            "line": 22508,
+            "value": "aluminum-thistle-clementine-tiny-pretoria-3801"
+          },
+          {
+            "line": 52798,
+            "value": "zalabya-great-blue-heron-canary-chair-4991"
+          },
+          {
+            "line": 61136,
+            "value": "zarb-kibbeh-nayyeh-edelweiss-rice-pudding-rose-crocus-1747"
+          },
+          {
+            "line": 83382,
+            "value": "strawberry-tree-sesame-seed-cyclamen-network-7007"
+          },
+          {
+            "line": 169179,
+            "value": "timbuktu-sugar-apple-nightingale-chariot-vermiculite-graphite-wadi-6584"
+          },
+          {
+            "line": 203990,
+            "value": "fish-qatayef-asafiri-magpie-light-red-lentil-bloodstone-7421"
+          },
+          {
+            "line": 213540,
+            "value": "airplane-tahini-coconut-palm-elder-sunstone-maputo-4540"
+          },
+          {
+            "line": 227455,
+            "value": "dam-variscite-needle-baobab-hat-bat-grackle-1571"
+          },
+          {
+            "line": 268685,
+            "value": "seal-plum-tree-thinker-map-source-7786"
+          },
+          {
+            "line": 302142,
+            "value": "river-roof-butterfly-tabbouleh-black-bean-7026"
+          },
+          {
+            "line": 374573,
+            "value": "raven-batheeth-protea-jungle-public-bathhouse-9722"
+          },
+          {
+            "line": 424404,
+            "value": "mosul-city-plane-parsley-leaf-5248"
+          },
+          {
+            "line": 615159,
+            "value": "kingdom-copper-magnetite-magnetite-writer-lion-5972"
+          },
+          {
+            "line": 633281,
+            "value": "chard-water-skin-ezogelin-soup-chapter-7813"
+          },
+          {
+            "line": 671206,
+            "value": "hummus-beetle-owl-al-arbaa-1065"
+          },
+          {
+            "line": 675118,
+            "value": "discoverer-dianthus-lote-tree-capital-vest-2739"
+          },
+          {
+            "line": 707383,
+            "value": "poppy-nile-river-turban-warak-enab-zebra-finch-2271"
+          },
+          {
+            "line": 707460,
+            "value": "turkish-coffee-violet-red-winged-blackbird-4025"
+          },
+          {
+            "line": 735609,
+            "value": "whale-guide-path-zaalouk-seeker-9022"
+          }
+        ]
+      },
+      "length_extremes": {
+        "general": {
+          "shortest": {
+            "line": 92420,
+            "value": "bint-al-sahn-snow-pea-7160"
+          },
+          "longest": {
+            "line": 138573,
+            "value": "chrysanthemum-watercress-margoog-cyclamen-bastirma-rhodochrosite-dragonfruit-pink-6678"
+          }
+        },
+        "names": {
+          "shortest": {
+            "line": 186247,
+            "value": "ola-rim-al-husayn-amir-4875"
+          },
+          "longest": {
+            "line": 47067,
+            "value": "maher-najwa-juwayriyah-yaman-sumayyah-juwayriyah-zulekha-mahmood-4006"
+          }
+        },
+        "prophets": {
+          "shortest": {
+            "line": 40857,
+            "value": "lut-al-yasa-al-yasa-8075"
+          },
+          "longest": {
+            "line": 89214,
+            "value": "mustafa-mudathir-sulayman-muhammed-zakariya-muhammed-zakariya-muhammed-7085"
+          }
+        },
+        "divine": {
+          "shortest": {
+            "line": 408859,
+            "value": "malik-al-mulk-adl-adl-1338"
+          },
+          "longest": {
+            "line": 158279,
+            "value": "muhaymin-muqtadir-mutakabbir-musawwir-samad-mutakabbir-shahid-qahhar-1606"
+          }
+        },
+        "islamic": {
+          "shortest": {
+            "line": 96918,
+            "value": "amr-ibn-al-as-ilm-9639"
+          },
+          "longest": {
+            "line": 309131,
+            "value": "calligraphic-composition-contemplation-reliability-tranquility-calligraphic-composition-veracity-9599"
+          }
+        }
+      },
+      "elapsed_seconds": 12.415802
+    },
+    {
+      "name": "default-unnumbered",
+      "physical_lines": 1000000,
+      "bytes": 42998812,
+      "sha256": "4cbd19a0a21bcea2e51e8e9d373421953ba19c47082dfb423f0ac4fa9bfc3465",
+      "unique_lines": 997385,
+      "duplicate_excess": 2615,
+      "duplicate_identifiers": 1053,
+      "max_occurrences": 55,
+      "top_repeated": [
+        {
+          "value": "nasir-al-din-al-tusi",
+          "count": 55
+        },
+        {
+          "value": "abu-kamil-shuja-ibn-aslam",
+          "count": 52
+        },
+        {
+          "value": "building-of-dome-of-the-rock",
+          "count": 51
+        },
+        {
+          "value": "hamza-ibn-abd-al-muttalib",
+          "count": 51
+        },
+        {
+          "value": "abdur-rahman-ibn-abu-bakr",
+          "count": 51
+        },
+        {
+          "value": "abd-al-rahman-ibn-awf",
+          "count": 50
+        },
+        {
+          "value": "safiyyah-bint-abd-al-muttalib",
+          "count": 48
+        },
+        {
+          "value": "abd-al-rahman-al-sufi",
+          "count": 48
+        },
+        {
+          "value": "founding-of-house-of-wisdom",
+          "count": 48
+        },
+        {
+          "value": "golden-age-of-islam-start",
+          "count": 47
+        },
+        {
+          "value": "habib-ibn-zayd-al-ansari",
+          "count": 47
+        },
+        {
+          "value": "abdullah-ibn-amr-ibn-al-aas",
+          "count": 47
+        },
+        {
+          "value": "age-of-exploration-by-muslims",
+          "count": 47
+        },
+        {
+          "value": "construction-of-great-mosque-of-cordoba",
+          "count": 47
+        },
+        {
+          "value": "ghiyath-al-din-al-kashi",
+          "count": 45
+        },
+        {
+          "value": "compendious-book-on-calculation-by-completion-and-balancing",
+          "count": 44
+        },
+        {
+          "value": "abu-ubaidah-ibn-al-jarrah",
+          "count": 43
+        },
+        {
+          "value": "umm-hakim-bint-al-harith",
+          "count": 43
+        },
+        {
+          "value": "al-abbas-ibn-abd-al-muttalib",
+          "count": 37
+        },
+        {
+          "value": "dhul-jalali-wal-ikram-qabid",
+          "count": 14
+        }
+      ],
+      "group_counts": {
+        "divine": 200203,
+        "general": 199644,
+        "islamic": 199911,
+        "names": 200420,
+        "prophets": 199822
+      },
+      "word_counts": {
+        "5": 249832,
+        "6": 249642,
+        "7": 249968,
+        "8": 250558
+      },
+      "matches_one_complete_expression": {
+        "islamic": 901
+      },
+      "blocked_lines": 0,
+      "ambiguous_group_lines": 0,
+      "sensitivity_probe_hits": {},
+      "violations": 0,
+      "violation_examples": [],
+      "reservoir_samples": {
+        "divine": [
+          {
+            "line": 70248,
+            "value": "hafiz-jami-baith-ghafur-bari"
+          },
+          {
+            "line": 114273,
+            "value": "wahhab-ghaffar-mubdi-ghafur-muakhkhir-barr-khabir"
+          },
+          {
+            "line": 140066,
+            "value": "qadir-quddus-rahman-khabir-akhir-tawwab-ahad-raqib"
+          },
+          {
+            "line": 251028,
+            "value": "qawiyy-tawwab-rafi-raziq-hasib-samad"
+          },
+          {
+            "line": 259722,
+            "value": "qabid-jalil-afuww-basiir-sabur-badi"
+          },
+          {
+            "line": 432500,
+            "value": "wasi-jabbar-barr-azim-latif-qadir-qadir-musawwir"
+          },
+          {
+            "line": 463045,
+            "value": "fatah-mubdi-mudhill-darr-rashid-salam-jabbar"
+          },
+          {
+            "line": 496948,
+            "value": "hayy-kabir-raqib-malik-al-mulk-zahir"
+          },
+          {
+            "line": 521672,
+            "value": "hakam-qadir-muqit-basiir-razzaq-muhsi-hakim"
+          },
+          {
+            "line": 544599,
+            "value": "awwal-hasib-qadir-khaliq-jabbar"
+          },
+          {
+            "line": 581869,
+            "value": "warith-afuww-warith-muqsit-adl-rahman-muhyi"
+          },
+          {
+            "line": 616089,
+            "value": "shakur-baith-wahhab-wahid-hasib-awwal"
+          },
+          {
+            "line": 658830,
+            "value": "wahid-wahhab-razzaq-ahad-matin-badi-wahhab-mudhill"
+          },
+          {
+            "line": 695885,
+            "value": "qawiyy-kabir-mughni-jabbar-adl-latif"
+          },
+          {
+            "line": 756029,
+            "value": "wahid-sami-musawwir-bari-khafid"
+          },
+          {
+            "line": 757216,
+            "value": "ghani-muhyi-muakhkhir-rahim-sabur-nafi-qahhar-shakur"
+          },
+          {
+            "line": 760967,
+            "value": "rauf-warith-muqaddim-alim-fattah"
+          },
+          {
+            "line": 878220,
+            "value": "azim-latif-qahhar-muhsi-wasi-baith-mudhill-hakim"
+          },
+          {
+            "line": 891110,
+            "value": "hakim-qahhar-mubdi-ghani-rafi-fatah-alim"
+          },
+          {
+            "line": 948170,
+            "value": "wakil-qahhar-raqib-darr-ghaffar"
+          }
+        ],
+        "prophets": [
+          {
+            "line": 666,
+            "value": "shoaib-dhul-kifl-dhul-kifl-ayyub"
+          },
+          {
+            "line": 75144,
+            "value": "muhammad-ayub-lut-salih-sulayman-nuh-mustafa"
+          },
+          {
+            "line": 104768,
+            "value": "yusuf-ayub-ismail-ayub-yasin"
+          },
+          {
+            "line": 114855,
+            "value": "ayub-ayyub-idris-ismail-ahmad"
+          },
+          {
+            "line": 144233,
+            "value": "ahmad-younus-yunus-muzammil-ahmad"
+          },
+          {
+            "line": 229255,
+            "value": "mustafa-nuh-yunus-ishaq-hud-younus-idris-yunus"
+          },
+          {
+            "line": 342344,
+            "value": "yasin-idris-musa-dhul-kifl-hud-ibrahim-younus"
+          },
+          {
+            "line": 402775,
+            "value": "adam-salih-muhammad-harun-shuayb-muhammad-adam"
+          },
+          {
+            "line": 418645,
+            "value": "ahmad-al-yasa-muhammad-nuh"
+          },
+          {
+            "line": 473975,
+            "value": "isa-mustafa-taha-muzammil-ibrahim-salih-idris"
+          },
+          {
+            "line": 515765,
+            "value": "ahmad-hud-idris-muzammil-ilyas-dhul-kifl-muhammad"
+          },
+          {
+            "line": 547687,
+            "value": "yahya-muzammil-idris-ismail-ayyub"
+          },
+          {
+            "line": 555624,
+            "value": "al-yasa-dhul-kifl-muhammed-yahya-ahmed-muzammil"
+          },
+          {
+            "line": 638455,
+            "value": "muhammad-mudathir-ilyas-zakariya-shoaib"
+          },
+          {
+            "line": 642719,
+            "value": "al-yasa-idris-isa-zakariya-yasin-muzammil-ahmad"
+          },
+          {
+            "line": 652072,
+            "value": "yahya-zakariya-shuayb-ishaq-ahmed-yaqub-muzammil"
+          },
+          {
+            "line": 708277,
+            "value": "hud-dhul-kifl-ismail-nuh-harun-ismail"
+          },
+          {
+            "line": 864835,
+            "value": "mudathir-yahya-taha-salih-shuayb-zakariya-sulayman-ilyas"
+          },
+          {
+            "line": 981893,
+            "value": "muzammil-yasin-shoaib-ayub-ismail-yasin-ishaq"
+          },
+          {
+            "line": 997488,
+            "value": "ayub-ishaq-sulayman-ilyas-mudathir"
+          }
+        ],
+        "names": [
+          {
+            "line": 8585,
+            "value": "mubarak-uthman-hana-juwayriyah-madiha"
+          },
+          {
+            "line": 116677,
+            "value": "khayr-abdul-latif-hilal-rami-haytham-luqman-rawan"
+          },
+          {
+            "line": 117476,
+            "value": "zahra-rayan-malika-jamila-khadijah-rukhsana-fatima-sultan"
+          },
+          {
+            "line": 180703,
+            "value": "zubaida-rahma-waleed-jameela-nazli-fajr-haytham-khadijah"
+          },
+          {
+            "line": 195332,
+            "value": "ola-abbas-almas-sameena-osama"
+          },
+          {
+            "line": 204783,
+            "value": "maymunah-jumana-fahd-ubayd-wafiya-maysun-sofia"
+          },
+          {
+            "line": 252257,
+            "value": "mansour-jumana-zubaida-malika-khadra-lina"
+          },
+          {
+            "line": 280267,
+            "value": "jalal-bassam-khadra-shukriyah-aisha-zaki-latifa-shayma"
+          },
+          {
+            "line": 345815,
+            "value": "raid-yara-huda-salim-ihsan-tamim-sumaira"
+          },
+          {
+            "line": 512337,
+            "value": "lubna-hisham-nadir-hadiya-rania-mazen"
+          },
+          {
+            "line": 544684,
+            "value": "nabil-dania-abdul-qadir-imran"
+          },
+          {
+            "line": 641137,
+            "value": "omar-khawla-ola-mazen-thuraya-imran-mounir-usama"
+          },
+          {
+            "line": 646952,
+            "value": "anum-najla-marwa-iyad-sumayyah"
+          },
+          {
+            "line": 704891,
+            "value": "abdul-hafiz-yumna-success-salwa-sumaira"
+          },
+          {
+            "line": 833737,
+            "value": "aafia-shaden-juwayriyah-rahaf-nawfal"
+          },
+          {
+            "line": 913599,
+            "value": "al-husayn-jamal-najat-warda-maher"
+          },
+          {
+            "line": 926963,
+            "value": "basma-nashwa-jameela-sajid-souad-sahar"
+          },
+          {
+            "line": 952330,
+            "value": "hussain-nazli-sahar-badir-maryam-sad"
+          },
+          {
+            "line": 974766,
+            "value": "farooq-mansour-ola-anwar-shatha"
+          },
+          {
+            "line": 994694,
+            "value": "alia-al-hasan-hasan-muneera"
+          }
+        ],
+        "islamic": [
+          {
+            "line": 12238,
+            "value": "sahih-quran-stand-composure-thoughtfulness"
+          },
+          {
+            "line": 33282,
+            "value": "fresco-decoration-medical-schools-hisab-astronomical-tables-equanimity"
+          },
+          {
+            "line": 65385,
+            "value": "open-mindedness-al-bara-ibn-azib-reflection-graciousness"
+          },
+          {
+            "line": 73158,
+            "value": "public-health-calligraphic-composition-aqil"
+          },
+          {
+            "line": 75590,
+            "value": "wajib-almoravid-dynasty-istiqamah-friendliness-faruq"
+          },
+          {
+            "line": 95892,
+            "value": "falsafa-abu-hurairah-rifq-hifz-baqa"
+          },
+          {
+            "line": 110461,
+            "value": "awareness-sahn-courtyard-adab-tariqa"
+          },
+          {
+            "line": 131454,
+            "value": "rise-of-sufi-orders-accountability-abdullah-ibn-masud"
+          },
+          {
+            "line": 188394,
+            "value": "ayyubid-dynasty-caliphate-of-ali"
+          },
+          {
+            "line": 303076,
+            "value": "muawiyah-ibn-abi-sufyan-inclusiveness-hanif"
+          },
+          {
+            "line": 323727,
+            "value": "geometric-patterns-house-of-wisdom-sunnah-sociability"
+          },
+          {
+            "line": 341196,
+            "value": "honesty-in-dealings-steadfastness-ikhtiyar-tawadu-calendars"
+          },
+          {
+            "line": 411622,
+            "value": "hidaya-thankfulness-haleem-fard-seljuk-empire-ghutra-qalb"
+          },
+          {
+            "line": 560856,
+            "value": "keeping-promises-fath-ibn-yunus-minbar"
+          },
+          {
+            "line": 655364,
+            "value": "umm-sharik-laylat-al-qadr-jilbab-waqar"
+          },
+          {
+            "line": 718282,
+            "value": "munir-lacquer-craft-muhammad-al-fazari-dam-construction"
+          },
+          {
+            "line": 730641,
+            "value": "advocate-for-the-oppressed-lutf-istiqama-muezzin-balcony"
+          },
+          {
+            "line": 894661,
+            "value": "minbar-sanctuary-fear-of-god-ikhtiyar"
+          },
+          {
+            "line": 916104,
+            "value": "tranquility-mushahada-peace-making-mamluk-sultanate"
+          },
+          {
+            "line": 955759,
+            "value": "fire-element-contentment-with-gods-decree-najiba-wajib"
+          }
+        ],
+        "general": [
+          {
+            "line": 180560,
+            "value": "coriander-delphinium-ephesus-ruins-needle-souk-gate"
+          },
+          {
+            "line": 195424,
+            "value": "stove-niamey-harare-tamees-caravanserai-inn-molybdenite"
+          },
+          {
+            "line": 267301,
+            "value": "adana-kebab-playground-crow-guide-parrot-seahorse"
+          },
+          {
+            "line": 442868,
+            "value": "star-anise-hashi-tourmaline-coriander-seed-moment-qidreh"
+          },
+          {
+            "line": 453698,
+            "value": "turmeric-maraq-signpost-guraas-feldspar-kofta"
+          },
+          {
+            "line": 457022,
+            "value": "tulip-kebab-quoin-bay-leaf"
+          },
+          {
+            "line": 477428,
+            "value": "lovebird-plate-dhow-shallot-mangosteen-hub-link-pretoria"
+          },
+          {
+            "line": 561813,
+            "value": "honeysuckle-wood-qatayef-asafiri-aster-ship-evening"
+          },
+          {
+            "line": 584450,
+            "value": "pear-tree-city-walls-defense-hoe"
+          },
+          {
+            "line": 633842,
+            "value": "mhadjeb-iguana-endive-petunia-strait-passage-lusaka-aquamarine"
+          },
+          {
+            "line": 674782,
+            "value": "emerald-kaduna-city-harira-soup-speaker-reindeer-footpath"
+          },
+          {
+            "line": 714626,
+            "value": "rambutan-clematis-valley-finch-onion"
+          },
+          {
+            "line": 714981,
+            "value": "stadium-sorrel-shawaya-marjoram-cardamom-iceberg-lettuce"
+          },
+          {
+            "line": 719301,
+            "value": "gneiss-morganite-fortress-citadel-reindeer"
+          },
+          {
+            "line": 771129,
+            "value": "lobelia-rope-obsidian-trail-tunis-city-mufatah-banyan"
+          },
+          {
+            "line": 773682,
+            "value": "continent-gooseberry-sparrow-white-mulberry-giza-plateau-fata"
+          },
+          {
+            "line": 780798,
+            "value": "pinto-bean-bougainvillea-orange-blossom-water-asafoetida-scholar"
+          },
+          {
+            "line": 786921,
+            "value": "red-sea-body-blueberry-wild-harvest-afghanistan-country"
+          },
+          {
+            "line": 903063,
+            "value": "nigella-seed-clean-qom-city-kohl-container-epoch"
+          },
+          {
+            "line": 921157,
+            "value": "cloak-gazelle-al-arbaa-cobalt-mango-tree-asparagus"
+          }
+        ]
+      },
+      "length_extremes": {
+        "names": {
+          "shortest": {
+            "line": 417541,
+            "value": "dina-dania-ola-ola-rim"
+          },
+          "longest": {
+            "line": 917038,
+            "value": "zulekha-firdaws-kawthar-aisha-siddiqua-juwayriyah-jameela-bushra"
+          }
+        },
+        "prophets": {
+          "shortest": {
+            "line": 27404,
+            "value": "al-yasa-hud-al-yasa"
+          },
+          "longest": {
+            "line": 761863,
+            "value": "mudathir-muzammil-muzammil-muhammad-muhammad-sulayman-mustafa-harun"
+          }
+        },
+        "islamic": {
+          "shortest": {
+            "line": 21007,
+            "value": "amr-ibn-al-as-jinn"
+          },
+          "longest": {
+            "line": 220502,
+            "value": "helpfulness-thoughtfulness-responsibility-architectural-ornamentation-philosophical-debates-futuwwa"
+          }
+        },
+        "general": {
+          "shortest": {
+            "line": 30016,
+            "value": "dill-clam-red-sea-body"
+          },
+          "longest": {
+            "line": 139022,
+            "value": "spandrel-philippines-archipelago-hyderabad-seychelles-djibouti-sodalite-magnetite"
+          }
+        },
+        "divine": {
+          "shortest": {
+            "line": 21059,
+            "value": "malik-al-mulk-haqq-adl"
+          },
+          "longest": {
+            "line": 90343,
+            "value": "mutakabbir-haqq-muakhkhir-baith-muntaqim-qahhar-mutakabbir-musawwir"
+          }
+        }
+      },
+      "elapsed_seconds": 11.416445
+    }
+  ],
+  "independent_negative_probes": [
+    {
+      "value": "ahmad-donkey-food",
+      "group_mask": 0,
+      "blocked": [
+        "donkey"
+      ]
+    },
+    {
+      "value": "ahmad-cow-olive",
+      "group_mask": 0,
+      "blocked": []
+    },
+    {
+      "value": "aisha-cow-olive",
+      "group_mask": 0,
+      "blocked": []
+    },
+    {
+      "value": "aisha-ramadan",
+      "group_mask": 0,
+      "blocked": []
+    },
+    {
+      "value": "rahman-ramadan",
+      "group_mask": 0,
+      "blocked": []
+    },
+    {
+      "value": "mihrab-cow",
+      "group_mask": 0,
+      "blocked": []
+    },
+    {
+      "value": "sad-ibn-abi-waqqas-cow",
+      "group_mask": 0,
+      "blocked": []
+    },
+    {
+      "value": "hamza-ibn-abd-al-muttalib-olive",
+      "group_mask": 0,
+      "blocked": []
+    },
+    {
+      "value": "kaffir",
+      "group_mask": 0,
+      "blocked": [
+        "kaffir"
+      ]
+    },
+    {
+      "value": "kaffer",
+      "group_mask": 0,
+      "blocked": [
+        "kaffer"
+      ]
+    },
+    {
+      "value": "kafir",
+      "group_mask": 0,
+      "blocked": [
+        "kafir"
+      ]
+    },
+    {
+      "value": "caffre",
+      "group_mask": 0,
+      "blocked": [
+        "caffre"
+      ]
+    }
+  ],
+  "negative_control": {
+    "path": "/tmp/hrs-million-audit-2026-10-03/injected-negative-control.txt",
+    "sha256": "b45e29f2b19d8295df8d98780cf72a0185d775a9e2626805dc9e96199a2ea5e9",
+    "physical_lines": 1000000,
+    "injections": {
+      "1": "ahmad-donkey-food-1234",
+      "500000": "aisha-cow-olive-2345",
+      "1000000": "rahman-ramadan-3456"
+    },
+    "arguments": [
+      "/usr/bin/python3",
+      "scripts/analyze.py",
+      "/tmp/hrs-million-audit-2026-10-03/injected-negative-control.txt",
+      "--sep",
+      "-"
+    ],
+    "exit": 1,
+    "stdout": "Total lines: 1000000\nUnique lines: 999998\nUniqueness percentage: 100.00%\n\nDuplicate lines:\nhabib-ibn-zayd-al-ansari-1328 (x2)\numm-hakim-bint-al-harith-8629 (x2)\nLength metrics: min=19 chars, max=101 chars, avg=47.0 chars\nWord count distribution (valid identifiers):\n  5 words: 250422 lines\n  6 words: 250234 lines\n  7 words: 249096 lines\n  8 words: 250245 lines\nMixing groups:\n  divine: 199987\n  general: 200399\n  islamic: 200661\n  names: 199119\n  prophets: 199831\n[FAIL] Policy violations: 3\n  Line 1: 'ahmad-donkey-food-1234' (Blocked vocabulary)\n  Line 500000: 'aisha-cow-olive-2345' (Unknown words or incompatible mixing groups)\n  Line 1000000: 'rahman-ramadan-3456' (Unknown words or incompatible mixing groups)\n",
+    "stderr": "",
+    "elapsed_seconds": 15.060224
+  }
+}
