@@ -116,6 +116,7 @@ No uniqueness, authorization-service or remote D1 behavior is claimed.
 
 - [runtime.json](runtime.json): CLI arguments, exits, examples, corpus hashes and auditor output.
 - [checks.json](checks.json): full race/vet/build and Python check output.
+- [committed-checks.json](committed-checks.json): independent checks of the extracted implementation commit. Its build disables VCS stamping because the archive has no Git metadata; the ordinary checkout build passed with its default settings.
 - [benchmark.txt](benchmark.txt): all three benchmark repetitions.
 - [make-verify.txt](make-verify.txt): repository corpus target result.
 - [curation.json](curation.json): dictionary changes and rationale.

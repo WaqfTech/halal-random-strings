@@ -28,19 +28,10 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 
 ## Summary
 - **Total Goals**: 22
-- 🟢 **Implemented & Verified**: 21
-- 🔵 **In Progress (Claimed)**: 1
+- 🟢 **Implemented & Verified**: 22
 - 🟡 **Ready to Execute (Pending)**: 0 (0 independent ⚡, 0 unblocked 🔗)
 - 🎯 **By Tier**: 0 immediate (Tier 1), 22 roadmap (Tier 2), 0 nice-to-have (Tier 3), 0 wont-fix (Tier 4)
-- 📋 **Execution Tasks Progress**: 107/108 completed (99%)
-
----
-
-## 🔵 In Progress (Claimed Goals)
-
-| Goal Package | Tier | Mode | Agent | Status & Note | Started |
-| :--- | :---: | :---: | :--- | :--- | :--- |
-| [`enforce-category-mixing-policy`](enforce-category-mixing-policy/goal.md) | `🗺️ Roadmap` | `⚡ Indep` | `@codex` | Implemented approved grouping and disabled custom dictionaries; 340k CLI corpus, 1296 ordered pairs, race tests, vet/build and Python regression checks passed. Final documentation gate and focused local commit in progress. | 39m0s ago |
+- 📋 **Execution Tasks Progress**: 108/108 completed (100%)
 
 ---
 
@@ -56,6 +47,7 @@ This index tracks all goal packages under `goals/`, their execution mode (Indepe
 | [`fix-words-embedding-and-init`](fix-words-embedding-and-init/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `e38e9e0` |
 | [`clean-repo-artifacts-and-clutter`](clean-repo-artifacts-and-clutter/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `0bb7f9a` |
 | [`fix-scunthorpe-and-blocked-list`](fix-scunthorpe-and-blocked-list/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `7fc7218` |
+| [`enforce-category-mixing-policy`](enforce-category-mixing-policy/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `d2ccbf2` |
 | [`fix-historical-scholar-attributions`](fix-historical-scholar-attributions/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `ba5c235` |
 | [`fix-sanctuaries-and-animal-rules`](fix-sanctuaries-and-animal-rules/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `7431c7e` |
 | [`harden-d1-scripts-and-architecture`](harden-d1-scripts-and-architecture/goal.md) | `⚡ Indep` | 🚢 SHIP | Git Commit | `dfd58b1` |

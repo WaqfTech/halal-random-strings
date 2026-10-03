@@ -1,0 +1,58 @@
+{
+  "commit": "d2ccbf2dfb806c66b4fc36fe066c19ae786941e0",
+  "note": "Archive lacks Git metadata; disable VCS stamping only for the archive build. Standard go build ./... passed in the actual checkout.",
+  "checks": [
+    {
+      "arguments": [
+        "go",
+        "test",
+        "-race",
+        "./..."
+      ],
+      "exit": 0,
+      "stdout": "ok  \tgithub.com/WaqfTech/halal-random-strings\t3.522s\n?   \tgithub.com/WaqfTech/halal-random-strings/cmd/halal-random-strings\t[no test files]\n",
+      "stderr": "",
+      "elapsed_seconds": 4.089115
+    },
+    {
+      "arguments": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.081143
+    },
+    {
+      "arguments": [
+        "go",
+        "build",
+        "-buildvcs=false",
+        "./..."
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_seconds": 0.230935
+    },
+    {
+      "arguments": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "test_analyzer_exit_counts_and_empty_input (test_naming_policy.NamingPolicyTests.test_analyzer_exit_counts_and_empty_input) ... ok\ntest_import_rejection_preserves_existing_dump (test_naming_policy.NamingPolicyTests.test_import_rejection_preserves_existing_dump) ... ok\ntest_missing_or_invalid_dictionary_fails_closed (test_naming_policy.NamingPolicyTests.test_missing_or_invalid_dictionary_fails_closed) ... ok\ntest_normalization_and_long_blocked_phrases (test_naming_policy.NamingPolicyTests.test_normalization_and_long_blocked_phrases) ... ok\ntest_reviewed_examples_and_separators (test_naming_policy.NamingPolicyTests.test_reviewed_examples_and_separators) ... ok\ntest_valid_sql_import_and_deduplication (test_naming_policy.NamingPolicyTests.test_valid_sql_import_and_deduplication) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.174s\n\nOK\n",
+      "elapsed_seconds": 0.223077
+    }
+  ]
+}
